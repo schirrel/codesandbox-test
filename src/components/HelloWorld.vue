@@ -12,8 +12,10 @@
 
       <v-col class="mb-4">
         <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to Vuetify
+          Welcome to Vuetify 2
         </h1>
+
+        <h2>{{ email }}</h2>
 
         <p class="subheading font-weight-regular">
           For help and collaboration with other Vuetify developers,
@@ -88,6 +90,14 @@
         </v-row>
       </v-col>
     </v-row>
+
+    <v-row justify="center">
+      <v-col cols="12">
+        <p class="text-center">
+          Versão: {{ version }}
+        </p>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -96,6 +106,8 @@ export default {
   name: 'HelloWorld',
 
   data: () => ({
+    version: 'N/A',
+    email: 'N/A',
     ecosystem: [
       {
         text: 'vuetify-loader',
@@ -146,6 +158,16 @@ export default {
         href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions'
       }
     ]
-  })
+  }),
+  beforeMount () {
+    console.log('NODE_ENV ' + process.env.NODE_ENV)
+    console.log('SERVER ' + process.env.VUE_APP_SERVER)
+    console.log('STAGE ' + process.env.VUE_APP_STAGE)
+    console.log('VERSION ' + process.env.VUE_APP_VERSION)
+    console.log('DEPLOYER ' + process.env.VUE_APP_DEPLOYER)
+
+    this.version = process.env.VUE_APP_VERSION
+    this.email = process.env.VUE_APP_EMAIL
+  }
 }
 </script>

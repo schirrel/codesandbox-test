@@ -13,7 +13,12 @@
   ],
   "variables": {
     "default": [
-      { "name": "PORT", "type": "PORT" }
+      { "name": "PORT", "type": "PORT" },
+      { "name": "VUE_APP_URL", "type": "TEXT" },
+      { "name": "VUE_APP_API", "type": "TEXT" },
+      { "name": "VUE_APP_EMAIL", "type": "TEXT" },
+      { "name": "VUE_APP_WHATSAPP", "type": "TEXT" },
+      { "name": "VUE_APP_ANALYTICS", "type": "TEXT" }
     ],
     "alpha": [],
     "beta": [],
