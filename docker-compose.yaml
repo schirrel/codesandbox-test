@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  pwa:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NODE_ENV: ${ENVIRONMENT}
+    ports:
+      - ${PORT}:80
+    restart: unless-stopped
+    environment:
+      VUE_APP_SERVER: ${SERVER}
+      VUE_APP_PORT: ${PORT}
+      VUE_APP_STAGE: ${STAGE}
+      VUE_APP_VERSION: ${VERSION}
+      VUE_APP_DEPLOYER: ${DEPLOYER}
+      VUE_APP_URL: ${URL}
+      VUE_APP_API: ${API}
+      VUE_APP_EMAIL: ${EMAIL}
+      VUE_APP_WHATSAPP: ${WHATSAPP}
+      VUE_APP_ANALYTICS: ${ANALYTICS}
+    healthcheck:
+      test: curl --fail -s http://localhost:80/ || exit 1
+      interval: 1m30s
+      timeout: 10s
+      start_period: 30s
+      retries: 4

@@ -1,0 +1,22 @@
+{
+  "boilerplate": "pwa",
+  "label": "Progressive Web App",
+  "description": "Código-base para desenvolver um Progressive Web Application (PWA) utilizando VueJS 2 com Vuetify 2, Axios e DexieJS.",
+  "references": [
+    { "label": "Site na Google Developers sobre PWAs", "url": "https://web.dev/progressive-web-apps/" },
+    { "label": "Site oficial do Vue.js", "url": "https://vuejs.org/" },
+    { "label": "Site oficial do Vuetify", "url": "https://vuetifyjs.com/" },
+    { "label": "Site oficial do Dexie.js", "url": "https://dexie.org/" }
+  ],
+  "maintainers": [
+    { "name": "Camilo Carromeu", "email": "camilo.carromeu@embrapa.br", "phone": "+55 (67) 9 8111-8060" }
+  ],
+  "variables": {
+    "default": [
+      { "name": "PORT", "type": "PORT" }
+    ],
+    "alpha": [],
+    "beta": [],
+    "release": []
+  }
+}

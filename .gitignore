@@ -3,7 +3,9 @@ node_modules
 /dist
 
 
-# local env files
+# env files
+.env
+.env.ci
 .env.local
 .env.*.local
 
