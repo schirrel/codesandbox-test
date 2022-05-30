@@ -24,4 +24,6 @@ services:
 
   backup:
     image: tianon/true
-    restart: no
+    restart: "no"
+    profiles:
+      - tools
