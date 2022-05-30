@@ -21,3 +21,6 @@ services:
       timeout: 10s
       start_period: 30s
       retries: 4
+
+  backup:
+    image: tianon/true
