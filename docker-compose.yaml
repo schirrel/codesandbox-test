@@ -24,3 +24,4 @@ services:
 
   backup:
     image: tianon/true
+    restart: no
