@@ -6,12 +6,12 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        NODE_ENV: ${ENVIRONMENT}
         PORT: ${PORT}
         SERVER: ${SERVER}
         STAGE: ${STAGE}
         VERSION: ${VERSION}
         DEPLOYER: ${DEPLOYER}
+        ERRBIT: ${ERRBIT}
     ports:
       - ${PORT}:80
     restart: unless-stopped
