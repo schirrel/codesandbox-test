@@ -1,4 +1,5 @@
-# pwa
+### %GENESIS_PROJECT_NAME%
+# %GENESIS_PROJECT_UNIX% / %GENESIS_APP_UNIX%
 
 ## Project setup
 ```

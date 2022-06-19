@@ -11,7 +11,7 @@ services:
         STAGE: ${STAGE}
         VERSION: ${VERSION}
         DEPLOYER: ${DEPLOYER}
-        ERRBIT: ${ERRBIT}
+        SENTRY_DSN: ${SENTRY_DSN}
     ports:
       - ${PORT}:80
     restart: unless-stopped
@@ -26,4 +26,10 @@ services:
     image: tianon/true
     restart: "no"
     profiles:
-      - tools
+      - cli
+
+  sanitize:
+    image: tianon/true
+    restart: "no"
+    profiles:
+      - cli

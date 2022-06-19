@@ -1,5 +1,6 @@
 {
   "boilerplate": "pwa",
+  "platform": "javascript",
   "label": "Progressive Web App",
   "description": "Código-base para desenvolver um Progressive Web Application (PWA) utilizando VueJS 2 com Vuetify 2, Axios e DexieJS.",
   "references": [
@@ -16,9 +17,9 @@
       { "name": "PORT", "type": "PORT" },
       { "name": "VUE_APP_URL", "type": "TEXT" },
       { "name": "VUE_APP_API", "type": "TEXT" },
-      { "name": "VUE_APP_EMAIL", "type": "TEXT" },
-      { "name": "VUE_APP_WHATSAPP", "type": "TEXT" },
-      { "name": "VUE_APP_ANALYTICS", "type": "TEXT" }
+      { "name": "VUE_APP_EMAIL", "type": "TEXT", "value": "sac@embrapa.br" },
+      { "name": "VUE_APP_WHATSAPP", "type": "TEXT", "value": "556733682193" },
+      { "name": "VUE_APP_ANALYTICS", "type": "TEXT", "value": "UA-XXXXX-X" }
     ],
     "alpha": [],
     "beta": [],
