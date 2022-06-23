@@ -15,7 +15,7 @@ console.log('Version: ' + process.env.VUE_APP_VERSION)
 Sentry.init({
   Vue,
   dsn: process.env.VUE_APP_SENTRY_DSN,
-  release: 'embrapa.io@' + process.env.VUE_APP_VERSION.split('-')[0],
+  release: '%GENESIS_PROJECT_UNIX%@' + process.env.VUE_APP_VERSION.split('-')[0],
   environment: process.env.VUE_APP_STAGE,
   integrations: [
     new BrowserTracing({

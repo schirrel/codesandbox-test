@@ -1,5 +1,5 @@
 {
-  "boilerplate": "pwa",
+  "boilerplate": "vuejs-pwa",
   "platform": "javascript",
   "label": "Progressive Web App",
   "description": "Código-base para desenvolver um Progressive Web Application (PWA) utilizando VueJS 2 com Vuetify 2, Axios e DexieJS.",
@@ -24,5 +24,6 @@
     "alpha": [],
     "beta": [],
     "release": []
-  }
+  },
+  "orchestrators": [ "DockerCompose" ]
 }
