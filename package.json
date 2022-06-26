@@ -10,8 +10,15 @@
   "dependencies": {
     "@sentry/tracing": "^7.1.1",
     "@sentry/vue": "^7.1.1",
+    "axios": "^0.27.2",
+    "dexie": "^3.2.2",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.3",
     "register-service-worker": "^1.7.2",
     "vue": "^2.6.14",
+    "vue-gtag": "^1.16.1",
+    "vue-localstorage": "^0.6.2",
+    "vue-lodash": "^2.1.2",
     "vue-router": "^3.5.1",
     "vuetify": "^2.6.0"
   },

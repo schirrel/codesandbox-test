@@ -2,7 +2,7 @@
 
 import { register } from 'register-service-worker'
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') {
   register(`${process.env.BASE_URL}service-worker.js`, {
     ready () {
       console.log(
@@ -21,6 +21,8 @@ if (process.env.NODE_ENV === 'production') {
     },
     updated () {
       console.log('New content is available; please refresh.')
+
+      window.dispatchEvent(new Event('hasUpdate'))
     },
     offline () {
       console.log('No internet connection found. App is running in offline mode.')
