@@ -52,8 +52,8 @@
 
 <script>
 import SimulationEditWrapper from '@/components/SimulationEdit'
-import ConfirmWrapper from '@/components/Confirm'
-import MessageWrapper from '@/components/Message'
+import ConfirmWrapper from '@/components/ConfirmDialog'
+import MessageWrapper from '@/components/MessageSnack'
 
 export default {
   components: {

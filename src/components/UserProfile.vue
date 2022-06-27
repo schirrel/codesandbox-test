@@ -211,8 +211,9 @@
 import axios from 'axios'
 import Pincode from 'vue-pincode-input'
 import ErrorHelper from '@/helpers/error'
-import MessageWrapper from '@/components/Message.vue'
-import ConfirmWrapper from '@/components/Confirm.vue'
+
+import MessageWrapper from '@/components/MessageSnack.vue'
+import ConfirmWrapper from '@/components/ConfirmDialog.vue'
 
 export default {
   mixins: [

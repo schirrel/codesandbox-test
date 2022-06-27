@@ -92,8 +92,8 @@
 
 <script>
 import SimulationCopyWrapper from './SimulationCopy'
-import ConfirmWrapper from './Confirm'
-import MessageWrapper from './Message'
+import ConfirmWrapper from './ConfirmDialog'
+import MessageWrapper from './MessageSnack'
 
 export default {
   components: {
@@ -136,10 +136,7 @@ export default {
       this.$refs.confirm
         .open(
           'Apagar Simulação',
-          'Tem certeza de que deseja apagar a simulação "' + simulation.name + '"? Esta ação é irreversível!',
-          {
-            color: 'red'
-          }
+          'Tem certeza de que deseja apagar a simulação "' + simulation.name + '"? Esta ação é irreversível!', { color: 'red' }
         )
         .then(confirm => {
           if (confirm) {

@@ -113,7 +113,6 @@
 
 <script>
 export default {
-  components: {},
   data () {
     return {
       version: process.env.VUE_APP_VERSION,

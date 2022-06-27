@@ -11,11 +11,11 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer />
-        <v-btn text @click.native="cancel()">
-          Cancelar
+        <v-btn text @click.native="cancel()" v-if="declineText">
+          {{ options.declineText }}
         </v-btn>
-        <v-btn :color="options.color" dark @click.native="agree()">
-          Confirmar
+        <v-btn :color="options.color" dark @click.native="agree()"  v-if="confirmText">
+          {{ options.confirmText }}
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -33,7 +33,9 @@ export default {
       title: null,
       options: {
         color: 'primary',
-        width: 290
+        width: 290,
+        confirmText: 'Confirmar',
+        declineText: 'Cancelar'
       }
     }
   },
@@ -51,10 +53,12 @@ export default {
     agree () {
       this.resolve(true)
       this.dialog = false
+      this.$emit('consent')
     },
     cancel () {
       this.resolve(false)
       this.dialog = false
+      this.$emit('dissent')
     }
   }
 }

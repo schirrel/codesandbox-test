@@ -197,9 +197,10 @@
 
 <script>
 import axios from 'axios'
-import ProgressWrapper from '@/components/Progress.vue'
-import DialogWrapper from '@/components/Dialog.vue'
-import Beta from '@/components/Beta'
+import ProgressWrapper from '@/components/ProgressBar.vue'
+import DialogWrapper from '@/components/ConfirmDialog.vue'
+import Beta from '@/components/BetaRibbon'
+
 import Pincode from 'vue-pincode-input'
 import md5 from 'crypto-js/md5'
 import base64 from 'image-to-base64'
@@ -247,14 +248,14 @@ export default {
       const self = this
       axios.get('/privacy-policy.html').then(pol => {
         self.privacy = pol.data
-        self.$refs.dPrivacy.open('Política de Privacidade', self.privacy, 'Aceito', 'Não Aceito')
+        self.$refs.dPrivacy.open('Política de Privacidade', self.privacy, { confirmText: 'Aceito', declineText: 'Não Aceito' })
       })
     },
     reliableInfo () {
       const text = '<p>Um <strong>dispositivo confiável</strong> é um equipamento de <u>uso não compartilhado</u> (p.e., <strong>seu celular ou computador pessoal</strong>). Neste caso você permanecerá autenticado neste dispositivo por <u>tempo indeternimado</u>.</p>' +
         '<p>Caso esteja em um equipamento de uso compartilhado, tal como o computador de um saguão de hotel, marque <strong>NÃO</strong> nesta opção! Com isso, ao fechar o navegador, seu usuário será automaticamente deslogado.</p>'
 
-      this.$refs.dPrivacy.open('Dispositivo Confiável', text, 'Ok')
+      this.$refs.dPrivacy.open('Dispositivo Confiável', text, { confirmText: 'Ok', declineText: '' })
     },
     validate () {
       return this.$refs.form && this.$refs.form.validate() && this.reliable !== null

@@ -126,20 +126,16 @@
     </v-main>
 
     <confirm-wrapper ref="confirm" />
-
-    <dialog-wrapper ref="dialog" />
   </v-app>
 </template>
 
 <script>
-import ConfirmWrapper from '../components/Confirm.vue'
-import DialogWrapper from '../components/Dialog.vue'
-import UserWrapper from '../components/User.vue'
+import ConfirmWrapper from '@/components/ConfirmDialog.vue'
+import UserWrapper from '@/components/UserProfile.vue'
 
 export default {
   components: {
     ConfirmWrapper,
-    DialogWrapper,
     UserWrapper
   },
   data () {
