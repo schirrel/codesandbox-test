@@ -1,0 +1,24 @@
+{
+  "name": "%GENESIS_PROJECT_NAME%",
+  "short_name": "%GENESIS_PROJECT_NAME%",
+  "description": "Aplicativo da Embrapa para...",
+  "icons": [
+    {
+      "src": "img/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "img/icons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#66BB6A",
+  "orientation": "any"
+}
