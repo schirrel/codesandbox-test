@@ -1,6 +1,6 @@
 <template>
   <v-card flat tile color="blue-grey lighten-5">
-    <v-window v-model="onboarding" style="height: 380px;">
+    <v-window v-model="onboarding" style="height: 320px;">
       <v-window-item v-for="s in simulations" :key="s.code">
         <simulation-card :simulation="s" v-on="$listeners" />
       </v-window-item>

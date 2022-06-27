@@ -1,9 +1,7 @@
 <template>
   <v-card :width="width" elevation="2" class="ma-3">
     <v-card-title>
-      <v-chip class="font-weight-bold" label color="teal" text-color="white">
-        {{ simulation.type }}
-      </v-chip>
+      {{ simulation.name }}
       <v-spacer />
       <v-icon color="grey lighten-2" v-html="simulation.validated ? (simulation.changed.getTime() < $localStorage.get('synchronized') * 1000 ? 'mdi-cloud-check' : 'mdi-cloud-upload') : 'mdi-pencil'" />
       <v-menu bottom left>
@@ -37,15 +35,8 @@
         </v-list>
       </v-menu>
     </v-card-title>
-    <v-card-title :class="simulation.certified === null || simulation.certified === undefined ? 'grey lighten-4' : (simulation.certified ? 'green lighten-5' : 'red lighten-5')">
-      <span class="headline" style="overflow: hidden;">{{ simulation.name }}</span>
-      <v-spacer />
-      <v-icon v-if="simulation.certified !== null && simulation.certified !== undefined" :color="simulation.certified ? 'success' : 'error'" v-html="simulation.certified ? 'mdi-check-decagram' : 'mdi-alert-decagram'" />
-    </v-card-title>
     <v-card-text class="mt-3" style="height: 100px;">
-      Área de {{ simulation.area || 'N/A' }} ha com rebanho de {{ simulation.animal_category || 'N/A' }} da raça {{ simulation.animal_race || 'N/A' }}, em pastagem
-      {{ simulation.pastagem_species || 'N/A' }} (desde {{ simulation.pastagem_anoDeFormacao || 'N/A' }}) e com
-      {{ simulation.arvores_type || 'N/A' }} em arranjo de {{ simulation.arvores_numeroDeFileiras || 'N/A' }} fileira(s) no renque.
+      Área de {{ simulation.area || 'N/A' }} ha com...
     </v-card-text>
     <v-card-actions>
       <v-row wrap class="pb-3" v-if="$vuetify.breakpoint.smAndDown">

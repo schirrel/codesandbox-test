@@ -14,14 +14,9 @@
       </v-app-bar>
     </nav>
 
-    <v-main class="mt-12 pt-4">
+    <v-main class="mt-12 pt-12">
       <v-container fluid>
         <v-row wrap>
-          <v-col xs="12" sm="12" md="10" offset-md="1" lg="8" offset-lg="2" xl="6" offset-xl="3" cols="12" class="mt-2">
-            <v-alert type="warning" prominent class="my-0">
-              <strong>Atenção!</strong> Esta é uma funcionalidade experimental e está sujeita à disponibilidade de serviços em nuvem da Embrapa e de terceiros.
-            </v-alert>
-          </v-col>
           <v-col xs="12" sm="12" md="10" offset-md="1" lg="8" offset-lg="2" xl="6" offset-xl="3" cols="12">
             <v-card>
               <v-card-text>

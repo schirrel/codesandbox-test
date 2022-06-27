@@ -9,6 +9,7 @@ import VueLodash from 'vue-lodash'
 import lodash from 'lodash'
 
 import router from './router'
+import db from './db'
 
 Vue.config.productionTip = false
 
@@ -36,6 +37,8 @@ Vue.use(storage, {
   name: 'ls',
   bind: true
 })
+
+Vue.prototype.$db = db
 
 new Vue({
   router,

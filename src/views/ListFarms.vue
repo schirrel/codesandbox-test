@@ -21,14 +21,14 @@
             mdi-sync
           </v-icon> Sincronizar
         </v-btn>
-        <div class="d-flex align-center mr-3" style="margin-left: auto">
-          <user-wrapper class="hidden-xs-only" />
-        </div>
-        <v-btn dark color="purple" depressed @click.stop="showWizard()" large class="hidden-sm-and-down" v-if="farms && farms.length > 0">
+        <v-btn dark color="purple" depressed @click.stop="showWizard()" large class="hidden-sm-and-down mr-3" v-if="farms && farms.length > 0">
           <v-icon left>
             mdi-plus
           </v-icon> Nova Simulação
         </v-btn>
+        <div class="d-flex align-center" style="margin-left: auto">
+          <user-wrapper class="hidden-xs-only" />
+        </div>
 
         <!-- Small Display -->
         <v-btn icon class="hidden-md-and-up" @click="$router.push('/about')">
@@ -210,6 +210,7 @@ export default {
         .orderBy('farm')
         .and(s => s.active)
         .keys(keys => {
+          console.log(keys)
           this.$db.farm
             .where('code')
             .anyOf(keys)
@@ -300,9 +301,7 @@ export default {
                       const promises = []
 
                       simulations.forEach((s) => {
-                        if (s.validated) {
-                          promises.push(axios.post(api + '/simulation', s, { headers: { Authorization: 'Bearer ' + self.user.token } }))
-                        }
+                        promises.push(axios.post(api + '/simulation', s, { headers: { Authorization: 'Bearer ' + self.user.token } }))
                       })
 
                       axios.all(promises).then(results => {
