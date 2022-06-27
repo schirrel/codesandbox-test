@@ -1,7 +1,7 @@
 {
   "name": "%GENESIS_PROJECT_NAME%",
   "short_name": "%GENESIS_PROJECT_NAME%",
-  "description": "Aplicativo de cálculo do Programa Brasileiro Carne Carbono Neutro - CCN visa auxiliar os gestores no processo de elaboração do inventário de GEE.",
+  "description": "Aplicativo da Embrapa para...",
   "icons": [
     {
       "src": "img/icons/android-chrome-192x192.png",
