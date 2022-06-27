@@ -328,10 +328,8 @@ export default {
 
             const picture = 'https://www.gravatar.com/avatar/' + md5(response.data.email).toString() + '?s=200&d=404'
 
-            axios.get(picture, { responseType: 'arraybuffer' }).then(response => {
-              user.picture = 'data:image/png;base64,' + Buffer.from(response.data, 'base64')
-
-              console.log('user pic: ' + user.picture)
+            axios.get(picture).then(response => {
+              user.picture = picture
             }).finally(() => {
               this.$localStorage.set('user', user)
               this.$localStorage.set('reliable', this.reliable)

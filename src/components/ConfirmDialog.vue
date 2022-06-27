@@ -11,10 +11,10 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer />
-        <v-btn text @click.native="cancel()" v-if="declineText">
+        <v-btn text @click.native="cancel()" v-if="options.declineText">
           {{ options.declineText }}
         </v-btn>
-        <v-btn :color="options.color" dark @click.native="agree()"  v-if="confirmText">
+        <v-btn :color="options.color" dark @click.native="agree()"  v-if="options.confirmText">
           {{ options.confirmText }}
         </v-btn>
       </v-card-actions>
