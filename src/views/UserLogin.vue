@@ -150,7 +150,7 @@
                     Um número de 6 dígitos foi enviado para o e-mail <strong>{{ email }}</strong>. Por favor, insira-o abaixo para continuar:
                   </v-card-text>
                   <div class="input-wrapper my-5" style="width: 280px; margin: 0 auto;">
-                    <pincode v-model="pin" :length="6" />
+                    <v-otp-input v-model="pin" :length="6" />
                   </div>
                   <v-card-actions>
                     <v-btn
@@ -201,7 +201,6 @@ import ProgressWrapper from '@/components/ProgressBar.vue'
 import DialogWrapper from '@/components/ConfirmDialog.vue'
 import Beta from '@/components/BetaRibbon'
 
-import Pincode from 'vue-pincode-input'
 import md5 from 'crypto-js/md5'
 import base64 from 'image-to-base64'
 import ErrorHelper from '@/helpers/error'
@@ -213,8 +212,7 @@ export default {
   components: {
     ProgressWrapper,
     DialogWrapper,
-    Beta,
-    Pincode
+    Beta
   },
   data () {
     return {

@@ -167,7 +167,7 @@
                   Um número de 6 dígitos foi enviado para o e-mail <strong>{{ user.email }}</strong>. Se tiver realmente certeza de que quer continuar, insira-o abaixo:
                 </v-card-text>
                 <div class="input-wrapper my-5" style="width: 280px; margin: 0 auto;">
-                  <pincode v-model="pin" :length="6" />
+                  <v-otp-input v-model="pin" :length="6" />
                 </div>
                 <v-card-actions>
                   <v-btn
@@ -209,7 +209,6 @@
 
 <script>
 import axios from 'axios'
-import Pincode from 'vue-pincode-input'
 import ErrorHelper from '@/helpers/error'
 
 import MessageWrapper from '@/components/MessageSnack.vue'
@@ -220,7 +219,6 @@ export default {
     ErrorHelper
   ],
   components: {
-    Pincode,
     MessageWrapper,
     ConfirmWrapper
   },
