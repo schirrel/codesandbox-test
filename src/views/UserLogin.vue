@@ -202,7 +202,6 @@ import DialogWrapper from '@/components/ConfirmDialog.vue'
 import Beta from '@/components/BetaRibbon'
 
 import md5 from 'crypto-js/md5'
-import base64 from 'image-to-base64'
 import ErrorHelper from '@/helpers/error'
 
 export default {
@@ -329,10 +328,10 @@ export default {
 
             const picture = 'https://www.gravatar.com/avatar/' + md5(response.data.email).toString() + '?s=200&d=404'
 
-            base64(picture).then(stream => {
-              if (stream.length > 128) {
-                user.picture = 'data:image/png;base64,' + stream
-              }
+            axios.get(picture, { responseType: 'arraybuffer' }).then(response => {
+              user.picture = 'data:image/png;base64,' + Buffer.from(response.data, 'base64')
+
+              console.log('user pic: ' + user.picture)
             }).finally(() => {
               this.$localStorage.set('user', user)
               this.$localStorage.set('reliable', this.reliable)
