@@ -25,5 +25,5 @@
     "beta": [],
     "release": []
   },
-  "orchestrators": [ "DockerCompose" ]
+  "orchestrators": [ "DockerCompose", "DockerSwarm" ]
 }
