@@ -6,9 +6,8 @@
       </v-toolbar-title>
     </v-toolbar>
     <v-card tile>
-      <v-card-text class="px-4 py-2" v-show="!!message">
-        {{ message }}
-      </v-card-text>
+      <v-card-text class="px-4 py-2" v-show="!!message" v-html="message" style="text-align: justify;" />
+      <v-divider v-show="!!message" />
       <v-card-actions>
         <v-spacer />
         <v-btn text @click.native="cancel()" v-if="options.declineText">

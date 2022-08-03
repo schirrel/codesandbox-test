@@ -240,7 +240,7 @@ export default {
       const self = this
       axios.get('/privacy-policy.html').then(pol => {
         self.privacy = pol.data
-        self.$refs.dPrivacy.open('Política de Privacidade', self.privacy, { confirmText: 'Aceito', declineText: 'Não Aceito' })
+        self.$refs.dPrivacy.open('Política de Privacidade', self.privacy, { confirmText: 'Aceito', declineText: 'Não Aceito', width: 500 })
       })
     },
     reliableInfo () {
