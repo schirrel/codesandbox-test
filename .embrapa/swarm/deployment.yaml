@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   pwa:
-    image: 127.0.0.1:5000/${IO_PROJECT}_${IO_APP}_${IO_STAGE}_wordpress
+    image: 127.0.0.1:5000/${IO_PROJECT}_${IO_APP}_${IO_STAGE}_pwa
     ports:
       - ${PORT}:80
     networks:
