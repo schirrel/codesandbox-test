@@ -1,6 +1,6 @@
 import Dexie from 'dexie'
 
-const db = new Dexie('%GENESIS_PROJECT_UNIX%')
+const db = new Dexie('mais-precoce')
 
 db.version(1).stores({
   farm: 'code, name, created, changed',

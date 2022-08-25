@@ -23,7 +23,7 @@
             <v-card outlined>
               <v-card-text>
                 <p>
-                  Este aplicativo é parte integrante do projeto <strong>%GENESIS_PROJECT_NAME%</strong> e foi desenvolvido pela
+                  Este aplicativo é parte integrante do projeto <strong>+Precoce</strong> e foi desenvolvido pela
                   <a href="https://www.embrapa.br/gado-de-corte" target="_blank" rel="noopener">Embrapa Gado de Corte</a>, em Campo Grande - MS, e a
                   <a href="https://www.embrapa.br/florestas" target="_blank" rel="noopener">Embrapa Florestas</a>, em Colombo - PR. Seu
                   desenvolvimento contou com o apoio da
@@ -40,7 +40,7 @@
                 <v-row align="center" justify="center">
                   <v-btn-toggle multiple class="mb-4">
                     <v-btn
-                      :href="'mailto: ' + settings.email + '?subject=Problemas%20na%20vers%C3%A3o%20' + version + '%20do%20aplicativo%20%GENESIS_PROJECT_UNIX%'"
+                      :href="'mailto: ' + settings.email + '?subject=Problemas%20na%20vers%C3%A3o%20' + version + '%20do%20aplicativo%20mais-precoce'"
                       x-large
                       color="primary"
                       class="white--text"

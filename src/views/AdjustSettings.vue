@@ -154,7 +154,7 @@ export default {
     },
     email () {
       window.open(
-        'mailto: ' + process.env.VUE_APP_EMAIL + '?subject=Problemas%20na%20vers%C3%A3o%20' + this.version + '%20do%20%GENESIS_PROJECT_UNIX%',
+        'mailto: ' + process.env.VUE_APP_EMAIL + '?subject=Problemas%20na%20vers%C3%A3o%20' + this.version + '%20do%20mais-precoce',
         '_blank'
       )
     },

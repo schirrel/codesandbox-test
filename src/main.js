@@ -13,7 +13,7 @@ import db from './db'
 
 Vue.config.productionTip = false
 
-console.log('%GENESIS_PROJECT_UNIX% / %GENESIS_APP_UNIX% @ ' + process.env.VUE_APP_STAGE)
+console.log('mais-precoce / plugin-flow @ ' + process.env.VUE_APP_STAGE)
 console.log('Version: ' + process.env.VUE_APP_VERSION)
 
 Sentry.init({

@@ -31,7 +31,7 @@ const router = new VueRouter({
 
 Vue.use(VueGtag, {
   config: { id: process.env.VUE_APP_ANALYTICS },
-  appName: '%GENESIS_PROJECT_NAME%',
+  appName: '+Precoce',
   pageTrackerScreenviewEnabled: true
 }, router)
 

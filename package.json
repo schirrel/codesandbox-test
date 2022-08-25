@@ -1,6 +1,6 @@
 {
-  "name": "@%GENESIS_PROJECT_UNIX%/%GENESIS_APP_UNIX%",
-  "version": "%GENESIS_VERSION%",
+  "name": "@mais-precoce/plugin-flow",
+  "version": "0.22.8-dev.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
