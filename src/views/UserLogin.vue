@@ -6,7 +6,7 @@
           <v-icon>mdi-arrow-left</v-icon>
         </v-btn>
 
-        <v-toolbar-title v-text="$route.name" />
+        <v-app-bar-title v-text="$route.name" />
 
         <v-spacer />
 

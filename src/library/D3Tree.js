@@ -735,6 +735,8 @@ class D3Tree {
    * Adiciona ao nó o tipo balanço, caso as regras de negócio sejam satisfeitas
    */
   changeNodeTypeToBalance(d, id) {
+    console.log(d)
+    console.log(this.balanceClicked)
     const descendants = this.root.descendants();
     let balanceFatherCounter = 0;
     this.counterBalanceClick += 1;
@@ -745,6 +747,9 @@ class D3Tree {
       if (d === this.balanceClicked.d) {
         this.resetNodeSelected(true);
         return false;
+      }
+      if(!this.balanceClicked.d) {
+        this.balanceClicked.d = d
       }
 
       if (

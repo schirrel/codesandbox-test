@@ -2,39 +2,39 @@
   <v-app light>
     <nav>
       <v-app-bar clipped-left dark color="green lighten-1">
-        <v-toolbar-title v-text="$route.name" />
+        <v-app-bar-title v-text="$route.name" />
       </v-app-bar>
     </nav>
 
-
     <v-main>
-
-    <TreeMenu
-      :TypeOfActionSelectedNow="TypeOfActionSelectedNow"
-      :mini="mini"
-      @setTypeClickTree="setTypeClickTree"
-      @executeModelCommand="executeModelCommand"
-    />
+      <TreeMenu
+        :TypeOfActionSelectedNow="TypeOfActionSelectedNow"
+        :mini="mini"
+        @setTypeClickTree="setTypeClickTree"
+        @executeModelCommand="executeModelCommand"
+      />
       <v-container fluid>
-      <div class="fluxograma" ref="fluxograma"></div>
+        <div class="fluxograma" ref="fluxograma"></div>
 
-    <TreeModal
-      :modal="modal"
-      :optionSelect="optionSelect"
-      :selectedNode="selectedNode"
-      @confirmEditNode="confirmEditNode"
-    />
+        <TreeModal
+          :modal="modal"
+          :optionSelect="optionSelect"
+          :selectedNode="selectedNode"
+          @confirmEditNode="confirmEditNode"
+        />
 
-    <TreeConfig :config="config" @executeModelCommand="executeModelCommand" />
-
-     </v-container>
+        <TreeConfig
+          :config="config"
+          @executeModelCommand="executeModelCommand"
+        />
+      </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script>
-// import jsonExampleLoadFluxograma from "../jsons/jsonFluxograma.json";
-// import jsonExampleIgnoreSimulationData from "../jsons/jsonPlataforma.json";
+import jsonExampleLoadFluxograma from '../jsons/jsonFluxograma.json'
+import jsonExampleIgnoreSimulationData from '../jsons/jsonPlataforma.json'
 import jsonFernando from '../jsons/jsonFernando.json'
 import TreeMenu from '../components/TreeMenu'
 import TreeModal from '../components/TreeModal'
@@ -60,17 +60,19 @@ export default {
     }
   },
   mounted: function () {
-    // Carrega os dados dos atributos(class,resource,duration,factor) do backend
-    this.loadAtributesBackend()
-    // Configura qual função será acionada para mostrar os erros na tela
-    tree.setHandleError(this.$swal)
-    // Configura qual função será acionada ao clicar em um nó da árvore
-    tree.setHandleClickFunction(this.handleOnclickFunction)
-    // Ajusta a árvore para utilizar os atributos do select fornecido pelo backend
-    // E configura qual cor vai representar cada classe
-    tree.setAttributesSelectAndColor(this.optionSelect)
-    // Constroi a árvore na div fluxograma
-    tree.build()
+    setTimeout(() => {
+      // Carrega os dados dos atributos(class,resource,duration,factor) do backend
+      this.loadAtributesBackend()
+      // Configura qual função será acionada para mostrar os erros na tela
+      tree.setHandleError(this.$swal)
+      // Configura qual função será acionada ao clicar em um nó da árvore
+      tree.setHandleClickFunction(this.handleOnclickFunction)
+      // Ajusta a árvore para utilizar os atributos do select fornecido pelo backend
+      // E configura qual cor vai representar cada classe
+      tree.setAttributesSelectAndColor(this.optionSelect)
+      // Constroi a árvore na div fluxograma
+      tree.build()
+    }, 1000)
   },
   methods: {
     /**
@@ -174,9 +176,9 @@ export default {
       /*************************************************************************
        * //TODO: Adicionar aqui no futuro código para carregar json do backend
        ************************************************************************/
-      // const json = jsonExampleIgnoreSimulationData;
+      const json = jsonExampleIgnoreSimulationData
       // const json = jsonExampleLoadFluxograma;
-      const json = jsonFernando
+      // const json = jsonFernando
       /************************************************************************/
 
       /**

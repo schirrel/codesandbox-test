@@ -1,67 +1,57 @@
 <template>
-  <v-card>
-    <v-navigation-drawer fixed clipped v-model="drawer" :mini-variant="mini" app>
-      <v-list dense>
-        <v-subheader class="mt-2 grey--text text--darken-1">Fluxos</v-subheader>
+  <v-navigation-drawer clipped stateless v-model="drawer" absolute>
+    <v-list dense>
+      <v-subheader class="mt-2 grey--text text--darken-1">Fluxos</v-subheader>
 
-        <v-list-tile
-          v-for="item in menuFlow"
-          :key="item.value"
-          @click="setTypeOfClick(item.value)"
-          :class="isActive(item.value)"
-          :ripple="true"
-        >
-          <v-list-tile-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>{{ item.text }}</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
+      <v-list-item
+        v-for="item in menuFlow"
+        :key="item.value"
+        @click="setTypeOfClick(item.value)"
+        :class="isActive(item.value)"
+        :ripple="true"
+      >
+        <v-list-item-action>
+          <v-icon>{{ item.icon }}</v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>{{ item.text }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
 
-        <v-subheader class="mt-2 grey--text text--darken-1">Balanços</v-subheader>
+      <v-subheader class="mt-2 grey--text text--darken-1">Balanços</v-subheader>
 
-        <v-list-tile
-          v-for="item in menuBalance"
-          :key="item.value"
-          @click="setTypeOfClick(item.value)"
-          :class="isActive(item.value)"
-          :ripple="true"
-        >
-          <v-list-tile-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>{{ item.text }}</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
+      <v-list-item
+        v-for="item in menuBalance"
+        :key="item.value"
+        @click="setTypeOfClick(item.value)"
+        :class="isActive(item.value)"
+        :ripple="true"
+      >
+        <v-list-item-action>
+          <v-icon>{{ item.icon }}</v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>{{ item.text }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
 
-        <v-subheader class="mt-2 grey--text text--darken-1">Modelo</v-subheader>
+      <v-subheader class="mt-2 grey--text text--darken-1">Modelo</v-subheader>
 
-        <v-list-tile
-          v-for="item in menuModel"
-          :key="item.value"
-          @click="executeModelCommand(item.value)"
-          :ripple="true"
-        >
-          <v-list-tile-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>{{ item.text }}</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
-
-    <v-toolbar color="#003399" dense dark fixed clipped-left app>
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title class="mr-5 align-center">
-        <span class="title">Embrapa</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-    </v-toolbar>
-  </v-card>
+      <v-list-item
+        v-for="item in menuModel"
+        :key="item.value"
+        @click="executeModelCommand(item.value)"
+        :ripple="true"
+      >
+        <v-list-item-action>
+          <v-icon>{{ item.icon }}</v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>{{ item.text }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
+  </v-navigation-drawer>
 </template>
 
 <script>
@@ -74,7 +64,7 @@ export default {
        * Variável boleana usada para controlar a abertura do menu
        * true(abre) - false(fecha)
        */
-      drawer: false,
+      drawer: true,
       // mini: false,
       /**
        * Vetor usado para construir o submenu de Fluxos
@@ -193,4 +183,5 @@ export default {
 .active {
   background-color: #f5f5f5;
 }
+
 </style>
