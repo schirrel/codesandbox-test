@@ -5,12 +5,8 @@ import VueGtag from 'vue-gtag'
 Vue.use(VueRouter)
 
 const options = [
-  { path: '/', component: 'ListFarms', name: 'Propriedades', props: false },
-  { path: '/login', component: 'UserLogin', name: 'Login', props: false },
-  { path: '/settings', component: 'AdjustSettings', name: 'Configurações', props: false },
+  { path: '/', component: 'FlowTree', name: 'Fluxograma', props: false },
   { path: '/about', component: 'AboutProject', name: 'Sobre', props: false },
-  { path: '/simulation/:code', component: 'EditSimulation', name: 'Formulário Simulação', props: true },
-  { path: '/report/:code', component: 'ViewReport', name: 'Diagnóstico', props: true },
   { path: '*', component: 'NotFound', name: 'Página Não Encontrada', props: false }
 ]
 

@@ -3,7 +3,7 @@
   "version": "0.22.8-dev.1",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --skip-plugins @vue/cli-plugin-eslint",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -22,7 +22,9 @@
     "vue-localstorage": "^0.6.2",
     "vue-lodash": "^2.1.2",
     "vue-router": "^3.5.1",
-    "vuetify": "^2.6.0"
+    "vuetify": "^2.6.0",
+    "d3": "4.2.2",
+    "vue-sweetalert2": "^2.1.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-eslint": "~5.0.0",
