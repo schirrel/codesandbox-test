@@ -81,6 +81,12 @@ export default {
           value: actionsType.edit
         },
         {
+          text: 'Childrens',
+          icon: 'mediation',
+          value: actionsType.children
+        },
+
+        {
           text: 'Entrada',
           icon: 'arrow_upward',
           value: actionsType.addIn

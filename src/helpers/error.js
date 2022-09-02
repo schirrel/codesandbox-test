@@ -129,6 +129,8 @@ export default {
     cannotAddNodeInMixedBalanceFather:
     'Não é possível incluir vértices a vértice pai de balanço misto.',
     cannotCreateMixBalanceWithFatherWithMore2Childrens:
-    'Balanço misto não pode ter vértice com dois ou mais filhos.'
+    'Balanço misto não pode ter vértice com dois ou mais filhos.',
+    cannotAddTerminal: 'Não pode adicionar se o nó não for terminal',
+    cannotClickedTwoNonTerminal: 'Balanço não pode ser feito em dois nós terminais.'
   }
 }

@@ -17,6 +17,14 @@
       />
 
       <TreeConfig :config="config" @executeModelCommand="executeModelCommand" />
+
+      <TreeChildren
+      :children="children"
+      :TypeOfActionSelectedNow="TypeOfActionSelectedNow"
+      @setTypeClickTree="setTypeClickTree"
+      @confirmEditNode="confirmEditNode"
+    />
+
     </v-container>
   </v-main>
 </template>
@@ -28,11 +36,13 @@ import jsonExampleLoadFluxograma from '../jsons/jsonFluxograma.json'
 import TreeMenu from '../components/TreeMenu'
 import TreeModal from '../components/TreeModal'
 import TreeConfig from '../components/TreeConfig'
+import TreeChildren from '../components/TreeChildren'
+
 import D3TreeClass, { actionsType, nodesType } from '../library/D3Tree'
 const tree = new D3TreeClass()
 
 export default {
-  components: { TreeMenu, TreeModal, TreeConfig },
+  components: { TreeMenu, TreeModal, TreeConfig, TreeChildren },
   data () {
     return {
       optionSelect: {
@@ -42,8 +52,11 @@ export default {
         factor: []
       },
       selectedNode: null,
+      selectedIndex: null,
+      nodeTypeChildren: null,
       modal: false,
       config: false,
+      children: false,
       mini: false,
       TypeOfActionSelectedNow: actionsType.edit
     }
@@ -70,10 +83,10 @@ export default {
     handleOnclickFunction (selected, index) {
       switch (this.TypeOfActionSelectedNow) {
         case actionsType.addIn:
-          tree.addChildrenNode(selected, index, nodesType.in)
+          tree.addChildrenNode(selected, index, nodesType.in, true)
           break
         case actionsType.addOut:
-          tree.addChildrenNode(selected, index, nodesType.out)
+          tree.addChildrenNode(selected, index, nodesType.out, true)
           break
         case actionsType.remove:
           tree.removeChildrenNode(selected, index)
@@ -90,6 +103,12 @@ export default {
           // Não limpa o nó selecionado caso o modal esteja aberto
           tree.setModalstate(true)
           break
+        case actionsType.children:
+          this.selectedNode = selected
+          this.treeChildren = tree
+          this.childrens = !this.childrens
+          break
+
         default:
           tree.addChildrenNode(selected, index, nodesType.in)
       }
@@ -152,6 +171,7 @@ export default {
     confirmEditNode (isNotModified) {
       tree.redrawTree(isNotModified)
       this.modal = false
+      this.children = false
       tree.setModalstate(false)
     },
 

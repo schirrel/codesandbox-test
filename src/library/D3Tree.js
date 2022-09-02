@@ -4,6 +4,8 @@ import error from '@/helpers/error'
 
 const WIDTH = 1000
 const HEIGHT = 800
+// todo validar pq tinha isso
+// const traverse = require('traverse')
 
 export const actionsType = {
   add: 'addNode',
@@ -18,6 +20,7 @@ export const actionsType = {
   save: 'save',
   reset: 'reset',
   config: 'config',
+  children: 'children',
   mini: 'mini',
   orientation: 'orientation',
   nodeh: 'nodeh',
@@ -485,6 +488,9 @@ class D3Tree {
       .classed('link', true)
       .style('marker-end', this.selectArrowSide)
       .style('stroke', this.selectStrokeColorPath)
+      // link da ideia de como adicionar largura na aresta
+      // https://stackoverflow.com/questions/44441577/how-to-change-edge-thickness-in-d3-js
+      // .style("stroke-width", d => Math.max(4, 1))  adicionando largura das arestas
       .attr('x1', this.selectX1ByType.bind(this))
       .attr('x2', this.selectX2ByType.bind(this))
       .attr('y1', this.selectY1ByType.bind(this))
@@ -579,16 +585,18 @@ class D3Tree {
   /**
    * Adiciona um novo nó filho ao nó selecionado
    */
-  addChildrenNode (selected, i, nodeType) {
+  addChildrenNode (selected, i, nodeType, add) {
     if (!this.checkIfHavePermission(selected, nodeType)) {
       return false
     }
 
-    const newNodeData = {
+    let newNodeData
+
+    const obj = {
       children: [],
       value: nodeType,
       idBalance: 0,
-      name: '',
+      name: add,
       description: '',
       class: DEFAULT.class,
       resource: selected.data.resource,
@@ -596,6 +604,33 @@ class D3Tree {
       category: selected.data.category,
       duration: DEFAULT.duration,
       factor: DEFAULT.factor
+      // TODO VALIDAR FERNANDO ADICIONADO POR IGOR
+      // class: "(nenhuma)",
+      // resource: "Bezerras desmamadas",
+      // unit: "cab",
+      // category: "BOVINOS",
+      // duration: "0",
+      // factor: "1"
+
+    }
+    if (add === true) {
+      newNodeData = {
+        children: [],
+        value: nodeType,
+        idBalance: 0,
+        name: '',
+        description: '',
+        class: DEFAULT.class,
+        resource: selected.data.resource,
+        unit: selected.data.unit,
+        category: selected.data.category,
+        duration: DEFAULT.duration,
+        factor: DEFAULT.factor
+      }
+    } else {
+      // futuramente adicionar estrutura para guardar novos modelos de nós
+      // atualmente trabalhando apenas com um nó generico para teste
+      newNodeData = obj
     }
 
     // Cria um novo nó com base em newNodeData usando d3.hierarchy()
@@ -908,7 +943,7 @@ class D3Tree {
   /**
    * Verifica se tem permissão para adicionar um novo nó
    */
-  checkIfHavePermission (fatherNode, newNodeType) {
+  checkIfHavePermission (fatherNode, newNodeType, add) {
     const descendants = this.root.descendants()
     const fatherType = fatherNode.data.value
 
@@ -948,6 +983,12 @@ class D3Tree {
         this.msgAlertUser(error.enums.cannotAddNodeInMixedBalanceFather)
         return false
       }
+    }
+
+    if (fatherNode.children && add) {
+      this.msgAlertUser(error.cannotAddTerminal)
+      this.resetNodeSelected(true)
+      return false
     }
 
     return true
