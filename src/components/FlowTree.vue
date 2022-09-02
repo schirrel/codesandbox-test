@@ -23,8 +23,8 @@
 
 <script>
 import jsonExampleLoadFluxograma from '../jsons/jsonFluxograma.json'
-import jsonExampleIgnoreSimulationData from '../jsons/jsonPlataforma.json'
-import jsonFernando from '../jsons/jsonFernando.json'
+// import jsonExampleIgnoreSimulationData from '../jsons/jsonPlataforma.json'
+// import jsonFernando from '../jsons/jsonFernando.json'
 import TreeMenu from '../components/TreeMenu'
 import TreeModal from '../components/TreeModal'
 import TreeConfig from '../components/TreeConfig'
