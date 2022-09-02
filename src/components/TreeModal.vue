@@ -1,5 +1,6 @@
 <template>
   <v-dialog
+  @keydown.esc="cancelChangeInNode"
     content-class="rightModal"
     v-model="modalModel"
     persistent

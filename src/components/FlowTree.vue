@@ -49,19 +49,17 @@ export default {
     }
   },
   mounted: function () {
-    setTimeout(() => {
-      // Carrega os dados dos atributos(class,resource,duration,factor) do backend
-      this.loadAtributesBackend()
-      // Configura qual função será acionada para mostrar os erros na tela
-      tree.setHandleError(this.$swal)
-      // Configura qual função será acionada ao clicar em um nó da árvore
-      tree.setHandleClickFunction(this.handleOnclickFunction)
-      // Ajusta a árvore para utilizar os atributos do select fornecido pelo backend
-      // E configura qual cor vai representar cada classe
-      tree.setAttributesSelectAndColor(this.optionSelect)
-      // Constroi a árvore na div fluxograma
-      tree.build()
-    }, 1000)
+    // Carrega os dados dos atributos(class,resource,duration,factor) do backend
+    this.loadAtributesBackend()
+    // Configura qual função será acionada para mostrar os erros na tela
+    tree.setHandleError(this.$swal)
+    // Configura qual função será acionada ao clicar em um nó da árvore
+    tree.setHandleClickFunction(this.handleOnclickFunction)
+    // Ajusta a árvore para utilizar os atributos do select fornecido pelo backend
+    // E configura qual cor vai representar cada classe
+    tree.setAttributesSelectAndColor(this.optionSelect)
+    // Constroi a árvore na div fluxograma
+    tree.build()
   },
   methods: {
     /**
@@ -165,8 +163,8 @@ export default {
       /*************************************************************************
        * //TODO: Adicionar aqui no futuro código para carregar json do backend
        ************************************************************************/
-      const json = jsonExampleIgnoreSimulationData
-      // const json = jsonExampleLoadFluxograma;
+      // const json = jsonExampleIgnoreSimulationData
+      const json = jsonExampleLoadFluxograma
       // const json = jsonFernando
       /************************************************************************/
 

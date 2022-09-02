@@ -1,6 +1,6 @@
 import * as d3 from "d3";
-import error from "./errosMsgs";
 import history from "./history";
+import error from '@/helpers/error'
 
 const WIDTH = 1000;
 const HEIGHT = 800;
@@ -217,14 +217,16 @@ class D3Tree {
       ]
     };
 
-    if (reset === false && this.json.simulationData.graph.root[0] === "n") {
-      console.log("Json novo");
-      this.readJsonPP(this.json);
-    } else {
-      console.log("JSON modelo antigo ignorando simulationData");
-      this.load();
-    }
+    // TODO validar esse código
+    // if (reset === false && this.json.simulationData.graph.root[0] === "n") {
+    //   console.log("Json novo");
+    //   this.readJsonPP(this.json);
+    // } else {
+    //   throw error.enums.oldJson
+    //   // this.load();
+    // }
 
+    this.readJsonPP(this.json);
     history.saveState(this.data);
   }
 
@@ -626,22 +628,22 @@ class D3Tree {
    */
   removeChildrenNode(d) {
     if (d.depth === 0 || d.depth === 1) {
-      this.msgAlertUser(error.cannotRemoveDefault);
+      this.msgAlertUser(error.enums.cannotRemoveDefault);
       return false;
     }
 
     if (d.data.idBalance > 0) {
-      this.msgAlertUser(error.mustRemoveBalanceBefore);
+      this.msgAlertUser(error.enums.mustRemoveBalanceBefore);
       return false;
     }
 
     if (this.checkIfIsCantRemoveNode(d)) {
-      this.msgAlertUser(error.cannotRemoveLastChild);
+      this.msgAlertUser(error.enums.cannotRemoveLastChild);
       return false;
     }
 
     if (d.children) {
-      this.msgAlertUser(error.cannotRemoveIfHaveChildrens);
+      this.msgAlertUser(error.enums.cannotRemoveIfHaveChildrens);
       return false;
     }
 
@@ -735,8 +737,6 @@ class D3Tree {
    * Adiciona ao nó o tipo balanço, caso as regras de negócio sejam satisfeitas
    */
   changeNodeTypeToBalance(d, id) {
-    console.log(d)
-    console.log(this.balanceClicked)
     const descendants = this.root.descendants();
     let balanceFatherCounter = 0;
     this.counterBalanceClick += 1;
@@ -748,9 +748,10 @@ class D3Tree {
         this.resetNodeSelected(true);
         return false;
       }
-      if(!this.balanceClicked.d) {
-        this.balanceClicked.d = d
-      }
+      //TODO Validate below
+      // if(!this.balanceClicked.d) {
+      //   this.balanceClicked.d = d
+      // }
 
       if (
         d.depth === 0 ||
@@ -758,13 +759,13 @@ class D3Tree {
         this.balanceClicked.d.depth === 0 ||
         this.balanceClicked.d.depth === 1
       ) {
-        this.msgAlertUser(error.cannotAddBalanceInDefaultNodes);
+        this.msgAlertUser(error.enums.cannotAddBalanceInDefaultNodes);
         this.resetNodeSelected(true);
         return false;
       }
 
       if (d.data.resource !== this.balanceClicked.d.data.resource) {
-        this.msgAlertUser(error.cannotHaveBalanceWithDifferentRessources);
+        this.msgAlertUser(error.enums.cannotHaveBalanceWithDifferentRessources);
         this.resetNodeSelected(true);
         return false;
       }
@@ -773,7 +774,7 @@ class D3Tree {
         d.data.idBalance > 0 &&
         d.data.idBalance === this.balanceClicked.d.data.idBalance
       ) {
-        this.msgAlertUser(error.cannotCreateBalanceIfIsAlready);
+        this.msgAlertUser(error.enums.cannotCreateBalanceIfIsAlready);
         this.resetNodeSelected(true);
         return false;
       }
@@ -790,14 +791,14 @@ class D3Tree {
       }
 
       if (this.balanceClicked.d.data.idBalance > 0) {
-        this.msgAlertUser(error.firstClickCannotBeBalance);
+        this.msgAlertUser(error.enums.firstClickCannotBeBalance);
         this.resetNodeSelected(true);
         return false;
       }
 
       if (!this.balanceClicked.d.children) {
         if (!d.children) {
-          this.msgAlertUser(error.mustHaveChildren);
+          this.msgAlertUser(error.enums.mustHaveChildren);
           //console.log("d value: " + d.data.value);
           //console.log("d lastvalue: " + this.balanceClicked.d.data.value);
           this.resetNodeSelected(true);
@@ -805,19 +806,19 @@ class D3Tree {
         }
 
         if (d.children && d.data.value !== this.balanceClicked.d.data.value) {
-          this.msgAlertUser(error.mustStartwithChildren);
+          this.msgAlertUser(error.enums.mustStartwithChildren);
           this.resetNodeSelected(true);
           return false;
         }
       } else {
         if (!d.children) {
-          this.msgAlertUser(error.mixedMustBeDifferent);
+          this.msgAlertUser(error.enums.mixedMustBeDifferent);
           this.resetNodeSelected(true);
           return false;
         }
 
         if (d.data.value === this.balanceClicked.d.data.value) {
-          this.msgAlertUser(error.mixedMustBeDifferent);
+          this.msgAlertUser(error.enums.mixedMustBeDifferent);
           this.resetNodeSelected(true);
           return false;
         }
@@ -839,7 +840,7 @@ class D3Tree {
           d.data.idBalance > 0 &&
           balanceFatherCounter >= 2
         ) {
-          this.msgAlertUser(error.mixedMustBeDifferent);
+          this.msgAlertUser(error.enums.mixedMustBeDifferent);
           this.resetNodeSelected(true);
           return false;
         }
@@ -850,7 +851,7 @@ class D3Tree {
         (d.children.length >= 2 || this.balanceClicked.d.children.length >= 2)
       ) {
         this.msgAlertUser(
-          error.cannotCreateMixBalanceWithFatherWithMore2Childrens
+          error.enums.cannotCreateMixBalanceWithFatherWithMore2Childrens
         );
         this.resetNodeSelected(true);
         return false;
@@ -877,7 +878,7 @@ class D3Tree {
    */
   removeNodeTypeToBalance(d) {
     if (d.data.idBalance <= 0) {
-      this.msgAlertUser(error.isNotBalance);
+      this.msgAlertUser(error.enums.isNotBalance);
       return false;
     }
 
@@ -890,7 +891,7 @@ class D3Tree {
     });
 
     if (count > 2 && d.children) {
-      this.msgAlertUser(error.cannotRemoveFatherBalanceBigger2);
+      this.msgAlertUser(error.enums.cannotRemoveFatherBalanceBigger2);
       return false;
     }
 
@@ -919,18 +920,18 @@ class D3Tree {
 
     // Não é possível incluir novas Arestas ao Vértice raiz
     if (fatherNode.depth === 0) {
-      this.msgAlertUser(error.cannotInclude);
+      this.msgAlertUser(error.enums.cannotInclude);
       return false;
     }
 
     if (!fatherNode.children && fatherType !== newNodeType) {
-      this.msgAlertUser(error.mustIsEqualFather);
+      this.msgAlertUser(error.enums.mustIsEqualFather);
       return false;
     }
 
     //Não é possível incluir novas Arestas ao Vértice balanço sem filhos
     if (fatherNode.data.idBalance > 0 && !fatherNode.children) {
-      this.msgAlertUser(error.cannotAddNodeInBalanceChildren);
+      this.msgAlertUser(error.enums.cannotAddNodeInBalanceChildren);
       return false;
     }
 
@@ -950,7 +951,7 @@ class D3Tree {
 
       // Verifica se é balanço misto
       if (counterIn >= 1 && counterOut >= 1) {
-        this.msgAlertUser(error.cannotAddNodeInMixedBalanceFather);
+        this.msgAlertUser(error.enums.cannotAddNodeInMixedBalanceFather);
         return false;
       }
     }
