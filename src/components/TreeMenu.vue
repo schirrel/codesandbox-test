@@ -11,7 +11,8 @@
         :ripple="true"
       >
         <v-list-item-action>
-          <v-icon>{{ item.icon }}</v-icon>
+          <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
+          <img class="svg-custom-icon" v-else-if="item.iconSvg" :src="item.iconSvg"/>
         </v-list-item-action>
         <v-list-item-content>
           <v-list-item-title>{{ item.text }}</v-list-item-title>
@@ -28,7 +29,8 @@
         :ripple="true"
       >
         <v-list-item-action>
-          <v-icon>{{ item.icon }}</v-icon>
+          <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
+          <img class="svg-custom-icon" v-else-if="item.iconSvg" :src="item.iconSvg"/>
         </v-list-item-action>
         <v-list-item-content>
           <v-list-item-title>{{ item.text }}</v-list-item-title>
@@ -56,6 +58,8 @@
 
 <script>
 import { actionsType } from '../library/D3Tree'
+import mediation from '@/assets/icons/mediation.svg'
+import tripOrigin from '@/assets/icons/trip_origin.svg'
 export default {
   props: ['TypeOfActionSelectedNow', 'mini'],
   data () {
@@ -77,28 +81,28 @@ export default {
       menuFlow: [
         {
           text: 'Atributos',
-          icon: 'library_books',
+          icon: 'mdi-text-box-multiple',
           value: actionsType.edit
         },
         {
           text: 'Childrens',
-          icon: 'mediation',
+          iconSvg: mediation,
           value: actionsType.children
         },
 
         {
           text: 'Entrada',
-          icon: 'arrow_upward',
+          icon: 'mdi-arrow-up',
           value: actionsType.addIn
         },
         {
           text: 'Saída',
-          icon: 'arrow_downward',
+          icon: 'mdi-arrow-down',
           value: actionsType.addOut
         },
         {
           text: 'Excluir',
-          icon: 'close',
+          icon: 'mdi-close',
           value: actionsType.remove
         }
       ],
@@ -108,12 +112,12 @@ export default {
       menuBalance: [
         {
           text: 'Adicionar',
-          icon: 'trip_origin',
+          iconSvg: tripOrigin,
           value: actionsType.addBalance
         },
         {
           text: 'Excluir',
-          icon: 'cancel',
+          icon: 'mdi-close-circle',
           value: actionsType.removeBalance
         }
       ],
@@ -123,27 +127,27 @@ export default {
       menuModel: [
         {
           text: 'Desfazer',
-          icon: 'undo',
+          icon: 'mdi-undo',
           value: actionsType.undo
         },
         {
           text: 'Refazer',
-          icon: 'redo',
+          icon: 'mdi-redo',
           value: actionsType.redo
         },
         {
           text: 'Salvar',
-          icon: 'save',
+          icon: 'mdi-content-save',
           value: actionsType.save
         },
         {
           text: 'Reset',
-          icon: 'refresh',
+          icon: 'mdi-refresh',
           value: actionsType.reset
         },
         {
           text: 'Configurações',
-          icon: 'settings',
+          icon: 'mdi-cog',
           value: actionsType.config
         }
       ]
@@ -190,4 +194,8 @@ export default {
   background-color: #f5f5f5;
 }
 
+.svg-custom-icon {
+  height: 24px;
+  width: 24px;
+}
 </style>

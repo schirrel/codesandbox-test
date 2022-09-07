@@ -5,7 +5,7 @@ const ModuleFederationEnhancedPlugin = require('@schirrel/module-federation-enha
 const dependencies = require('./package.json').dependencies
 
 module.exports = defineConfig({
-  publicPath: process.env.PUBLIC_PATH,
+  publicPath: process.env.VUE_APP_URL,
   transpileDependencies: ['vuetify', 'd3'],
   filenameHashing: false,
   configureWebpack: {
@@ -14,7 +14,8 @@ module.exports = defineConfig({
         name: 'flow',
         filename: 'remoteEntry.js',
         exposes: {
-          './FlowTree': './src/components/FlowTree.vue'
+          './FlowTree': './src/components/FlowTree.vue',
+          './FlowVuetifyConfig': './src/plugins/vuetify.js'
         },
         shared: {
           vue: {

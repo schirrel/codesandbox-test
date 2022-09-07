@@ -1,5 +1,5 @@
 <template>
-  <v-main>
+  <section>
     <TreeMenu
       :TypeOfActionSelectedNow="TypeOfActionSelectedNow"
       :mini="mini"
@@ -19,14 +19,13 @@
       <TreeConfig :config="config" @executeModelCommand="executeModelCommand" />
 
       <TreeChildren
-      :children="children"
-      :TypeOfActionSelectedNow="TypeOfActionSelectedNow"
-      @setTypeClickTree="setTypeClickTree"
-      @confirmEditNode="confirmEditNode"
-    />
-
+        :children="children"
+        :TypeOfActionSelectedNow="TypeOfActionSelectedNow"
+        @setTypeClickTree="setTypeClickTree"
+        @confirmEditNode="confirmEditNode"
+      />
     </v-container>
-  </v-main>
+  </section>
 </template>
 
 <script>
@@ -293,7 +292,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .fluxograma {
   /* border: solid; */
   padding: 0;
@@ -301,9 +300,14 @@ export default {
   font-family: "PT Mono", monospace;
 }
 
-.link {
+::v-deep .link {
   fill: none;
   stroke: #ccc;
   stroke-width: 3px;
+}
+
+section {
+  z-index: 1;
+  position: relative;
 }
 </style>

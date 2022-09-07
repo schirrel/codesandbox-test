@@ -6,7 +6,9 @@
       </v-app-bar>
     </nav>
 
+  <v-main>
     <FlowTree />
+  </v-main>
   </v-app>
 </template>
 
