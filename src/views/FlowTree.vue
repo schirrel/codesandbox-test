@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import FlowTree from '../components/FlowTree'
+import FlowTree from '@/components/shared/FlowTree'
 
 export default {
   components: { FlowTree }

@@ -33,16 +33,17 @@
 import Vue from 'vue'
 import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
+import '@/plugins/sentry'
 
-import jsonExampleLoadFluxograma from '../jsons/jsonFluxograma.json'
-// import jsonExampleIgnoreSimulationData from '../jsons/jsonPlataforma.json'
-// import jsonFernando from '../jsons/jsonFernando.json'
-import TreeMenu from '../components/TreeMenu'
-import TreeModal from '../components/TreeModal'
-import TreeConfig from '../components/TreeConfig'
-import TreeChildren from '../components/TreeChildren'
+import jsonExampleLoadFluxograma from '@/jsons/jsonFluxograma.json'
+// import jsonExampleIgnoreSimulationData from '@/jsons/jsonPlataforma.json'
+// import jsonFernando from '@/jsons/jsonFernando.json'
+import TreeMenu from '@/components/TreeMenu'
+import TreeModal from '@/components/TreeModal'
+import TreeConfig from '@/components/TreeConfig'
+import TreeChildren from '@/components/TreeChildren'
 
-import D3TreeClass, { actionsType, nodesType } from '../library/D3Tree'
+import D3TreeClass, { actionsType, nodesType } from '@/library/D3Tree'
 const tree = new D3TreeClass()
 Vue.use(VueSweetalert2)
 export default {
