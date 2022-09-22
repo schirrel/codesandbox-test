@@ -29,6 +29,11 @@
 </template>
 
 <script>
+
+import Vue from 'vue'
+import VueSweetalert2 from 'vue-sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css'
+
 import jsonExampleLoadFluxograma from '../jsons/jsonFluxograma.json'
 // import jsonExampleIgnoreSimulationData from '../jsons/jsonPlataforma.json'
 // import jsonFernando from '../jsons/jsonFernando.json'
@@ -39,7 +44,7 @@ import TreeChildren from '../components/TreeChildren'
 
 import D3TreeClass, { actionsType, nodesType } from '../library/D3Tree'
 const tree = new D3TreeClass()
-
+Vue.use(VueSweetalert2)
 export default {
   components: { TreeMenu, TreeModal, TreeConfig, TreeChildren },
   data () {

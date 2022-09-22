@@ -10,8 +10,6 @@ import lodash from 'lodash'
 
 import router from './router'
 import db from './db'
-import VueSweetalert2 from 'vue-sweetalert2'
-import 'sweetalert2/dist/sweetalert2.min.css'
 
 Vue.config.productionTip = false
 
@@ -36,7 +34,6 @@ if (process.env.VUE_APP_STAGE !== 'development') {
 
 Vue.use(VueLodash, { name: 'custom', lodash: lodash })
 
-Vue.use(VueSweetalert2)
 Vue.use(storage)
 Vue.use(storage, {
   name: 'ls',
