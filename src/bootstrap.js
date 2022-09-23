@@ -7,12 +7,12 @@ import VueLodash from 'vue-lodash'
 import lodash from 'lodash'
 
 import router from './router'
-import '@/plugins/sentry'
+import { useSenty } from '@/plugins/sentry'
 Vue.config.productionTip = false
 
 console.log('mais-precoce / plugin-flow @ ' + process.env.VUE_APP_STAGE)
 console.log('Version: ' + process.env.VUE_APP_VERSION)
-
+useSenty(router)
 Vue.use(VueLodash, { name: 'custom', lodash: lodash })
 
 Vue.use(storage)

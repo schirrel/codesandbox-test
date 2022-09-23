@@ -33,7 +33,7 @@
 import Vue from 'vue'
 import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
-import '@/plugins/sentry'
+import { useSenty } from '@/plugins/sentry'
 
 import jsonExampleLoadFluxograma from '@/jsons/jsonFluxograma.json'
 // import jsonExampleIgnoreSimulationData from '@/jsons/jsonPlataforma.json'
@@ -46,6 +46,7 @@ import TreeChildren from '@/components/TreeChildren'
 import D3TreeClass, { actionsType, nodesType } from '@/library/D3Tree'
 const tree = new D3TreeClass()
 Vue.use(VueSweetalert2)
+
 export default {
   components: { TreeMenu, TreeModal, TreeConfig, TreeChildren },
   data () {
@@ -67,6 +68,7 @@ export default {
     }
   },
   mounted: function () {
+    useSenty()
     // Carrega os dados dos atributos(class,resource,duration,factor) do backend
     this.loadAtributesBackend()
     // Configura qual função será acionada para mostrar os erros na tela
