@@ -15,7 +15,7 @@ Sentry.init({
   tracesSampleRate: 1.0
 })
 
-export const useSenty = (router) => {
+export const useSentry = (router) => {
   const props = {
     tracingOrigins: ['localhost', window.location.hostname, /^\//]
   }

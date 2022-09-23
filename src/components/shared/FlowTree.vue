@@ -33,7 +33,7 @@
 import Vue from 'vue'
 import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
-import { useSenty } from '@/plugins/sentry'
+import { useSentry } from '@/plugins/sentry'
 
 import jsonExampleLoadFluxograma from '@/jsons/jsonFluxograma.json'
 // import jsonExampleIgnoreSimulationData from '@/jsons/jsonPlataforma.json'
@@ -68,7 +68,7 @@ export default {
     }
   },
   mounted: function () {
-    useSenty()
+    useSentry()
     // Carrega os dados dos atributos(class,resource,duration,factor) do backend
     this.loadAtributesBackend()
     // Configura qual função será acionada para mostrar os erros na tela
