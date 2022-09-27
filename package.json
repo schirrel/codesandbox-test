@@ -1,6 +1,6 @@
 {
   "name": "@mais-precoce/plugin-flow",
-  "version": "0.22.10-alpha.2",
+  "version": "0.22.10-alpha.3",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
