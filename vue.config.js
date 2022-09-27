@@ -11,7 +11,7 @@ module.exports = defineConfig({
   configureWebpack: {
     plugins: [
       new ModuleFederationEnhancedPlugin({
-        name: 'flow',
+        name: 'pluginFlow',
         filename: 'remoteEntry.js',
         exposes: {
           './FlowTree': './src/components/shared/FlowTree.vue',
