@@ -49,6 +49,12 @@ Vue.use(VueSweetalert2)
 
 export default {
   components: { TreeMenu, TreeModal, TreeConfig, TreeChildren },
+  props: {
+    simulation: {
+      type: Object,
+      default: () => jsonExampleLoadFluxograma
+    }
+  },
   data () {
     return {
       optionSelect: {
@@ -191,7 +197,7 @@ export default {
        * //TODO: Adicionar aqui no futuro código para carregar json do backend
        ************************************************************************/
       // const json = jsonExampleIgnoreSimulationData
-      const json = jsonExampleLoadFluxograma
+      const json = this.simulation
       // const json = jsonFernando
       /************************************************************************/
 

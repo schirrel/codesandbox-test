@@ -6,16 +6,19 @@
       </v-app-bar>
     </nav>
 
-  <v-main>
-    <FlowTree />
-  </v-main>
+    <v-main>
+      <FlowTree :simulation="simulation"/>
+    </v-main>
   </v-app>
 </template>
 
 <script>
+import simulation from '@/jsons/default.json'
+
 import FlowTree from '@/components/shared/FlowTree'
 
 export default {
-  components: { FlowTree }
+  components: { FlowTree },
+  data: () => ({ simulation })
 }
 </script>
