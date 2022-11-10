@@ -241,8 +241,8 @@ class D3Tree {
     const svg = d3
       .select('.fluxograma')
       .append('svg')
-      .attr('width', window.innerWidth)
-      .attr('height', window.innerHeight)
+      .attr('width', '100vw')
+      .attr('height', '100vh')
       .call(
         d3.zoom().on('zoom', function () {
           svg.attr('transform', d3.event.transform)
@@ -722,36 +722,6 @@ class D3Tree {
   }
 
   /**
-   * Reseta a variável responsavel por controlar qual foi o primeiro clique no
-   * momento da criação do balanço e redesenha a árvore após o segundo clique
-   */
-  joinBalance (balance1, balance2) {
-    const descendants = this.root.descendants()
-    let newId = 0
-    let target = 0
-
-    if (balance1.data.idBalance > balance2.data.idBalance) {
-      target = balance1.data.idBalance
-      newId = balance2.data.idBalance
-    } else {
-      target = balance2.data.idBalance
-      newId = balance1.data.idBalance
-    }
-
-    descendants.forEach(d => {
-      if (d.data.idBalance === target) d.data.idBalance = newId
-
-      // Corrigi os id após remover um balanço
-      if (d.data.idBalance > target) d.data.idBalance -= 1
-
-      // Copia os dados do segundo clique para todos nós do balanço
-      if (d.data.idBalance === newId) this.copyBalanceData(d, balance1)
-    })
-
-    this.counterBalance -= 1
-  }
-
-  /**
    * Copia os atribuitos do segundo nó clicado para o primeiro nó no momento
    * da criação do balanço
    */
@@ -766,29 +736,35 @@ class D3Tree {
    * Adiciona ao nó o tipo balanço, caso as regras de negócio sejam satisfeitas
    */
   changeNodeTypeToBalance (d, id) {
-    const descendants = this.root.descendants()
-    let balanceFatherCounter = 0
+    if (
+      d.depth === 0 ||
+      d.depth === 1
+    ) {
+      this.msgAlertUser(error.enums.cannotAddBalanceInDefaultNodes)
+      this.resetNodeSelected(true)
+      return false
+    }
+
+    if (d.children && d.children.length > 0 && this.counterBalanceClick === 0) {
+      this.msgAlertUser(error.enums.cannotHaveChildren)
+      this.resetNodeSelected(true)
+      return false
+    }
+
+    if (
+      d.data.idBalance > 0
+    ) {
+      this.msgAlertUser(error.enums.cannotCreateBalanceIfIsAlready)
+      this.resetNodeSelected(true)
+      return false
+    }
+
     this.counterBalanceClick += 1
 
     if (this.counterBalanceClick === 2) {
       this.counterBalanceClick = 0
 
       if (d === this.balanceClicked.d) {
-        this.resetNodeSelected(true)
-        return false
-      }
-      // TODO Validate below
-      // if(!this.balanceClicked.d) {
-      //   this.balanceClicked.d = d
-      // }
-
-      if (
-        d.depth === 0 ||
-        d.depth === 1 ||
-        this.balanceClicked.d.depth === 0 ||
-        this.balanceClicked.d.depth === 1
-      ) {
-        this.msgAlertUser(error.enums.cannotAddBalanceInDefaultNodes)
         this.resetNodeSelected(true)
         return false
       }
@@ -800,27 +776,15 @@ class D3Tree {
       }
 
       if (
-        d.data.idBalance > 0 &&
-        d.data.idBalance === this.balanceClicked.d.data.idBalance
+        d.data.idBalance > 0
       ) {
         this.msgAlertUser(error.enums.cannotCreateBalanceIfIsAlready)
         this.resetNodeSelected(true)
         return false
       }
 
-      if (
-        d.data.idBalance > 0 &&
-        this.balanceClicked.d.data.idBalance > 0 &&
-        d.data.value !== this.balanceClicked.d.data.value
-      ) {
-        // União de balanço
-        this.joinBalance(d, this.balanceClicked.d)
-        this.resetNodeSelected()
-        return true
-      }
-
-      if (this.balanceClicked.d.data.idBalance > 0) {
-        this.msgAlertUser(error.enums.firstClickCannotBeBalance)
+      if (d === this.balanceClicked.d.parent) {
+        this.msgAlertUser(error.enums.cannotAddBalanceBetweenParentAndChildren)
         this.resetNodeSelected(true)
         return false
       }
@@ -828,62 +792,9 @@ class D3Tree {
       if (!this.balanceClicked.d.children) {
         if (!d.children) {
           this.msgAlertUser(error.enums.mustHaveChildren)
-          // console.log("d value: " + d.data.value);
-          // console.log("d lastvalue: " + this.balanceClicked.d.data.value);
           this.resetNodeSelected(true)
           return false
         }
-
-        if (d.children && d.data.value !== this.balanceClicked.d.data.value) {
-          this.msgAlertUser(error.enums.mustStartwithChildren)
-          this.resetNodeSelected(true)
-          return false
-        }
-      } else {
-        if (!d.children) {
-          this.msgAlertUser(error.enums.mixedMustBeDifferent)
-          this.resetNodeSelected(true)
-          return false
-        }
-
-        if (d.data.value === this.balanceClicked.d.data.value) {
-          this.msgAlertUser(error.enums.mixedMustBeDifferent)
-          this.resetNodeSelected(true)
-          return false
-        }
-
-        const target = d.data.idBalance
-        // Conta a quantidade de nós pais do balanço
-        descendants.forEach(d => {
-          if (
-            d.data.idBalance === target &&
-            d.children &&
-            d.children.length > 0
-          ) {
-            balanceFatherCounter += 1
-          }
-        })
-
-        if (
-          d.data.value !== this.balanceClicked.d.data.value &&
-          d.data.idBalance > 0 &&
-          balanceFatherCounter >= 2
-        ) {
-          this.msgAlertUser(error.enums.mixedMustBeDifferent)
-          this.resetNodeSelected(true)
-          return false
-        }
-      }
-
-      if (
-        d.data.value !== this.balanceClicked.d.data.value &&
-        (d.children.length >= 2 || this.balanceClicked.d.children.length >= 2)
-      ) {
-        this.msgAlertUser(
-          error.enums.cannotCreateMixBalanceWithFatherWithMore2Childrens
-        )
-        this.resetNodeSelected(true)
-        return false
       }
 
       if (d.data.idBalance > 0) {
@@ -944,7 +855,6 @@ class D3Tree {
    * Verifica se tem permissão para adicionar um novo nó
    */
   checkIfHavePermission (fatherNode, newNodeType, add) {
-    const descendants = this.root.descendants()
     const fatherType = fatherNode.data.value
 
     // Não é possível incluir novas Arestas ao Vértice raiz
@@ -962,27 +872,6 @@ class D3Tree {
     if (fatherNode.data.idBalance > 0 && !fatherNode.children) {
       this.msgAlertUser(error.enums.cannotAddNodeInBalanceChildren)
       return false
-    }
-
-    // Não pode incluir novas arestas em nó pai de balanço misto
-    if (fatherNode.data.idBalance > 0 && fatherNode.children) {
-      let counterIn = 0
-      let counterOut = 0
-      descendants.forEach(d => {
-        if (d.data.idBalance === fatherNode.data.idBalance) {
-          if (d.data.value === nodesType.in) {
-            counterIn += 1
-          } else {
-            counterOut += 1
-          }
-        }
-      })
-
-      // Verifica se é balanço misto
-      if (counterIn >= 1 && counterOut >= 1) {
-        this.msgAlertUser(error.enums.cannotAddNodeInMixedBalanceFather)
-        return false
-      }
     }
 
     if (fatherNode.children && add) {
