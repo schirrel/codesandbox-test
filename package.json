@@ -1,6 +1,6 @@
 {
   "name": "@mais-precoce/plugin-flow",
-  "version": "0.22.8-dev.1",
+  "version": "0.22.10-alpha.3",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -11,17 +11,16 @@
     "@sentry/tracing": "^7.1.1",
     "@sentry/vue": "^7.1.1",
     "axios": "^0.27.2",
-    "crypto-js": "^4.1.1",
-    "dexie": "^3.2.2",
+    "d3": "4.2.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.3",
     "register-service-worker": "^1.7.2",
     "unix-timestamp": "^1.0.2",
     "vue": "^2.6.14",
-    "vue-gtag": "^1.16.1",
     "vue-localstorage": "^0.6.2",
     "vue-lodash": "^2.1.2",
     "vue-router": "^3.5.1",
+    "vue-sweetalert2": "^2.1.1",
     "vuetify": "^2.6.0"
   },
   "devDependencies": {
@@ -39,6 +38,8 @@
     "sass-loader": "^10.0.0",
     "vue-cli-plugin-vuetify": "~2.4.8",
     "vue-template-compiler": "^2.6.14",
-    "vuetify-loader": "^1.7.0"
+    "vuetify-loader": "^1.7.0",
+    "webpack": "5.74.0",
+    "@schirrel/module-federation-enhanced-plugin": "^1.0.8"
   }
 }
