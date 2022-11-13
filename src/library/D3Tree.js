@@ -638,22 +638,22 @@ class D3Tree {
    */
   removeChildrenNode(d) {
     if (d.depth === 0 || d.depth === 1) {
-      this.msgAlertUser(error.cannotRemoveDefault).bind(this);
+      this.msgAlertUser(error.cannotRemoveDefault);
       return false;
     }
 
     if (d.data.idBalance > 0) {
-      this.msgAlertUser(error.mustRemoveBalanceBefore).bind(this);;
+      this.msgAlertUser(error.mustRemoveBalanceBefore);
       return false;
     }
 
     if (this.checkIfIsCantRemoveNode(d)) {
-      this.msgAlertUser(error.cannotRemoveLastChild).bind(this);;
+      this.msgAlertUser(error.cannotRemoveLastChild);
       return false;
     }
 
     if (d.children) {
-      this.msgAlertUser(error.cannotRemoveIfHaveChildrens).bind(this);;
+      this.msgAlertUser(error.cannotRemoveIfHaveChildrens);
       return false;
     }
 
@@ -726,7 +726,7 @@ class D3Tree {
     }
     if (d.children && d.children.length > 0 && this.counterBalanceClick == 0) {
       {
-        this.msgAlertUser(error.cannotHaveChildren).bind(this);
+        this.msgAlertUser(error.cannotHaveChildren);
         this.resetNodeSelected(true);
         return false;
       }
