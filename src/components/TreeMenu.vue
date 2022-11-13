@@ -1,12 +1,7 @@
 <template>
-  <v-card>
-    <v-navigation-drawer
-      fixed
-      clipped
-      v-model="drawer"
-      :mini-variant="mini"
-      app
-    >
+      <v-navigation-drawer clipped stateless v-model="drawer" absolute>
+
+
       <v-list dense>
         <v-subheader class="mt-2 grey--text text--darken-1">Fluxos</v-subheader>
 
@@ -71,15 +66,6 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-
-    <v-app-bar color="#003399" dense dark fixed clipped-left app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-app-bar-title class="mr-5 align-center">
-        <span class="title">Embrapa</span>
-      </v-app-bar-title>
-      <v-spacer></v-spacer>
-    </v-app-bar>
-  </v-card>
 </template>
 
 <script>
@@ -94,7 +80,7 @@ export default {
        * Variável boleana usada para controlar a abertura do menu
        * true(abre) - false(fecha)
        */
-      drawer: false,
+      drawer: true,
       // mini: false,
       /**
        * Vetor usado para construir o submenu de Fluxos
