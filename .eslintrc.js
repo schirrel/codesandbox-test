@@ -14,5 +14,5 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
   },
-  "ignorePatterns": ["src/views/FlowTree.vue", "src/library/*.js", "src/components/*.vue", "**/shared/**"],
+  "ignorePatterns": ["src/library/D3Tree.js", "**/shared/**", "**/TreeModal.vue"],
 }

@@ -1,7 +1,6 @@
 <template>
       <v-navigation-drawer clipped stateless v-model="drawer" absolute>
 
-
       <v-list dense>
         <v-subheader class="mt-2 grey--text text--darken-1">Fluxos</v-subheader>
 
@@ -69,12 +68,12 @@
 </template>
 
 <script>
-import { actionsType } from "../library/D3Tree";
-import tripOrigin from "@/assets/icons/trip_origin.svg";
+import { actionsType } from '../library/D3Tree'
+import tripOrigin from '@/assets/icons/trip_origin.svg'
 
 export default {
-  props: ["TypeOfActionSelectedNow", "mini"],
-  data() {
+  props: ['TypeOfActionSelectedNow', 'mini'],
+  data () {
     return {
       /**
        * Variável boleana usada para controlar a abertura do menu
@@ -92,72 +91,72 @@ export default {
        */
       menuFlow: [
         {
-          text: "Atributos",
-          icon: "mdi-text-box-multiple",
-          value: actionsType.edit,
+          text: 'Atributos',
+          icon: 'mdi-text-box-multiple',
+          value: actionsType.edit
         },
         {
-          text: "Entrada",
-          icon: "mdi-arrow-up",
-          value: actionsType.addIn,
+          text: 'Entrada',
+          icon: 'mdi-arrow-up',
+          value: actionsType.addIn
         },
         {
-          text: "Saída",
-          icon: "mdi-arrow-down",
-          value: actionsType.addOut,
+          text: 'Saída',
+          icon: 'mdi-arrow-down',
+          value: actionsType.addOut
         },
         {
-          text: "Excluir",
-          icon: "mdi-close",
-          value: actionsType.remove,
-        },
+          text: 'Excluir',
+          icon: 'mdi-close',
+          value: actionsType.remove
+        }
       ],
       /**
        * Vetor usado para construir o submenu de Balanço
        */
       menuBalance: [
         {
-          text: "Adicionar",
+          text: 'Adicionar',
           iconSvg: tripOrigin,
-          value: actionsType.addBalance,
+          value: actionsType.addBalance
         },
         {
-          text: "Excluir",
-          icon: "mdi-close-circle",
-          value: actionsType.removeBalance,
-        },
+          text: 'Excluir',
+          icon: 'mdi-close-circle',
+          value: actionsType.removeBalance
+        }
       ],
       /**
        * Vetor usado para construir o submenu de Modelo
        */
       menuModel: [
         {
-          text: "Desfazer",
-          icon: "mdi-undo",
-          value: actionsType.undo,
+          text: 'Desfazer',
+          icon: 'mdi-undo',
+          value: actionsType.undo
         },
         {
-          text: "Refazer",
-          icon: "mdi-redo",
-          value: actionsType.redo,
+          text: 'Refazer',
+          icon: 'mdi-redo',
+          value: actionsType.redo
         },
         {
-          text: "Salvar",
-          icon: "mdi-content-save",
-          value: actionsType.save,
+          text: 'Salvar',
+          icon: 'mdi-content-save',
+          value: actionsType.save
         },
         {
-          text: "Reset",
-          icon: "mdi-refresh",
-          value: actionsType.reset,
+          text: 'Reset',
+          icon: 'mdi-refresh',
+          value: actionsType.reset
         },
         {
-          text: "Configurações",
-          icon: "mdi-cog",
-          value: actionsType.config,
-        },
-      ],
-    };
+          text: 'Configurações',
+          icon: 'mdi-cog',
+          value: actionsType.config
+        }
+      ]
+    }
   },
   methods: {
     /**
@@ -170,8 +169,8 @@ export default {
      *  - Remove balanço
      *  - Editar propriedades do nó
      **/
-    setTypeOfClick(type) {
-      this.$emit("setTypeClickTree", type);
+    setTypeOfClick (type) {
+      this.$emit('setTypeClickTree', type)
     },
     /**
      * Emiti um evento que executa o tipo de comando selecionado no componente Tree
@@ -181,23 +180,23 @@ export default {
      *  - Salvar
      *  - Resetar
      **/
-    executeModelCommand(type) {
-      this.$emit("executeModelCommand", type);
+    executeModelCommand (type) {
+      this.$emit('executeModelCommand', type)
     },
     /**
      * Aplica a classe 'active' caso seja a opção selecionada no menu
      */
-    isActive(itemValue) {
-      if (this.TypeOfActionSelectedNow === itemValue) return "active";
-      else return "";
-    },
-  },
-};
+    isActive (itemValue) {
+      if (this.TypeOfActionSelectedNow === itemValue) return 'active'
+      else return ''
+    }
+  }
+}
 </script>
 
 <style>
 .active {
-  background-color: #f5f5f5;
+  background-color: #f5f5f5
 }
 .svg-custom-icon {
   height: 24px;

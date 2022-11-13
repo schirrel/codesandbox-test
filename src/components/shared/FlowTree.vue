@@ -24,23 +24,21 @@
 
 
 <script>
-
 import Vue from 'vue'
 import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
+import jsonFernando from '@/jsons/jsonFernando.json'
+import TreeMenu from '@/components/TreeMenu'
+import TreeModal from '@/components/TreeModal'
+import TreeConfig from '@/components/TreeConfig'
+import D3TreeClass, { actionsType, nodesType } from '@/library/D3Tree'
 
+const tree = new D3TreeClass(Vue.swal)
 Vue.use(VueSweetalert2)
 
-import jsonFernando from "@/jsons/jsonFernando.json";
-import TreeMenu from "@/components/TreeMenu";
-import TreeModal from "@/components/TreeModal";
-import TreeConfig from "@/components/TreeConfig";
-import D3TreeClass, { actionsType, nodesType } from "@/library/D3Tree";
-const tree = new D3TreeClass(Vue.swal);
-
-export default  {
+export default {
   components: { TreeMenu, TreeModal, TreeConfig },
-  data() {
+  data () {
     return {
       optionSelect: {
         class: [],
@@ -53,20 +51,20 @@ export default  {
       config: false,
       mini: false,
       TypeOfActionSelectedNow: actionsType.edit
-    };
+    }
   },
-  mounted: function() {
+  mounted: function () {
     // Carrega os dados dos atributos(class,resource,duration,factor) do backend
-    this.loadAtributesBackend();
+    this.loadAtributesBackend()
     // Configura qual função será acionada para mostrar os erros na tela
-    // tree.setHandleError(this.$swal);
+    // tree.setHandleError(this.$swal)
     // Configura qual função será acionada ao clicar em um nó da árvore
-    tree.setHandleClickFunction(this.handleOnclickFunction);
+    tree.setHandleClickFunction(this.handleOnclickFunction)
     // Ajusta a árvore para utilizar os atributos do select fornecido pelo backend
     // E configura qual cor vai representar cada classe
-    tree.setAttributesSelectAndColor(this.optionSelect);
+    tree.setAttributesSelectAndColor(this.optionSelect)
     // Constroi a árvore na div fluxograma
-    tree.build();
+    tree.build()
   },
   methods: {
     /**
@@ -74,31 +72,31 @@ export default  {
      * @param selected representa os dados do nó selecionado
      * @param index representa a identicação do nó selecionado
      */
-    handleOnclickFunction(selected, index) {
+    handleOnclickFunction (selected, index) {
       switch (this.TypeOfActionSelectedNow) {
         case actionsType.addIn:
-          tree.addChildrenNode(selected, index, nodesType.in);
-          break;
+          tree.addChildrenNode(selected, index, nodesType.in)
+          break
         case actionsType.addOut:
-          tree.addChildrenNode(selected, index, nodesType.out);
-          break;
+          tree.addChildrenNode(selected, index, nodesType.out)
+          break
         case actionsType.remove:
-          tree.removeChildrenNode(selected, index);
-          break;
+          tree.removeChildrenNode(selected, index)
+          break
         case actionsType.addBalance:
-          tree.changeNodeTypeToBalance(selected, index);
-          break;
+          tree.changeNodeTypeToBalance(selected, index)
+          break
         case actionsType.removeBalance:
-          tree.removeNodeTypeToBalance(selected, index);
-          break;
+          tree.removeNodeTypeToBalance(selected, index)
+          break
         case actionsType.edit:
-          this.selectedNode = selected;
-          this.modal = true;
+          this.selectedNode = selected
+          this.modal = true
           // Não limpa o nó selecionado caso o modal esteja aberto
-          tree.setModalstate(true);
-          break;
+          tree.setModalstate(true)
+          break
         default:
-          tree.addChildrenNode(selected, index, nodesType.in);
+          tree.addChildrenNode(selected, index, nodesType.in)
       }
     },
 
@@ -108,9 +106,9 @@ export default  {
      * qualquer nó selecionado anteriormente
      * @param type identifica o tipo de clique selecionado
      */
-    setTypeClickTree(type) {
-      this.TypeOfActionSelectedNow = type;
-      tree.resetNodeSelected(true);
+    setTypeClickTree (type) {
+      this.TypeOfActionSelectedNow = type
+      tree.resetNodeSelected(true)
     },
 
     /**
@@ -118,36 +116,36 @@ export default  {
      * Executa um comando de modificação na árvore (redo, undo, save, reset)
      * @param command identifica o tipo de commando executado
      */
-    executeModelCommand(command, param) {
-      console.log(`comando=${command} -> ${param}`);
+    executeModelCommand (command, param) {
+      console.log(`comando=${command} -> ${param}`)
       switch (command) {
         case actionsType.undo:
-          tree.undo();
-          break;
+          tree.undo()
+          break
         case actionsType.redo:
-          tree.redo();
-          break;
+          tree.redo()
+          break
         case actionsType.save:
-          this.saveTreeBackend();
-          break;
+          this.saveTreeBackend()
+          break
         case actionsType.reset:
-          this.removeTreeBackend();
-          break;
+          this.removeTreeBackend()
+          break
         case actionsType.config:
-          this.config = !this.config;
-          break;
+          this.config = !this.config
+          break
         case actionsType.mini:
-          this.mini = !this.mini;
-          break;
+          this.mini = !this.mini
+          break
         case actionsType.orientation:
-          tree.changeOrientationTree(param);
-          break;
+          tree.changeOrientationTree(param)
+          break
         case actionsType.nodeh:
-          tree.changeNodeh(param);
-          break;
+          tree.changeNodeh(param)
+          break
         case actionsType.nodew:
-          tree.changeNodew(param);
-          break;
+          tree.changeNodew(param)
+          break
       }
     },
 
@@ -156,23 +154,23 @@ export default  {
      * Redesenha a árvore e fecha o modal após a edição do nó
      * @param isNotModified não salva o histórico de modificação caso seja true
      */
-    confirmEditNode(isNotModified) {
-      tree.redrawTree(isNotModified);
-      this.modal = false;
-      tree.setModalstate(false);
+    confirmEditNode (isNotModified) {
+      tree.redrawTree(isNotModified)
+      this.modal = false
+      tree.setModalstate(false)
     },
 
     /**
      * Busca no backend as opções de atribuitos disponíveis para os selects do
      * modal e repassa essas informações para o component TreeModal via props
      */
-    loadAtributesBackend() {
+    loadAtributesBackend () {
       /*************************************************************************
        * //TODO: Adicionar aqui no futuro código para carregar json do backend
        ************************************************************************/
-      //const json = jsonExampleIgnoreSimulationData;
-      //const json = jsonExampleLoadFluxograma;
-      const json = jsonFernando;
+      //const json = jsonExampleIgnoreSimulationData
+      //const json = jsonExampleLoadFluxograma
+      const json = jsonFernando
       /************************************************************************/
 
       /**
@@ -190,98 +188,98 @@ export default  {
        * O fluxograma ira carregar os dados do simulationData e gerar fluxograma salvo.
        * Exemplo de json -> jsonExampleLoadFluxograma
        */
-      tree.setJsonFromPP(json);
+      tree.setJsonFromPP(json)
 
       // Carrega os dados do json para gerar os selecteds com as opções fornecidas
       this.loadVectorFromJson(
         json.simulationData.formulas.flows,
         this.optionSelect.factor
-      );
+      )
       this.loadVectorFromJson(
         json.simulationData.formulas.nodes,
         this.optionSelect.duration
-      );
+      )
       this.loadClassFromJson(
         json.simulationData.stagesHierarchy,
         this.optionSelect.class
-      );
+      )
       this.loadResourceFromJson(
         json.simulationData.resources,
         this.optionSelect.resource
-      );
+      )
     },
 
     /**
      * Carrega as opções de fatores e duração do json recebido pela plataforma
      */
-    loadVectorFromJson(from, to) {
-      from.forEach(element => {
+    loadVectorFromJson (from, to) {
+      from.forEach((element) => {
         to.push({
           text: element
-        });
-      });
-      to.sort((a, b) => (a.text > b.text ? 1 : -1));
+        })
+      })
+      to.sort((a, b) => (a.text > b.text ? 1 : -1))
     },
 
     /**
      * Carrega as opções de classes do json recebido pela plataforma
      */
-    loadClassFromJson(from, to) {
+    loadClassFromJson (from, to) {
       for (let item in from) {
         to.push({
           color: from[item].color,
           text: item
-        });
+        })
       }
-      to.sort((a, b) => (a.text > b.text ? 1 : -1));
+      to.sort((a, b) => (a.text > b.text ? 1 : -1))
     },
 
     /**
      * Carrega as opções de recursos do json recebido pela plataforma
      */
-    loadResourceFromJson(from, to) {
+    loadResourceFromJson (from, to) {
       for (let item in from) {
         to.push({
           unit: from[item].unit,
           category: from[item].category,
           text: item
-        });
+        })
       }
-      to.sort((a, b) => (a.text > b.text ? 1 : -1));
+      to.sort((a, b) => (a.text > b.text ? 1 : -1))
     },
 
     /**
      * Salva no backend da aplicação o estado atual árvore construida
      */
-    saveTreeBackend() {
+    saveTreeBackend () {
       /*************************************************************************
        * //TODO: Adicionar aqui no futuro código para salvar árvore no backend
        ************************************************************************/
 
       // Por enquanto esta apenas salvando no localstorage
-      tree.save();
+      tree.save()
 
       // Pega o json convertido no formato P+P para enviar para a plataforma
-      const jsonPP = tree.generateJsonPP();
+      const jsonPP = tree.generateJsonPP()
     },
 
     /**
      * Destroy no backend da aplicação o estado atual árvore construida
      */
-    removeTreeBackend() {
+    removeTreeBackend () {
       /*************************************************************************
        * //TODO: Adicionar aqui no futuro código para exluir árvore no backend
        ************************************************************************/
 
       // Por enquanto esta apenas removendo do localstorage
-      tree.clean();
+      tree.clean()
     }
   }
-};
+}
 </script>
 
 <style scoped>
 ::v-deep circle {
-    cursor: pointer
+  cursor: pointer
 }
 </style>
