@@ -1,10 +1,10 @@
 <template>
   <v-dialog v-model="dialog" :max-width="options.width" @keydown.esc="cancel()">
-    <v-toolbar dark :color="options.color" dense>
-      <v-toolbar-title class="white--text">
+    <v-app-bar dark :color="options.color" dense>
+      <v-app-bar-title class="white--text">
         {{ title }}
-      </v-toolbar-title>
-    </v-toolbar>
+      </v-app-bar-title>
+    </v-app-bar>
     <v-card tile>
       <v-card-text class="px-4 py-2" v-show="!!message" v-html="message" style="text-align: justify;" />
       <v-divider v-show="!!message" />

@@ -14,8 +14,7 @@ module.exports = defineConfig({
         name: 'pluginFlow',
         filename: 'remoteEntry.js',
         exposes: {
-          './FlowTree': './src/components/shared/FlowTree.vue',
-          './FlowVuetifyConfig': './src/plugins/shared/vuetify.js'
+        
         },
         shared: {
           vue: {
