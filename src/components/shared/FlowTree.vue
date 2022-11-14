@@ -16,9 +16,9 @@
 
     <TreeConfig :config="config" @executeModelCommand="executeModelCommand" />
 
-    <v-content>
+    <v-main>
       <div class="fluxograma" ref="fluxograma"></div>
-    </v-content>
+    </v-main>
   </section>
 </template>
 
@@ -33,8 +33,9 @@ import TreeModal from '@/components/TreeModal'
 import TreeConfig from '@/components/TreeConfig'
 import D3TreeClass, { actionsType, nodesType } from '@/library/D3Tree'
 
-const tree = new D3TreeClass(Vue.swal)
 Vue.use(VueSweetalert2)
+
+const tree = new D3TreeClass(Vue.swal)
 
 export default {
   components: { TreeMenu, TreeModal, TreeConfig },
