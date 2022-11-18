@@ -230,9 +230,9 @@ class D3Tree {
   }
 
   /**
-   * Adiciona o SVG na div fluxograma e centraliza a posição da árvore e
-   * habilidade a opção de zoom
-   */
+  * Adiciona o SVG na div fluxograma e centraliza a posição da árvore e
+  * habilidade a opção de zoom
+  */
   createElementBaseForD3() {
     let svg = d3
       .select(".fluxograma")
@@ -267,8 +267,8 @@ class D3Tree {
       .attr("id", "end-arrow")
       .attr("viewBox", "0 -5 10 10")
       .attr("refX", 25) // Distancia da seta em relação a origem
-      .attr("markerWidth", 5)
-      .attr("markerHeight", 5)
+      .attr("markerWidth", 15)
+      .attr("markerHeight", 15)
       .attr("orient", "auto")
       .append("svg:path")
       .attr("d", "M0,-5L10,0L0,5")
@@ -279,8 +279,8 @@ class D3Tree {
       .attr("id", "start-arrow")
       .attr("viewBox", "0 -5 10 10")
       .attr("refX", 25) // Distancia da seta em relação a origem
-      .attr("markerWidth", 5)
-      .attr("markerHeight", 5)
+      .attr("markerWidth", 15)
+      .attr("markerHeight", 15)
       .attr("orient", "auto")
       .append("svg:path")
       .attr("d", "M0,-5L10,0L0,5")
@@ -399,42 +399,37 @@ class D3Tree {
     return color;
   };
 
-  /**
+   /**
    * Muda o preenchimento do nó quando o usuário passa o mouse sobre
    */
-  mouseoverNode = node => {
-    this.hoverLastColor = d3.select(node).style("stroke");
-    this.hoverLastColorClass = d3.select(node).style("fill");
-    // d3.select(node)
-    //     .attr("r", d3.select(node).attr('data-node') ? this.circleSize : (this.circleSize * 80) / 100)
-    //     .style("stroke", "red")
-    //     .style("fill", d3.select(node).attr('data-node') ? "red" : initialColor)
-    d3.select(node)
-      .attr('fill', 'red')
-      .attr('r', this.circleSize)
-      .style('stroke', 'black')
-      .style('stroke-width', '2px')
-      .style('stroke-dasharray', '10,4')
-
-  };
-
-  /**
-   * Limpa o preenchimento do nó quando o usuário tira o mouse do nó
-   */
-  mouseoutNode = (node, i, isBalance) => {
-    if (this.balanceClicked.id === i) return true;
-    if (this.modal) return true;
-
-    let circle = this.circleSize;
-    if (isBalance) circle = (circle * 80) / 100;
-
-    d3.select(node)
-      .attr("fill", this.hoverLastColorClass)
-      .attr("r", circle)
-      .style("stroke", this.hoverLastColor)
-      .style("stroke-width", "4px")
-      .style("stroke-dasharray", "0,0");
-  };
+    mouseoverNode = node => {
+      this.hoverLastColor = d3.select(node).style("stroke");
+      this.hoverLastColorClass = d3.select(node).style("fill");
+      d3.select(node)
+        .attr("fill", "red")
+        .attr("r", this.circleSize)
+        .style("stroke", "black")
+        .style("stroke-width", "2px")
+        .style("stroke-dasharray", "10,4");
+    };
+  
+    /**
+     * Limpa o preenchimento do nó quando o usuário tira o mouse do nó
+     */
+    mouseoutNode = (node, i, isBalance) => {
+      if (this.balanceClicked.id === i) return true;
+      if (this.modal) return true;
+  
+      let circle = this.circleSize;
+      if (isBalance) circle = (circle * 80) / 100;
+  
+      d3.select(node)
+        .attr("fill", this.hoverLastColorClass)
+        .attr("r", circle)
+        .style("stroke", this.hoverLastColor)
+        .style("stroke-width", "4px")
+        .style("stroke-dasharray", "0,0");
+    };
 
   /**
    * Defini o nome do rótulo apresentado em cada nó
@@ -483,8 +478,8 @@ class D3Tree {
   };
 
   /**
-   * Desenha todas as linhas e setas da árvore que conectam os nós
-   */
+  * Desenha todas as linhas e setas da árvore que conectam os nós
+  */
   drawPath() {
     this.links = d3
       .select("svg g.links")
