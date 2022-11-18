@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import simulation from '@/jsons/default.json'
+import simulation from '@/jsons/novoJson.json'
 
 import FlowTree from '@/components/shared/FlowTree'
 

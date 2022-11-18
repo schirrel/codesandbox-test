@@ -33,7 +33,7 @@
 import Vue from 'vue'
 import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
-import { useSentry } from '@/plugins/sentry'
+// import { useSentry } from '@/plugins/sentry'
 
 import jsonExampleLoadFluxograma from '@/jsons/jsonFluxograma.json'
 // import jsonExampleIgnoreSimulationData from '@/jsons/jsonPlataforma.json'
@@ -43,7 +43,7 @@ import TreeModal from '@/components/TreeModal'
 import TreeConfig from '@/components/TreeConfig'
 import TreeChildren from '@/components/TreeChildren'
 
-import D3TreeClass, { actionsType, nodesType } from '@/library/D3Tree'
+import D3TreeClass, { actionsType, nodesType } from '@/library/NewD3Tree'
 const tree = new D3TreeClass()
 Vue.use(VueSweetalert2)
 
@@ -74,7 +74,8 @@ export default {
     }
   },
   mounted: function () {
-    useSentry()
+    console.log(this.simulation)
+    // useSentry()
     // Carrega os dados dos atributos(class,resource,duration,factor) do backend
     this.loadAtributesBackend()
     // Configura qual função será acionada para mostrar os erros na tela
@@ -83,7 +84,7 @@ export default {
     tree.setHandleClickFunction(this.handleOnclickFunction)
     // Ajusta a árvore para utilizar os atributos do select fornecido pelo backend
     // E configura qual cor vai representar cada classe
-    tree.setAttributesSelectAndColor(this.optionSelect)
+    // tree.setAttributesSelectAndColor(this.optionSelect)
     // Constroi a árvore na div fluxograma
     tree.build()
   },
@@ -219,22 +220,22 @@ export default {
       tree.setJsonFromPP(json)
 
       // Carrega os dados do json para gerar os selecteds com as opções fornecidas
-      this.loadVectorFromJson(
-        json.simulationData.formulas.flows,
-        this.optionSelect.factor
-      )
-      this.loadVectorFromJson(
-        json.simulationData.formulas.nodes,
-        this.optionSelect.duration
-      )
-      this.loadClassFromJson(
-        json.simulationData.stagesHierarchy,
-        this.optionSelect.class
-      )
-      this.loadResourceFromJson(
-        json.simulationData.resources,
-        this.optionSelect.resource
-      )
+      // this.loadVectorFromJson(
+      //   json.simulationData.formulas.flows,
+      //   this.optionSelect.factor
+      // )
+      // this.loadVectorFromJson(
+      //   json.simulationData.formulas.nodes,
+      //   this.optionSelect.duration
+      // )
+      // this.loadClassFromJson(
+      //   json.simulationData.stagesHierarchy,
+      //   this.optionSelect.class
+      // )
+      // this.loadResourceFromJson(
+      //   json.simulationData.resources,
+      //   this.optionSelect.resource
+      // )
     },
 
     /**

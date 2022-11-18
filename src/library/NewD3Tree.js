@@ -1,7 +1,7 @@
 import * as d3 from 'd3'
 import history from './history'
 import error from '@/helpers/error'
-
+import { mountTree } from '@/helpers/convertJsonToD3Model'
 const WIDTH = 1000
 const HEIGHT = 800
 // todo validar pq tinha isso
@@ -193,7 +193,7 @@ class D3Tree {
    * Prepara os dados utilizados para desenhar a árvore, caso tenha algo salvo
    * no localstorage esse dado sera carregado
    */
-  inicializeData (reset) {
+  async inicializeData (reset) {
     this.data = {
       name: 'A1',
       description: DEFAULT.description,
@@ -229,7 +229,9 @@ class D3Tree {
     //   // this.load();
     // }
 
-    this.readJsonPP(this.json)
+    // this.readJsonPP(this.json)
+    this.data = await mountTree(this.json)
+    console.log('data', this.data)
     history.saveState(this.data)
   }
 
@@ -294,8 +296,9 @@ class D3Tree {
   /**
    * Constroi o modelo inicial da árvore
    */
-  build () {
-    this.inicializeData()
+  async build () {
+    console.log('load json', this.json)
+    await this.inicializeData()
     this.createElementBaseForD3()
     this.createArrowModelToPath()
     this.drawTree()
@@ -340,38 +343,37 @@ class D3Tree {
    * Seletores usados para construir e mudar elementos da árvore D3.js
    */
   selectArrowSide (d) {
-    console.log(d)
-    return d.target.data.value === nodesType.out
+    return d.target.data.flow.type === nodesTypeName.in
       ? 'url(#end-arrow)'
       : 'url(#start-arrow)'
   }
 
   selectStrokeColorPath (d) {
-    return d.target.data.value === nodesType.out
+    return d.target.data.flow.type === nodesTypeName.in
       ? this.circleColor0
       : this.circleColor1
   }
 
   selectX1ByType (d) {
-    return d.target.data.value === nodesType.in
+    return d.target.data.flow.type === nodesTypeName.out
       ? this.orientation.x(d.target)
       : this.orientation.x(d.source)
   }
 
   selectY1ByType (d) {
-    return d.target.data.value === nodesType.in
+    return d.target.data.flow.type === nodesTypeName.out
       ? this.orientation.y(d.target)
       : this.orientation.y(d.source)
   }
 
   selectX2ByType (d) {
-    return d.target.data.value === nodesType.in
+    return d.target.data.flow.type === nodesTypeName.out
       ? this.orientation.x(d.source)
       : this.orientation.x(d.target)
   }
 
   selectY2ByType (d) {
-    return d.target.data.value === nodesType.in
+    return d.target.data.flow.type === nodesTypeName.out
       ? this.orientation.y(d.source)
       : this.orientation.y(d.target)
   }
@@ -385,7 +387,8 @@ class D3Tree {
   }
 
   selectColorByType (d) {
-    return d.data.value === nodesType.out
+    console.log(d.data.flow)
+    return d.data.flow && d.data.flow.type === nodesTypeName.in
       ? this.circleColor0
       : this.circleColor1
   }
@@ -394,14 +397,15 @@ class D3Tree {
    * Seleciona a cor do nó de acordo com o atribuito classe
    */
   selectFillColorNodeByClass (d) {
-    let color = 'white'
-    this.optionSelect.class.forEach(function (item) {
-      if (item.text === d.data.class) {
-        color = item.color
-        return true
-      }
-    })
-    return color
+    // let color = 'white'
+    // this.optionSelect.class.forEach(function (item) {
+    //   if (item.text === d.data.class) {
+    //     color = item.color
+    //     return true
+    //   }
+    // })
+    // return color
+    return 'white'
   };
 
   /**
@@ -440,13 +444,13 @@ class D3Tree {
    * Defini o nome do rótulo apresentado em cada nó
    */
   selectLabelOfNode (d) {
-    if (d.data.idBalance > this.highestIdBalance) { this.highestIdBalance = d.data.idBalance }
+    // if (d.data.idBalance > this.highestIdBalance) { this.highestIdBalance = d.data.idBalance }
 
-    if (d.data.idBalance > 0 && !d.data.name) return d.data.idBalance
+    // if (d.data.idBalance > 0 && !d.data.name) return d.data.idBalance
 
-    if (d.data.idBalance > 0) { return d.data.name.substring(0, this.sizeLabel - 1) }
+    // if (d.data.idBalance > 0) { return d.data.name }
 
-    return d.data.name.substring(0, this.sizeLabel)
+    return d.data.name
   };
 
   /**
@@ -454,7 +458,7 @@ class D3Tree {
    */
   selectXLabel (d) {
     let shift = 0
-    if (d.data.idBalance > 0) { shift = d.data.name.substring(0, this.sizeLabel - 1).length * 4 } else shift = d.data.name.substring(0, this.sizeLabel).length * 4
+    if (d.data.idBalance > 0) { shift = d.data.name.length * 4 } else shift = d.data.name.length * 4
 
     return shift === 0
       ? this.orientation.x(d) - 5
@@ -1230,94 +1234,96 @@ class D3Tree {
    * Converte o JSON da P+P para formato do D3.js
    */
   readJsonPP (json) {
-    // let simulationData = JSON.parse(json).simulationData;
-    const simulationData = json.simulationData
-    const newFlow = []
+    // // let simulationData = JSON.parse(json).simulationData;
+    // const simulationData = json.simulationData
+    // const newFlow = []
 
-    const nodeRoot = simulationData.graph.nodes[simulationData.graph.root]
-    const dataRoot = simulationData.graph.root.split('_')
+    // const nodeRoot = simulationData.graph.nodes[simulationData.graph.root]
+    // const dataRoot = simulationData.graph.root.split('_')
 
-    // Para cada fluxo no json
-    Object.keys(simulationData.graph.flows).forEach(key => {
-      // Le os dados separado e agrupa em cada objeto
-      this.readFlow(simulationData, key, newFlow)
-    })
+    // // Para cada fluxo no json
+    // Object.keys(simulationData.graph.flows).forEach(key => {
+    //   // Le os dados separado e agrupa em cada objeto
+    //   this.readFlow(simulationData, key, newFlow)
+    // })
 
-    // Adiciona o nó raiz no inicio do vetor
-    newFlow.unshift({
-      id: dataRoot.join('_'),
-      idBalance: 0,
-      parent: '',
-      name: dataRoot[2],
-      description: dataRoot[3],
-      value: 1,
-      class: nodeRoot.stages[0],
-      resource: DEFAULT.resource,
-      unit: DEFAULT.unit,
-      category: DEFAULT.category,
-      duration: nodeRoot.formula,
-      factor: DEFAULT.factor
-    })
+    // // Adiciona o nó raiz no inicio do vetor
+    // newFlow.unshift({
+    //   id: dataRoot.join('_'),
+    //   idBalance: 0,
+    //   parent: '',
+    //   name: dataRoot[2],
+    //   description: dataRoot[3],
+    //   value: 1,
+    //   class: nodeRoot.stages[0],
+    //   resource: DEFAULT.resource,
+    //   unit: DEFAULT.unit,
+    //   category: DEFAULT.category,
+    //   duration: nodeRoot.formula,
+    //   factor: DEFAULT.factor
+    // })
 
-    const invertFlow = []
-    const invertParent = []
+    // const invertFlow = []
+    // const invertParent = []
 
-    newFlow.forEach(function (node) {
-      let notHaveParent = false
-      for (let i = 0; i < newFlow.length; i++) {
-        if (node.parent === newFlow[i].id || node.parent === '') {
-          notHaveParent = true
-        }
-      }
+    // newFlow.forEach(function (node) {
+    //   let notHaveParent = false
+    //   for (let i = 0; i < newFlow.length; i++) {
+    //     if (node.parent === newFlow[i].id || node.parent === '') {
+    //       notHaveParent = true
+    //     }
+    //   }
 
-      if (!notHaveParent) {
-        const resp = invertParent.find(function (fatherId) {
-          if (fatherId === node.parent) {
-            return true
-          } else {
-            return false
-          }
-        })
+    //   if (!notHaveParent) {
+    //     const resp = invertParent.find(function (fatherId) {
+    //       if (fatherId === node.parent) {
+    //         return true
+    //       } else {
+    //         return false
+    //       }
+    //     })
 
-        if (
-          node.value === 0 &&
-          node.parentData.newType === 1 &&
-          resp === undefined
-        ) {
-          invertParent.push(node.parent)
+    //     if (
+    //       node.value === 0 &&
+    //       node.parentData.newType === 1 &&
+    //       resp === undefined
+    //     ) {
+    //       invertParent.push(node.parent)
 
-          invertFlow.push({
-            ...node,
-            id: node.parent,
-            idBalance: node.parentData.idBalance,
-            parent: node.id,
-            parentData: node.parentData,
-            name: node.parentData.name,
-            description: node.parentData.description,
-            value: node.parentData.newType,
-            unit: node.unit,
-            // category: value.resource.category,
-            class: node.parentData.stages,
-            duration: node.parentData.duration
-            // factor: factor
-          })
-        } else {
-          invertFlow.push(node)
-        }
-      } else {
-        invertFlow.push(node)
-      }
-    })
+    //       invertFlow.push({
+    //         ...node,
+    //         id: node.parent,
+    //         idBalance: node.parentData.idBalance,
+    //         parent: node.id,
+    //         parentData: node.parentData,
+    //         name: node.parentData.name,
+    //         description: node.parentData.description,
+    //         value: node.parentData.newType,
+    //         unit: node.unit,
+    //         // category: value.resource.category,
+    //         class: node.parentData.stages,
+    //         duration: node.parentData.duration
+    //         // factor: factor
+    //       })
+    //     } else {
+    //       invertFlow.push(node)
+    //     }
+    //   } else {
+    //     invertFlow.push(node)
+    //   }
+    // })
 
-    // console.log("########################### -> Flow Antes");
-    // console.log(newFlow);
-    // console.log("########################### -> InvertFlow Antes");
-    // console.log(invertFlow);
+    // // console.log("########################### -> Flow Antes");
+    // // console.log(newFlow);
+    // // console.log("########################### -> InvertFlow Antes");
+    // // console.log(invertFlow);
 
-    const hierarchyFlow = this.getNestedChildren(invertFlow, '')
-    // console.log(hierarchyFlow[0]);
+    // const hierarchyFlow = this.getNestedChildren(invertFlow, '')
+    // // console.log(hierarchyFlow[0]);
 
-    this.data = hierarchyFlow[0]
+    // this.data = hierarchyFlow[0]
+
+    this.data = mountTree(this.json)
     this.redrawTree(true)
   }
 

@@ -1,0 +1,244 @@
+{
+    "node": [
+        {
+            "code": "N01",
+            "name": "Nó 01",
+            "formula": "PESO#MATRIZES + PRECO_PESO#NULIPARAS + PRECO_ARROBA#MATRIZES + CARCACA#MATRIZES + PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA",
+            "description": "<p>Descrição</p>",
+            "stage": "62b86017737735b773d7c768"
+        },
+        {
+            "code": "N02",
+            "name": "Nó 02",
+            "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA",
+            "description": "<p>Descrição</p>",
+            "stage": "62b86017737735b773d7c768"
+        },
+        {
+            "code": "N03",
+            "name": "Nó 03",
+            "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA",
+            "description": "<p>Descrição</p>",
+            "stage": "62b86017737735b773d7c768"
+        },
+        {
+            "code": "N04",
+            "name": "Nó 04",
+            "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA",
+            "description": "<p>Descrição</p>",
+            "stage": "62b86017737735b773d7c768"
+        },
+        {
+            "code": "N05",
+            "name": "Nó 05",
+            "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA",
+            "description": "<p>Descrição</p>",
+            "stage": "62b86017737735b773d7c768"
+        },
+        {
+            "code": "N06",
+            "name": "Nó 06",
+            "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA",
+            "description": "<p>Descrição</p>",
+            "stage": "62b86017737735b773d7c768"
+        },
+        {
+            "code": "N07",
+            "name": "Nó 07",
+            "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA",
+            "description": "<p>Descrição</p>",
+            "stage": "62b86017737735b773d7c768"
+        },
+        {
+            "code": "N08",
+            "name": "Nó 08",
+            "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA",
+            "description": "<p>Descrição</p>",
+            "stage": "62b86017737735b773d7c768"
+        },
+        {
+            "code": "N09",
+            "name": "Nó 09",
+            "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA",
+            "description": "<p>Descrição</p>",
+            "stage": "62b86017737735b773d7c768"
+        },
+        {
+            "code": "N10",
+            "name": "Nó 10",
+            "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA",
+            "description": "<p>Descrição</p>",
+            "stage": "62b86017737735b773d7c768"
+        },
+        {
+            "code": "N11",
+            "name": "Nó 11",
+            "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA",
+            "description": "<p>Descrição</p>",
+            "stage": "62b86017737735b773d7c768"
+        },
+        {
+            "code": "N12",
+            "name": "Nó 12",
+            "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA",
+            "description": "<p>Descrição</p>",
+            "stage": "62b86017737735b773d7c768"
+        }
+    ],
+    "flow": [
+        {
+            "type": "Produção",
+            "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
+            "nodeIn": "N01",
+            "nodeOut": "N02",
+            "resource": "62b86017737735b773d7c768"
+        },
+        {
+            "type": "Produção",
+            "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
+            "nodeIn": "N02",
+            "nodeOut": "N03",
+            "resource": "62b86017737735b773d7c768"
+        },
+        {
+            "type": "Produção",
+            "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
+            "nodeIn": "N02",
+            "nodeOut": "N04",
+            "resource": "62b86017737735b773d7c768"
+        },
+        {
+            "type": "Produção",
+            "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
+            "nodeIn": "N03",
+            "nodeOut": "N05",
+            "resource": "62b86017737735b773d7c768"
+        },
+        {
+            "type": "Tratamento",
+            "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
+            "nodeIn": "N03",
+            "nodeOut": "N06",
+            "resource": "62b86017737735b773d7c768"
+        },
+        {
+            "type": "Produção",
+            "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
+            "nodeIn": "N04",
+            "nodeOut": "N07",
+            "resource": "62b86017737735b773d7c768"
+        },
+        {
+            "type": "Tratamento",
+            "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
+            "nodeIn": "N04",
+            "nodeOut": "N08",
+            "resource": "62b86017737735b773d7c768"
+        },
+        {
+            "type": "Tratamento",
+            "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
+            "nodeIn": "N08",
+            "nodeOut": "N09",
+            "resource": "62b86017737735b773d7c768"
+        },
+        {
+            "type": "Tratamento",
+            "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
+            "nodeIn": "N09",
+            "nodeOut": "N10",
+            "resource": "62b86017737735b773d7c768"
+        },
+        {
+            "type": "Tratamento",
+            "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
+            "nodeIn": "N10",
+            "nodeOut": "N11",
+            "resource": "62b86017737735b773d7c768"
+        },
+        {
+            "type": "Produção",
+            "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
+            "nodeIn": "N10",
+            "nodeOut": "N12",
+            "resource": "62b86017737735b773d7c768"
+        }
+    ],
+    "parameter": [
+        {
+            "name": "Categoria 1",
+            "parameter": [
+                {
+                    "code": "PESO#MATRIZES",
+                    "name": "Peso das matrizes",
+                    "description": "Peso das matrizes",
+                    "unit": "kg",
+                    "minimum": 100,
+                    "maximum": 1500,
+                    "standard": 600,
+                    "step": 50,
+                    "fixed": false,
+                    "internal": false,
+                    "order": 1
+                },
+                {
+                    "code": "VAGAO_MISTURADOR#VIDA_UTIL",
+                    "name": "Vida útil do vagão misturador",
+                    "description": "Vida útil do vagão misturador",
+                    "unit": "ano",
+                    "minimum": 1,
+                    "maximum": 10,
+                    "standard": 5,
+                    "step": 1,
+                    "fixed": false,
+                    "internal": false,
+                    "order": 1
+                },
+                {
+                    "code": "VAGAO_MISTURADOR#PRECO",
+                    "name": "Preço do vagão misturador",
+                    "description": "Preço do vagão misturador",
+                    "unit": "R$",
+                    "minimum": 20000,
+                    "maximum": 30000,
+                    "standard": 25000,
+                    "step": 500,
+                    "fixed": false,
+                    "internal": false,
+                    "order": 1
+                }
+            ]
+        },
+        {
+            "name": "Categoria 2",
+            "parameter": [
+                {
+                    "code": "VAGAO_MISTURADOR#VIDA_UTIL",
+                    "name": "Vida útil do vagão misturador",
+                    "description": "Vida útil do vagão misturador",
+                    "unit": "ano",
+                    "minimum": 1,
+                    "maximum": 10,
+                    "standard": 5,
+                    "step": 1,
+                    "fixed": false,
+                    "internal": false,
+                    "order": 1
+                },
+                {
+                    "code": "VAGAO_MISTURADOR#PRECO",
+                    "name": "Preço do vagão misturador",
+                    "description": "Preço do vagão misturador",
+                    "unit": "R$",
+                    "minimum": 20000,
+                    "maximum": 30000,
+                    "standard": 25000,
+                    "step": 500,
+                    "fixed": false,
+                    "internal": false,
+                    "order": 1
+                }
+            ]
+        }
+    ]
+}
