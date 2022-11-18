@@ -25,6 +25,7 @@
         @confirmEditNode="confirmEditNode"
       />
     </v-container>
+    <TreeNewNodeModal ref="newNodeItem" />
   </section>
 </template>
 
@@ -42,13 +43,14 @@ import TreeMenu from '@/components/TreeMenu'
 import TreeModal from '@/components/TreeModal'
 import TreeConfig from '@/components/TreeConfig'
 import TreeChildren from '@/components/TreeChildren'
+import TreeNewNodeModal from '@/components/TreeNewNodeModal'
 
-import D3TreeClass, { actionsType, nodesType } from '@/library/NewD3Tree'
+import D3TreeClass, { actionsType, nodesType, nodesTypeName } from '@/library/NewD3Tree'
 const tree = new D3TreeClass()
 Vue.use(VueSweetalert2)
 
 export default {
-  components: { TreeMenu, TreeModal, TreeConfig, TreeChildren },
+  components: { TreeMenu, TreeModal, TreeConfig, TreeChildren, TreeNewNodeModal },
   props: {
     simulation: {
       type: Object,
@@ -97,10 +99,15 @@ export default {
     handleOnclickFunction (selected, index) {
       switch (this.TypeOfActionSelectedNow) {
         case actionsType.addIn:
-          tree.addChildrenNode(selected, index, nodesType.in, true)
+          this.$refs.newNodeItem.open().then((code) => {
+            tree.addChildrenNode(selected, index, nodesTypeName.in, code)
+          })
+
           break
         case actionsType.addOut:
-          tree.addChildrenNode(selected, index, nodesType.out, true)
+          this.$refs.newNodeItem.open().then((code) => {
+            tree.addChildrenNode(selected, index, nodesTypeName.out, code)
+          })
           break
         case actionsType.remove:
           tree.removeChildrenNode(selected, index)

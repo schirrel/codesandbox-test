@@ -32,9 +32,14 @@ export const nodesType = {
   out: 0
 }
 
-const nodesTypeName = {
+export const nodesTypeName = {
   in: 'Tratamento',
   out: 'Produção'
+}
+
+const nodeTypes = {
+  isIn: (node) => node === 'Tratamento' || node === 1,
+  isOut: (node) => node === 'Produção' || node === 0
 }
 
 const DEFAULT = {
@@ -387,7 +392,6 @@ class D3Tree {
   }
 
   selectColorByType (d) {
-    console.log(d.data.flow)
     return d.data.flow && d.data.flow.type === nodesTypeName.in
       ? this.circleColor0
       : this.circleColor1
@@ -591,51 +595,23 @@ class D3Tree {
    * Adiciona um novo nó filho ao nó selecionado
    */
   addChildrenNode (selected, i, nodeType, add) {
+    console.log(nodeTypes)
+    debugger
     if (!this.checkIfHavePermission(selected, nodeType)) {
       return false
     }
 
-    let newNodeData
-
-    const obj = {
+    const newNodeData = {
       children: [],
-      value: nodeType,
-      idBalance: 0,
       name: add,
       description: '',
-      class: DEFAULT.class,
       resource: selected.data.resource,
-      unit: selected.data.unit,
-      category: selected.data.category,
-      duration: DEFAULT.duration,
-      factor: DEFAULT.factor
-      // TODO VALIDAR FERNANDO ADICIONADO POR IGOR
-      // class: "(nenhuma)",
-      // resource: "Bezerras desmamadas",
-      // unit: "cab",
-      // category: "BOVINOS",
-      // duration: "0",
-      // factor: "1"
-
-    }
-    if (add === true) {
-      newNodeData = {
-        children: [],
-        value: nodeType,
-        idBalance: 0,
-        name: '',
-        description: '',
-        class: DEFAULT.class,
+      flow: {
+        type: nodeType,
         resource: selected.data.resource,
-        unit: selected.data.unit,
-        category: selected.data.category,
-        duration: DEFAULT.duration,
-        factor: DEFAULT.factor
+        nodeIn: nodeType === nodesType.in ? selected.data.code : '',
+        nodeOn: nodeType !== nodesType.in ? '' : selected.data.code
       }
-    } else {
-      // futuramente adicionar estrutura para guardar novos modelos de nós
-      // atualmente trabalhando apenas com um nó generico para teste
-      newNodeData = obj
     }
 
     // Cria um novo nó com base em newNodeData usando d3.hierarchy()
@@ -860,7 +836,7 @@ class D3Tree {
    * Verifica se tem permissão para adicionar um novo nó
    */
   checkIfHavePermission (fatherNode, newNodeType, add) {
-    const fatherType = fatherNode.data.value
+    const fatherType = fatherNode.data.flow.type
 
     // Não é possível incluir novas Arestas ao Vértice raiz
     if (fatherNode.depth === 0) {

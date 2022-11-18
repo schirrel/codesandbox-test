@@ -1,0 +1,76 @@
+<template>
+  <v-row justify="center">
+    <v-dialog v-model="dialog" persistent max-width="390">
+      <v-card>
+        <v-card-title class="text-h5">
+          Primeiramente é necessário criar um
+          <strong> código identificador </strong> para o nó.
+        </v-card-title>
+        <v-card-text>
+              <v-form v-model="valid" ref="form">
+          <v-text-field
+            label="code"
+            v-model="newNode.code"
+            :rules="[rules.required, rules.counter, rules.min,  rules.alphanumericUnderscore]"
+          />
+              </v-form>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" text @click="cancel">
+            Cancelar
+          </v-btn>
+          <v-btn color="green darken-1" text @click="submit">
+            Criar
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-row>
+</template>
+<script>
+export default {
+  data () {
+    return {
+      valid: false,
+      dialog: false,
+      newNode: {
+        code: ''
+      },
+      rules: {
+        required: value => !!value || 'Obrigatorio.',
+        counter: value => value.length <= 6 || 'Máximo de 6 digitos',
+        min: value => value.length > 2 || 'Mínimo de 3 digitos',
+        alphanumericUnderscore: value => {
+          const pattern = /^\w+$/
+          return pattern.test(value) || 'Somente números e letras.'
+        }
+      }
+    }
+  },
+  methods: {
+    open () {
+      this.dialog = true
+      this.newNode = {
+        code: ''
+      }
+
+      return new Promise((resolve, reject) => {
+        this.resolve = resolve
+        this.reject = reject
+      })
+    },
+    submit () {
+      const validate = this.$refs.form.validate()
+      if (validate) {
+        this.resolve(this.newNode.code)
+        this.dialog = false
+      }
+    },
+    cancel () {
+      this.reject(false)
+      this.dialog = false
+    }
+  }
+}
+</script>
