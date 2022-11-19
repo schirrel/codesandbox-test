@@ -154,7 +154,7 @@ class D3Tree {
     //   this.readJsonPP(this.json);
     // } else {
     //   throw error.enums.oldJson
-    //   // this.load();
+    // this.load()
     // }
 
     // this.readJsonPP(this.json)
@@ -532,7 +532,7 @@ class D3Tree {
       type: nodeType,
       resource: selected.data.resource,
       nodeIn: nodeTypes.isProducaoSaida(nodeType) ? selected.data.code : add,
-      nodeOn: nodeTypes.isProducaoSaida(nodeType) ? add : selected.data.code
+      nodeOut: nodeTypes.isProducaoSaida(nodeType) ? add : selected.data.code
     }
     console.log(flow)
 

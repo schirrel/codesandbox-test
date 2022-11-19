@@ -152,6 +152,22 @@ export default {
      * Atualiza os valores do nó com os novos valores do input
      **/
     saveChangesInput () {
+      // atualizar referencia do code nos flows e no children
+      if (this.selectedNodeModel.data.code !== this.edit.code) {
+        if (this.selectedNodeModel.data.flow.nodeIn === this.selectedNodeModel.data.code) {
+          this.selectedNodeModel.data.flow.nodeIn = this.edit.code
+        } else {
+          this.selectedNodeModel.data.flow.nodeOut = this.edit.code
+        }
+        this.selectedNodeModel.data.children.forEach(each => {
+          if (each.flow.nodeIn === this.selectedNodeModel.data.code) {
+            each.flow.nodeIn = this.edit.code
+          } else {
+            each.flow.nodeOut = this.edit.code
+          }
+        })
+      }
+
       this.selectedNodeModel.data.code = this.edit.code
       this.selectedNodeModel.data.name = this.edit.name
       this.selectedNodeModel.data.description = this.edit.description
@@ -162,13 +178,13 @@ export default {
 
       // Busca o objeto recurso escolhido para pegar as propriedades
       // unit e category com base na escolha do usuário
-      const resourceName = this.edit.resource
-      const resourceData = this.optionSelect.resource.find(function (item) {
-        return (item.text === resourceName)
-      })
+      // const resourceName = this.edit.resource
+      // const resourceData = this.optionSelect.resource.find(function (item) {
+      //   return (item.text === resourceName)
+      // })
 
-      this.selectedNodeModel.data.unit = resourceData.unit
-      this.selectedNodeModel.data.category = resourceData.category
+      // this.selectedNodeModel.data.unit = resourceData.unit
+      // this.selectedNodeModel.data.category = resourceData.category
       this.$emit('saveChangesInput', this.selectedNodeModel)
     }
   }
