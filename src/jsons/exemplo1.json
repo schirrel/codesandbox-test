@@ -15,15 +15,15 @@
             "stage": ""
         },
         {
-            "code": "ArbM",
-            "name": "Nó ArbM",
+            "code": "VgAh",
+            "name": "Nó VgAh",
             "formula": "",
             "description": "",
             "stage": ""
         },
         {
-            "code": "ArbM2",
-            "name": "Nó ArbM2",
+            "code": "VgAh2",
+            "name": "Nó VgAh2",
             "formula": "",
             "description": "",
             "stage": ""
@@ -36,8 +36,8 @@
             "stage": ""
         },
         {
-            "code": "VgAh",
-            "name": "Nó VgAh",
+            "code": "VgAh3",
+            "name": "Nó VgAh3",
             "formula": "",
             "description": "",
             "stage": ""
@@ -50,36 +50,8 @@
             "stage": ""
         },
         {
-            "code": "MtsoR",
-            "name": "Nó MtsoR",
-            "formula": "",
-            "description": "",
-            "stage": ""
-        },
-        {
-            "code": "PwkTb",
-            "name": "Nó PwkTb",
-            "formula": "",
-            "description": "",
-            "stage": ""
-        },
-        {
             "code": "CryiW",
             "name": "Nó CryiW",
-            "formula": "",
-            "description": "",
-            "stage": ""
-        },
-        {
-            "code": "Etfow",
-            "name": "Nó Etfow",
-            "formula": "",
-            "description": "",
-            "stage": ""
-        },
-        {
-            "code": "tswPe",
-            "name": "Nó tswPe",
             "formula": "",
             "description": "",
             "stage": ""
@@ -92,65 +64,47 @@
             "nodeIn": "A1",
             "nodeOut": "B1",
             "resource": ""
-        },{
+        },
+        {
             "type": "Produção",
             "formula": "",
             "nodeIn": "B1",
-            "nodeOut": "ArbM",
+            "nodeOut": "VgAh",
             "resource": ""
-        }, {
+        },
+        {
             "type": "Produção",
             "formula": "",
             "nodeIn": "B1",
-            "nodeOut": "ArbM2",
+            "nodeOut": "VgAh2",
             "resource": ""
-        },{
+        },
+        {
             "type": "Produção",
             "formula": "",
-            "nodeIn": "ArbM",
+            "nodeIn": "VgAh",
             "nodeOut": "LcTa",
             "resource": ""
-        },{
-            "type": "Produção",
-            "formula": "",
-            "nodeIn": "ArbM",
-            "nodeOut": "MtsoR",
-            "resource": ""
-        },{
-            "type": "Tratamento",
-            "formula": "",
-            "nodeIn": "PwkTb",
-            "nodeOut": "ArbM",
-            "resource": ""
-        },{
+        },
+        {
             "type": "Tratamento",
             "formula": "",
             "nodeIn": "RtyA",
             "nodeOut": "B1",
             "resource": ""
-        },{
+        },
+        {
             "type": "Tratamento",
             "formula": "",
-            "nodeIn": "VgAh",
+            "nodeIn": "VgAh3",
             "nodeOut": "B1",
             "resource": ""
-        },{
+        },
+        {
             "type": "Tratamento",
             "formula": "",
             "nodeIn": "CryiW",
-            "nodeOut": "VgAh",
-            "resource": ""
-        },{
-            "type": "Tratamento",
-            "formula": "",
-            "nodeIn": "Etfow",
-            "nodeOut": "VgAh",
-            "resource": ""
-        },{
-            "type": "Produção",
-            "formula": "",
-            "nodeIn": "VgAh",
-            "nodeOut": "tswPe",
+            "nodeOut": "VgAh3",
             "resource": ""
         }
     ],

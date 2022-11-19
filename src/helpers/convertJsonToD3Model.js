@@ -1,12 +1,14 @@
+import { nodeTypes } from '../library/D3Tree/constants'
+
 const getNode = (code, data) => {
   return data.node.find(node => node.code === code)
 }
 
 const generateChildren = (data) => {
   data.flow.forEach(flow => {
-    const parent = getNode(flow.nodeIn, data)
+    const parent = getNode(nodeTypes.isProducaoSaida(flow.type) ? flow.nodeIn : flow.nodeOut, data)
     parent.children = parent.children || []
-    const child = getNode(flow.nodeOut, data)
+    const child = getNode(nodeTypes.isProducaoSaida(flow.type) ? flow.nodeOut : flow.nodeIn, data)
     child.hasParent = true
     parent.children.push({
       node: child,

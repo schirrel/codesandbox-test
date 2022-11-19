@@ -76,11 +76,14 @@ export default {
     }
   },
   mounted: function () {
-    console.log(this.simulation)
     // useSentry()
     // Carrega os dados dos atributos(class,resource,duration,factor) do backend
     this.loadAtributesBackend()
     // Configura qual função será acionada para mostrar os erros na tela
+    document.addEventListener('tree-update', function (e) {
+      // console.log(e.detail) // Prints "Example of an event"
+    })
+
     tree.setHandleError(this.$swal)
     // Configura qual função será acionada ao clicar em um nó da árvore
     tree.setHandleClickFunction(this.handleOnclickFunction)
@@ -324,7 +327,7 @@ export default {
 
 ::v-deep .link {
   fill: none;
-  stroke: #ccc;
+  /* stroke: #ccc; */
   stroke-width: 3px;
 }
 

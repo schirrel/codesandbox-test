@@ -131,25 +131,25 @@
         },{
             "type": "Tratamento",
             "formula": "",
-            "nodeIn": "VgAh",
+            "nodeIn": "VgAh3",
             "nodeOut": "B1",
             "resource": ""
         },{
             "type": "Tratamento",
             "formula": "",
             "nodeIn": "CryiW",
-            "nodeOut": "VgAh",
+            "nodeOut": "VgAh3",
             "resource": ""
         },{
             "type": "Tratamento",
             "formula": "",
             "nodeIn": "Etfow",
-            "nodeOut": "VgAh",
+            "nodeOut": "VgAh3",
             "resource": ""
         },{
             "type": "Produção",
             "formula": "",
-            "nodeIn": "VgAh",
+            "nodeIn": "VgAh3",
             "nodeOut": "tswPe",
             "resource": ""
         }

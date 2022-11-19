@@ -2,45 +2,9 @@ import * as d3 from 'd3'
 import history from './history'
 import error from '@/helpers/error'
 import { mountTree } from '@/helpers/convertJsonToD3Model'
-const WIDTH = 1000
-const HEIGHT = 800
-// todo validar pq tinha isso
-// const traverse = require('traverse')
+import { orientationTree, nodesType, nodeTypes, nodesTypeName, actionsType, convertTypeToString, colors } from './D3Tree/constants'
 
-export const actionsType = {
-  add: 'addNode',
-  addIn: 'addNodeIn',
-  addOut: 'addNodeOut',
-  remove: 'removeNode',
-  addBalance: 'addBalance',
-  removeBalance: 'removeBalance',
-  edit: 'editNode',
-  undo: 'undo',
-  redo: 'redo',
-  save: 'save',
-  reset: 'reset',
-  config: 'config',
-  children: 'children',
-  mini: 'mini',
-  orientation: 'orientation',
-  nodeh: 'nodeh',
-  nodew: 'nodew'
-}
-
-export const nodesType = {
-  in: 1,
-  out: 0
-}
-
-export const nodesTypeName = {
-  in: 'Tratamento',
-  out: 'Produção'
-}
-
-const nodeTypes = {
-  isIn: (node) => node === 'Tratamento' || node === 1,
-  isOut: (node) => node === 'Produção' || node === 0
-}
+export { nodesType, nodesTypeName, actionsType }
 
 const DEFAULT = {
   name: '',
@@ -57,49 +21,8 @@ const DEFAULT = {
   orientationTree: 'top'
 }
 
-const orientationTree = {
-  top: {
-    size: [WIDTH, HEIGHT],
-    x: function (d) {
-      return d.x
-    },
-    y: function (d) {
-      return d.y
-    }
-  },
-  right: {
-    size: [HEIGHT, WIDTH],
-    x: function (d) {
-      return 0 - d.y
-    },
-    y: function (d) {
-      return d.x
-    }
-  },
-  bottom: {
-    size: [WIDTH, HEIGHT],
-    x: function (d) {
-      return d.x
-    },
-    y: function (d) {
-      return 0 - d.y
-    }
-  },
-  left: {
-    size: [HEIGHT, WIDTH],
-    x: function (d) {
-      return d.y
-    },
-    y: function (d) {
-      return d.x
-    }
-  }
-}
-
 class D3Tree {
   constructor () {
-    this.circleColor0 = '#009933'
-    this.circleColor1 = '#003399'
     this.data = null
     this.root = null
     this.circleSize = DEFAULT.circleSize
@@ -236,7 +159,6 @@ class D3Tree {
 
     // this.readJsonPP(this.json)
     this.data = await mountTree(this.json)
-    console.log('data', this.data)
     history.saveState(this.data)
   }
 
@@ -302,7 +224,6 @@ class D3Tree {
    * Constroi o modelo inicial da árvore
    */
   async build () {
-    console.log('load json', this.json)
     await this.inicializeData()
     this.createElementBaseForD3()
     this.createArrowModelToPath()
@@ -323,6 +244,12 @@ class D3Tree {
     // console.log(this.data);
     // console.log("==================");
     this.root = d3.hierarchy(this.data)
+
+    // Create the event
+    const event = new CustomEvent('tree-update', { detail: this.data })
+    // Dispatch/Trigger/Fire the event
+    document.dispatchEvent(event)
+
     treeLayout(this.root)
     this.drawPath()
     this.drawNodes()
@@ -354,9 +281,9 @@ class D3Tree {
   }
 
   selectStrokeColorPath (d) {
-    return d.target.data.flow.type === nodesTypeName.in
-      ? this.circleColor0
-      : this.circleColor1
+    return nodeTypes.isProducaoSaida(d.target.data.flow.type)
+      ? colors.producao
+      : colors.tratamento
   }
 
   selectX1ByType (d) {
@@ -393,8 +320,8 @@ class D3Tree {
 
   selectColorByType (d) {
     return d.data.flow && d.data.flow.type === nodesTypeName.in
-      ? this.circleColor0
-      : this.circleColor1
+      ? colors.tratamento
+      : colors.producao
   }
 
   /**
@@ -454,7 +381,7 @@ class D3Tree {
 
     // if (d.data.idBalance > 0) { return d.data.name }
 
-    return d.data.name
+    return d.data.code
   };
 
   /**
@@ -462,7 +389,7 @@ class D3Tree {
    */
   selectXLabel (d) {
     let shift = 0
-    if (d.data.idBalance > 0) { shift = d.data.name.length * 4 } else shift = d.data.name.length * 4
+    if (d.data.idBalance > 0) { shift = d.data.code.length * 4 } else shift = d.data.code.length * 4
 
     return shift === 0
       ? this.orientation.x(d) - 5
@@ -481,7 +408,7 @@ class D3Tree {
    * transparente
    */
   selectStrokeColorBalance (d) {
-    if (d.data.idBalance > 0) { return d.value === 0 ? this.circleColor0 : this.circleColor1 } else return 'transparent'
+    if (d.data.idBalance > 0) { return d.value === 0 ? colors.tratamento : colors.producao } else return 'transparent'
   };
 
   /**
@@ -595,23 +522,27 @@ class D3Tree {
    * Adiciona um novo nó filho ao nó selecionado
    */
   addChildrenNode (selected, i, nodeType, add) {
-    console.log(nodeTypes)
-    debugger
     if (!this.checkIfHavePermission(selected, nodeType)) {
       return false
     }
+    // saida/Produção -> nodeout (novo nó) nodein (no existente)
+    // entrada/Tratamento -> nodeout (novo existente) nodein (novo nó)
+
+    const flow = {
+      type: nodeType,
+      resource: selected.data.resource,
+      nodeIn: nodeTypes.isProducaoSaida(nodeType) ? selected.data.code : add,
+      nodeOn: nodeTypes.isProducaoSaida(nodeType) ? add : selected.data.code
+    }
+    console.log(flow)
 
     const newNodeData = {
       children: [],
-      name: add,
+      code: add,
+      name: '',
       description: '',
       resource: selected.data.resource,
-      flow: {
-        type: nodeType,
-        resource: selected.data.resource,
-        nodeIn: nodeType === nodesType.in ? selected.data.code : '',
-        nodeOn: nodeType !== nodesType.in ? '' : selected.data.code
-      }
+      flow
     }
 
     // Cria um novo nó com base em newNodeData usando d3.hierarchy()
@@ -670,25 +601,6 @@ class D3Tree {
    * Verifica se tem permissão para remover o nó
    */
   checkIfNeedRemoveBalance (node) {
-    const descendants = this.root.descendants()
-    let balanceFatherCounter = 0
-    const target = node.parent.data.idBalance
-
-    if (target <= 0) return false
-
-    // Conta a quantidade de nós pais do balanço
-    descendants.forEach(d => {
-      if (d.data.idBalance === target && d.children && d.children.length > 0) {
-        balanceFatherCounter += 1
-      }
-    })
-
-    // Remove balanço caso tenha apenas 1 nó pai e seu ulitmo filho seja removido
-    if (balanceFatherCounter < 2 && node.parent.children.length <= 1) {
-      descendants.forEach(d => {
-        if (d.data.idBalance === target) d.data.idBalance = 0
-      })
-    }
   }
 
   /**
@@ -707,129 +619,18 @@ class D3Tree {
    * da criação do balanço
    */
   copyBalanceData (nodeClicked1, nodeClicked2) {
-    nodeClicked1.data.name = nodeClicked2.data.name
-    nodeClicked1.data.description = nodeClicked2.data.description
-    nodeClicked1.data.class = nodeClicked2.data.class
-    nodeClicked1.data.duration = nodeClicked2.data.duration
   }
 
   /**
    * Adiciona ao nó o tipo balanço, caso as regras de negócio sejam satisfeitas
    */
   changeNodeTypeToBalance (d, id) {
-    if (
-      d.depth === 0 ||
-      d.depth === 1
-    ) {
-      this.msgAlertUser(error.enums.cannotAddBalanceInDefaultNodes)
-      this.resetNodeSelected(true)
-      return false
-    }
-
-    if (d.children && d.children.length > 0 && this.counterBalanceClick === 0) {
-      this.msgAlertUser(error.enums.cannotHaveChildren)
-      this.resetNodeSelected(true)
-      return false
-    }
-
-    if (
-      d.data.idBalance > 0
-    ) {
-      this.msgAlertUser(error.enums.cannotCreateBalanceIfIsAlready)
-      this.resetNodeSelected(true)
-      return false
-    }
-
-    this.counterBalanceClick += 1
-
-    if (this.counterBalanceClick === 2) {
-      this.counterBalanceClick = 0
-
-      if (d === this.balanceClicked.d) {
-        this.resetNodeSelected(true)
-        return false
-      }
-
-      if (d.data.resource !== this.balanceClicked.d.data.resource) {
-        this.msgAlertUser(error.enums.cannotHaveBalanceWithDifferentRessources)
-        this.resetNodeSelected(true)
-        return false
-      }
-
-      if (
-        d.data.idBalance > 0
-      ) {
-        this.msgAlertUser(error.enums.cannotCreateBalanceIfIsAlready)
-        this.resetNodeSelected(true)
-        return false
-      }
-
-      if (d === this.balanceClicked.d.parent) {
-        this.msgAlertUser(error.enums.cannotAddBalanceBetweenParentAndChildren)
-        this.resetNodeSelected(true)
-        return false
-      }
-
-      if (!this.balanceClicked.d.children) {
-        if (!d.children) {
-          this.msgAlertUser(error.enums.mustHaveChildren)
-          this.resetNodeSelected(true)
-          return false
-        }
-      }
-
-      if (d.data.idBalance > 0) {
-        this.balanceClicked.d.data.idBalance = d.data.idBalance
-      } else {
-        d.data.idBalance = this.counterBalance
-        this.balanceClicked.d.data.idBalance = this.counterBalance
-        this.counterBalance += 1
-      }
-
-      this.copyBalanceData(this.balanceClicked.d, d)
-      this.resetNodeSelected()
-    } else {
-      this.balanceClicked.id = id
-      this.balanceClicked.d = d
-    }
   }
 
   /**
    * Remove o nó o tipo balanço, caso as regras de negócio sejam satisfeitas
    */
   removeNodeTypeToBalance (d) {
-    if (d.data.idBalance <= 0) {
-      this.msgAlertUser(error.enums.isNotBalance)
-      return false
-    }
-
-    const target = d.data.idBalance
-    const descendants = this.root.descendants()
-    let count = 0
-
-    descendants.forEach(function (d) {
-      if (d.data.idBalance === target) count++
-    })
-
-    if (count > 2 && d.children) {
-      this.msgAlertUser(error.enums.cannotRemoveFatherBalanceBigger2)
-      return false
-    }
-
-    if (count > 2 && !d.children) {
-      d.data.idBalance = 0
-    } else {
-      descendants.forEach(function (d) {
-        if (d.data.idBalance === target) d.data.idBalance = 0
-
-        // Corrigi os id após remover um balanço
-        if (d.data.idBalance > target) d.data.idBalance -= 1
-      })
-
-      this.counterBalance -= 1
-    }
-
-    this.redrawTree()
   }
 
   /**
@@ -948,30 +749,6 @@ class D3Tree {
   }
 
   /**
-   * Converte o tipo do nó de Int para String, usado na escrita do json
-   */
-  convertTypeToString (value) {
-    switch (value) {
-      case nodesType.in:
-        return nodesTypeName.in
-      case nodesType.out:
-        return nodesTypeName.out
-    }
-  }
-
-  /**
-   * Converte o tipo do nó de String para Int, usado na leitura do json
-   */
-  convertTypeToInt (value) {
-    switch (value) {
-      case nodesTypeName.in:
-        return nodesType.in
-      case nodesTypeName.out:
-        return nodesType.out
-    }
-  }
-
-  /**
    * Gera uma chave para nó simples com o formato da plataforma P+P
    */
   addKeyNode (d, numVertices, nodes) {
@@ -980,7 +757,7 @@ class D3Tree {
       formula: d.data.duration,
       stages: [d.data.class],
       flows: [],
-      type: this.convertTypeToString(d.data.value)
+      type: convertTypeToString(d.data.value)
     }
     // chave com new node em graph.nodes
     nodes[chave] = newNode
@@ -992,34 +769,6 @@ class D3Tree {
    * Gera uma chave para nó balanço com o formato da plataforma P+P
    */
   addKeyBalance (d, numVertices, nodes) {
-    if (!d.children) {
-      // let chave = `s_${d.data.value}_${d.data.idBalance}_${d.data.name}_${d.data.description}`;
-      const chave = `s_${numVertices}_${d.data.idBalance}_${d.data.name}_${d.data.description}`
-      const newNode = {
-        formula: d.data.duration,
-        stages: [d.data.class],
-        flows: [],
-        type: this.convertTypeToString(d.data.value)
-      }
-
-      // chave com new node em graph.nodes
-      nodes[chave] = newNode
-      // Salva chave para adiconar no idFlow ao nós que formam o fluxo
-      d.chave = chave
-    } else {
-      const chave = `b_${numVertices}_${d.data.idBalance}_${d.data.name}_${d.data.description}`
-      const newNode = {
-        formula: d.data.duration,
-        stages: [d.data.class],
-        flows: [],
-        type: this.convertTypeToString(d.data.value)
-      }
-
-      // chave com new node em graph.nodes
-      nodes[chave] = newNode
-      // Salva chave para adiconar no idFlow ao nós que formam o fluxo
-      d.chave = chave
-    }
   }
 
   /**
@@ -1047,54 +796,6 @@ class D3Tree {
     graph.nodes[d.target.chave].flows.push(idFlow)
   }
 
-  /**
-   * Converte o JSON do formato D3.js para o formato da P+P
-   */
-  generateJsonPP () {
-    // Copia dados da árvore usando o hierarchy do d3.js
-    const tempData = d3.hierarchy(this.data)
-    const descendants = tempData.descendants()
-    const links = tempData.links()
-    let numVertices = 0
-
-    const simulationData = {
-      graph: {
-        nodes: {},
-        flows: {}
-      }
-    }
-
-    descendants.forEach(d => {
-      numVertices = numVertices + 1
-      if (!d.data.idBalance || d.data.idBalance === 0) {
-        // É um nó comum
-        this.addKeyNode(d, numVertices, simulationData.graph.nodes)
-      } else {
-        // É um nó balanço
-        this.addKeyBalance(d, numVertices, simulationData.graph.nodes)
-      }
-    })
-
-    links.forEach(d => {
-      this.addNewFlow(d, simulationData.graph)
-    })
-
-    simulationData.graph.root = descendants[0].chave
-    simulationData.graph.nodeOne = descendants[1].chave
-
-    this.json.simulationData.graph = simulationData.graph
-
-    // console.log("====JSON INICIO====");
-    // console.log(JSON.stringify(this.json));
-    // console.log("====JSON FIM=======");
-    // console.log("Link para deixar o json indentado:");
-    // console.log("https://jsonformatter.org/");
-
-    this.copyToClipboard(JSON.stringify(this.json))
-
-    return JSON.stringify(this.json)
-  }
-
   copyToClipboard (str) {
     const el = document.createElement('textarea')
     el.value = str
@@ -1108,221 +809,14 @@ class D3Tree {
   }
 
   isBalanceKey (key) {
-    if (key[0] === 'b' || key[0] === 's') {
-      return true
-    }
-    return false
-  }
-
-  readFlow (simulationData, key, newFlow) {
-    const value = simulationData.graph.flows[key]
-    const nodes = key.split('-')
-    const node1 = nodes[0].split('_')
-    const node2 = nodes[1].split('_')
-    const linkType = simulationData.graph.nodes[nodes[1]].type
-    const factor = value.formula
-    let stages = null
-    let duration = null
-    let newType = null
-    let nodeParent = null
-    let nodeParentData = null
-    let name = null
-    let description = null
-    let id = null
-    let idBalance = 0
-
-    // console.log(value);
-    // console.log(nodes);
-
-    if (linkType === nodesTypeName.in) {
-      newType = nodesType.in
-      nodeParent = node2.join('_')
-      id = node1.join('_')
-
-      if (this.isBalanceKey(id)) {
-        idBalance = parseInt(node1[2])
-        name = node1[3]
-        description = node1[4]
-      } else {
-        name = node1[2]
-        description = node1[3]
-      }
-
-      // console.log(nodes[0]);
-      // console.log(simulationData.graph.nodes);
-      // console.log(simulationData.graph.nodes[nodes[0]]);
-
-      stages = simulationData.graph.nodes[nodes[0]].stages[0]
-      duration = simulationData.graph.nodes[nodes[0]].formula
-      nodeParentData = {
-        idBalance: this.isBalanceKey(nodes[1]) ? node2[2] : 0,
-        name: this.isBalanceKey(nodes[1]) ? node2[3] : node2[2],
-        description: this.isBalanceKey(nodes[1]) ? node2[4] : node2[3],
-        newType: nodesType.out,
-        stages: simulationData.graph.nodes[nodes[1]].stages[0],
-        duration: simulationData.graph.nodes[nodes[1]].formula
-      }
-    } else {
-      newType = nodesType.out
-      nodeParent = node1.join('_')
-      id = node2.join('_')
-
-      if (this.isBalanceKey(id)) {
-        idBalance = parseInt(node2[2])
-        name = node2[3]
-        description = node2[4]
-      } else {
-        name = node2[2]
-        description = node2[3]
-      }
-      stages = simulationData.graph.nodes[nodes[1]].stages[0]
-      duration = simulationData.graph.nodes[nodes[1]].formula
-      nodeParentData = {
-        idBalance: this.isBalanceKey(nodes[0]) ? node1[2] : 0,
-        name: this.isBalanceKey(nodes[0]) ? node1[3] : node1[2],
-        description: this.isBalanceKey(nodes[0]) ? node1[4] : node1[3],
-        newType: nodesType.in,
-        stages: simulationData.graph.nodes[nodes[0]].stages[0],
-        duration: simulationData.graph.nodes[nodes[0]].formula
-      }
-    }
-
-    const newNode = {
-      id: id,
-      idBalance: idBalance,
-      parent: nodeParent,
-      parentData: nodeParentData,
-      name: name,
-      description: description,
-      value: newType,
-      class: stages,
-      duration: duration,
-      factor: factor,
-      resource: value.resource.name,
-      unit: value.resource.unit,
-      category: value.resource.category
-    }
-
-    newFlow.push(newNode)
   }
 
   /**
    * Converte o JSON da P+P para formato do D3.js
    */
   readJsonPP (json) {
-    // // let simulationData = JSON.parse(json).simulationData;
-    // const simulationData = json.simulationData
-    // const newFlow = []
-
-    // const nodeRoot = simulationData.graph.nodes[simulationData.graph.root]
-    // const dataRoot = simulationData.graph.root.split('_')
-
-    // // Para cada fluxo no json
-    // Object.keys(simulationData.graph.flows).forEach(key => {
-    //   // Le os dados separado e agrupa em cada objeto
-    //   this.readFlow(simulationData, key, newFlow)
-    // })
-
-    // // Adiciona o nó raiz no inicio do vetor
-    // newFlow.unshift({
-    //   id: dataRoot.join('_'),
-    //   idBalance: 0,
-    //   parent: '',
-    //   name: dataRoot[2],
-    //   description: dataRoot[3],
-    //   value: 1,
-    //   class: nodeRoot.stages[0],
-    //   resource: DEFAULT.resource,
-    //   unit: DEFAULT.unit,
-    //   category: DEFAULT.category,
-    //   duration: nodeRoot.formula,
-    //   factor: DEFAULT.factor
-    // })
-
-    // const invertFlow = []
-    // const invertParent = []
-
-    // newFlow.forEach(function (node) {
-    //   let notHaveParent = false
-    //   for (let i = 0; i < newFlow.length; i++) {
-    //     if (node.parent === newFlow[i].id || node.parent === '') {
-    //       notHaveParent = true
-    //     }
-    //   }
-
-    //   if (!notHaveParent) {
-    //     const resp = invertParent.find(function (fatherId) {
-    //       if (fatherId === node.parent) {
-    //         return true
-    //       } else {
-    //         return false
-    //       }
-    //     })
-
-    //     if (
-    //       node.value === 0 &&
-    //       node.parentData.newType === 1 &&
-    //       resp === undefined
-    //     ) {
-    //       invertParent.push(node.parent)
-
-    //       invertFlow.push({
-    //         ...node,
-    //         id: node.parent,
-    //         idBalance: node.parentData.idBalance,
-    //         parent: node.id,
-    //         parentData: node.parentData,
-    //         name: node.parentData.name,
-    //         description: node.parentData.description,
-    //         value: node.parentData.newType,
-    //         unit: node.unit,
-    //         // category: value.resource.category,
-    //         class: node.parentData.stages,
-    //         duration: node.parentData.duration
-    //         // factor: factor
-    //       })
-    //     } else {
-    //       invertFlow.push(node)
-    //     }
-    //   } else {
-    //     invertFlow.push(node)
-    //   }
-    // })
-
-    // // console.log("########################### -> Flow Antes");
-    // // console.log(newFlow);
-    // // console.log("########################### -> InvertFlow Antes");
-    // // console.log(invertFlow);
-
-    // const hierarchyFlow = this.getNestedChildren(invertFlow, '')
-    // // console.log(hierarchyFlow[0]);
-
-    // this.data = hierarchyFlow[0]
-
     this.data = mountTree(this.json)
     this.redrawTree(true)
-  }
-
-  /**
-   * Converte um flat json em um nested json (formato usado pelo d3.js)
-   */
-  getNestedChildren (arr, parent) {
-    const out = []
-    for (const i in arr) {
-      if (arr[i].parent === parent) {
-        const children = this.getNestedChildren(arr, arr[i].id)
-
-        if (children.length) {
-          arr[i].children = children
-        }
-
-        // delete arr[i].parent;
-        // delete arr[i].id;
-
-        out.push(arr[i])
-      }
-    }
-    return out
   }
 }
 
