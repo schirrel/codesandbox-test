@@ -1,10 +1,10 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog" persistent max-width="390">
+    <v-dialog v-model="dialog" persistent max-width="500">
       <v-card>
         <v-card-title class="text-h5">
-          Primeiramente é necessário criar um
-          <strong> código identificador </strong> para o nó.
+          <span> Primeiramente é necessário criar um
+        <strong>código identificador</strong> para o nó. </span>
         </v-card-title>
         <v-card-text>
               <v-form v-model="valid" ref="form">
@@ -74,3 +74,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+strong {
+  word-break: normal;
+}
+</style>

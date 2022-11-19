@@ -9,6 +9,11 @@
     <v-card>
       <v-card-text>
         <v-container>
+            <v-text-field
+            label="Code"
+            v-model="edit.code"
+            :disabled="edit.disableEdit"
+          />
           <v-text-field
             label="Nome"
             v-model="edit.name"
@@ -63,6 +68,7 @@ export default {
   data () {
     return {
       edit: {
+        code: '',
         node: '',
         name: '',
         description: '',
@@ -99,6 +105,7 @@ export default {
      * Atualiza os input com os valores do nó selecionado para edição
      **/
     fillChangesInputsFromNode () {
+      this.edit.code = this.selectedNode.data.code
       this.edit.name = this.selectedNode.data.name
       this.edit.description = this.selectedNode.data.description
       this.edit.class = this.selectedNode.data.class
@@ -120,6 +127,7 @@ export default {
      * Limpa os dados digitados nos inputs e selects
      **/
     cleanChangeInputs () {
+      this.edit.code = ''
       this.edit.name = ''
       this.edit.description = ''
       this.edit.class = ''
@@ -144,6 +152,7 @@ export default {
      * Atualiza os valores do nó com os novos valores do input
      **/
     saveChangesInput () {
+      this.selectedNodeModel.data.code = this.edit.code
       this.selectedNodeModel.data.name = this.edit.name
       this.selectedNodeModel.data.description = this.edit.description
       this.selectedNodeModel.data.class = this.edit.class
