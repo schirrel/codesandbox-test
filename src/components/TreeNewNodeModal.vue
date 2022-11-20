@@ -7,11 +7,11 @@
         <strong>código identificador</strong> para o nó. </span>
         </v-card-title>
         <v-card-text>
-              <v-form v-model="valid" ref="form">
+              <v-form v-model="valid" ref="form" @submit.prevent="submit">
           <v-text-field
             label="code"
             v-model="newNode.code"
-            :rules="[rules.required, rules.counter, rules.min,  rules.alphanumericUnderscore]"
+            :rules="[rules.required, rules.counter, rules.min,  rules.alphanumericUnderscore, rules.notExisists]"
           />
               </v-form>
         </v-card-text>
@@ -44,6 +44,10 @@ export default {
         alphanumericUnderscore: value => {
           const pattern = /^\w+$/
           return pattern.test(value) || 'Somente números e letras.'
+        },
+        notExisists: value => {
+          const currentJson = localStorage.json ? JSON.parse(localStorage.json)?.node?.map(node => node.code) : []
+          return !currentJson.some(current => current === value) || 'Code existente'
         }
       }
     }

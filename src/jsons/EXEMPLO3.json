@@ -1,0 +1,41 @@
+{
+    "node": [
+        {
+            "code": "A1",
+            "name": "Nó A1",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "B1",
+            "name": "Nó B1",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "ArbM",
+            "name": "",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        }
+    ],
+    "flow": [
+        {
+            "type": "Produção",
+            "formula": "",
+            "nodeIn": "A1",
+            "nodeOut": "B1",
+            "resource": ""
+        },
+        {
+            "type": "Produção",
+            "formula": "",
+            "nodeIn": "B1",
+            "nodeOut": "ArbM"
+        }
+    ],
+    "parameter": []
+}

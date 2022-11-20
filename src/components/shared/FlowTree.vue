@@ -146,7 +146,7 @@ export default {
      */
     setTypeClickTree (type) {
       this.TypeOfActionSelectedNow = type
-      tree.resetNodeSelected(true)
+      // tree.resetNodeSelected(true)
     },
 
     /**

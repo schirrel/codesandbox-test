@@ -26,6 +26,7 @@
         :key="item.value"
         @click="setTypeOfClick(item.value)"
         :class="isActive(item.value)"
+        :disabled="item.disabled"
         :ripple="true"
       >
         <v-list-item-action>
@@ -34,6 +35,7 @@
         </v-list-item-action>
         <v-list-item-content>
           <v-list-item-title>{{ item.text }}</v-list-item-title>
+          <small>  Desabilitado </small>
         </v-list-item-content>
       </v-list-item>
 
@@ -58,7 +60,6 @@
 
 <script>
 import { actionsType } from '../library/D3Tree'
-import mediation from '@/assets/icons/mediation.svg'
 import tripOrigin from '@/assets/icons/trip_origin.svg'
 export default {
   props: ['TypeOfActionSelectedNow', 'mini'],
@@ -85,12 +86,6 @@ export default {
           value: actionsType.edit
         },
         {
-          text: 'Childrens',
-          iconSvg: mediation,
-          value: actionsType.children
-        },
-
-        {
           text: 'Entrada',
           icon: 'mdi-arrow-up',
           value: actionsType.addIn
@@ -113,12 +108,14 @@ export default {
         {
           text: 'Adicionar',
           iconSvg: tripOrigin,
-          value: actionsType.addBalance
+          value: actionsType.addBalance,
+          disabled: true
         },
         {
           text: 'Excluir',
           icon: 'mdi-close-circle',
-          value: actionsType.removeBalance
+          value: actionsType.removeBalance,
+          disabled: true
         }
       ],
       /**

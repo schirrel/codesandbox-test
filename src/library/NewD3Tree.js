@@ -1,9 +1,9 @@
 import * as d3 from 'd3'
 import history from './history'
 import error from '@/helpers/error'
-import { mountTree } from '@/helpers/convertJsonToD3Model'
-import { orientationTree, nodesType, nodeTypes, nodesTypeName, actionsType, convertTypeToString, colors } from './D3Tree/constants'
-
+import { convertJsonToTree } from '@/helpers/convertJsonToD3Model'
+import { orientationTree, nodesType, nodeTypes, nodesTypeName, actionsType, colors } from './D3Tree/constants'
+import utils from '@/helpers/util'
 export { nodesType, nodesTypeName, actionsType }
 
 const DEFAULT = {
@@ -78,33 +78,6 @@ class D3Tree {
   }
 
   /**
-   * Muda a orientação da arvore
-   */
-  changeOrientationTree (newOrientation) {
-    console.log('Muda a orientação da arvore')
-    console.log(newOrientation)
-    this.selectedOrientationTree = newOrientation
-    this.orientation = orientationTree[this.selectedOrientationTree]
-    this.redrawTree(true)
-  }
-
-  /**
-   * Muda nodeh que afeta a distância entre os nós irmãos
-   */
-  changeNodeh (newValue) {
-    this.nodeh = newValue
-    this.redrawTree(true)
-  }
-
-  /**
-   * Muda nodew que afeta a distância entre pai e filho
-   */
-  changeNodew (newValue) {
-    this.nodew = newValue
-    this.redrawTree(true)
-  }
-
-  /**
    * Configura os atributos para edição e as cores das classes
    */
   setAttributesSelectAndColor (attributes) {
@@ -158,8 +131,14 @@ class D3Tree {
     // }
 
     // this.readJsonPP(this.json)
-    this.data = await mountTree(this.json)
-    history.saveState(this.data)
+    const copyJson = utils.methods.copyObject(this.json)
+    await this.mountTree(copyJson)
+  }
+
+  async mountTree () {
+    const copyJson = utils.methods.copyObject(this.json)
+    this.data = await convertJsonToTree(copyJson)
+    this.redrawTree(true)
   }
 
   /**
@@ -224,10 +203,10 @@ class D3Tree {
    * Constroi o modelo inicial da árvore
    */
   async build () {
-    await this.inicializeData()
     this.createElementBaseForD3()
     this.createArrowModelToPath()
-    this.drawTree()
+    await this.inicializeData()
+    // this.drawTree()
   }
 
   /**
@@ -240,13 +219,11 @@ class D3Tree {
       .separation(function (a, b) {
         return a.parent === b.parent ? 1 : 1.25
       })
-    // console.log("==== New Data ====");
-    // console.log(this.data);
-    // console.log("==================");
+
     this.root = d3.hierarchy(this.data)
 
     // Create the event
-    const event = new CustomEvent('tree-update', { detail: this.data })
+    const event = new CustomEvent('tree-update', { detail: this.json })
     // Dispatch/Trigger/Fire the event
     document.dispatchEvent(event)
 
@@ -510,10 +487,10 @@ class D3Tree {
   /**
    * Redesenha a árvore após alguma modificação em algum nó
    */
-  redrawTree (notSaveState) {
-    if (!notSaveState) {
-      history.saveState(this.data)
-    }
+  redrawTree () {
+    history.saveState(this.data)
+    this.save()
+
     this.cleanTree()
     this.drawTree()
   }
@@ -521,7 +498,7 @@ class D3Tree {
   /**
    * Adiciona um novo nó filho ao nó selecionado
    */
-  addChildrenNode (selected, i, nodeType, add) {
+  async addChildrenNode (selected, i, nodeType, add) {
     if (!this.checkIfHavePermission(selected, nodeType)) {
       return false
     }
@@ -530,38 +507,22 @@ class D3Tree {
 
     const flow = {
       type: nodeType,
-      resource: selected.data.resource,
+      formula: '',
+      resource: '',
       nodeIn: nodeTypes.isProducaoSaida(nodeType) ? selected.data.code : add,
       nodeOut: nodeTypes.isProducaoSaida(nodeType) ? add : selected.data.code
     }
-    console.log(flow)
-
     const newNodeData = {
-      children: [],
       code: add,
       name: '',
+      formula: '',
       description: '',
-      resource: selected.data.resource,
-      flow
+      stage: ''
     }
+    this.json.node.push(newNodeData)
+    this.json.flow.push(flow)
 
-    // Cria um novo nó com base em newNodeData usando d3.hierarchy()
-    const newNode = d3.hierarchy(newNodeData)
-
-    // Adiciona propriedades(filho, pai, altura) ao nó
-    newNode.depth = selected.depth + 1
-    newNode.height = selected.height - 1
-    newNode.parent = selected
-    newNode.id = Date.now()
-
-    // Caso o nó selecionado não tenha filho criar os vetores para armazenar-los
-    if (!selected.children) {
-      selected.children = []
-      selected.data.children = []
-    }
-    selected.children.push(newNode)
-    selected.data.children.push(newNode.data)
-    this.redrawTree()
+    await this.mountTree()
   }
 
   /**
@@ -601,17 +562,6 @@ class D3Tree {
    * Verifica se tem permissão para remover o nó
    */
   checkIfNeedRemoveBalance (node) {
-  }
-
-  /**
-   * Reseta a variavel responsavel por controlar qual foi o primeiro clique no
-   * momento da criação do balanço
-   */
-  resetNodeSelected (notSaveState) {
-    this.balanceClicked.id = null
-    this.balanceClicked.d = null
-    if (notSaveState) this.redrawTree(true)
-    else this.redrawTree()
   }
 
   /**
@@ -658,7 +608,7 @@ class D3Tree {
 
     if (fatherNode.children && add) {
       this.msgAlertUser(error.cannotAddTerminal)
-      this.resetNodeSelected(true)
+      // this.resetNodeSelected(true)
       return false
     }
 
@@ -691,8 +641,9 @@ class D3Tree {
    * Salva o json com dados da árvore no localstorage
    */
   save () {
-    this.resetNodeSelected(true)
+    // this.resetNodeSelected(true, true)
     localStorage.data = JSON.stringify(this.data)
+    localStorage.json = JSON.stringify(this.json)
   }
 
   /**
@@ -707,15 +658,11 @@ class D3Tree {
   /**
    * Remove os dados da árvore do localstorage e redesenha a árvore
    */
-  clean () {
-    console.log('clean')
-    // if (localStorage.data) {
-    console.log('remove localstorage')
+  async clean () {
     localStorage.removeItem('data')
-    // }
     history.clean()
     this.counterBalance = 1
-    this.inicializeData(true)
+    await this.inicializeData(true)
     this.redrawTree(true)
   }
 
@@ -749,74 +696,11 @@ class D3Tree {
   }
 
   /**
-   * Gera uma chave para nó simples com o formato da plataforma P+P
-   */
-  addKeyNode (d, numVertices, nodes) {
-    const chave = `n_${numVertices}_${d.data.name}_${d.data.description}`
-    const newNode = {
-      formula: d.data.duration,
-      stages: [d.data.class],
-      flows: [],
-      type: convertTypeToString(d.data.value)
-    }
-    // chave com new node em graph.nodes
-    nodes[chave] = newNode
-    // Salva chave para adiconar no idFlow ao nós que formam o fluxo
-    d.chave = chave
-  }
-
-  /**
-   * Gera uma chave para nó balanço com o formato da plataforma P+P
-   */
-  addKeyBalance (d, numVertices, nodes) {
-  }
-
-  /**
-   * Gera uma fluxo de conexão entre dois nós com o formato da plataforma P+P
-   */
-  addNewFlow (d, graph) {
-    const idParent = d.source.chave
-    const idChild = d.target.chave
-    let idFlow = ''
-
-    if (d.target.value === nodesType.out) idFlow = `${idParent}-${idChild}`
-    else idFlow = `${idChild}-${idParent}`
-
-    const newFlow = {
-      formula: d.target.data.factor,
-      resource: {
-        name: d.target.data.resource,
-        unit: d.target.data.unit,
-        category: d.target.data.category
-      }
-    }
-
-    graph.flows[idFlow] = newFlow
-    graph.nodes[d.source.chave].flows.push(idFlow)
-    graph.nodes[d.target.chave].flows.push(idFlow)
-  }
-
-  copyToClipboard (str) {
-    const el = document.createElement('textarea')
-    el.value = str
-    el.setAttribute('readonly', '')
-    el.style.position = 'absolute'
-    el.style.left = '-9999px'
-    document.body.appendChild(el)
-    el.select()
-    document.execCommand('copy')
-    document.body.removeChild(el)
-  }
-
-  isBalanceKey (key) {
-  }
-
-  /**
    * Converte o JSON da P+P para formato do D3.js
    */
-  readJsonPP (json) {
-    this.data = mountTree(this.json)
-    this.redrawTree(true)
+  async readJsonPP (json) {
+    this.data = await this.mountTree(this.json)
+    // this.redrawTree(true)
   }
 }
 

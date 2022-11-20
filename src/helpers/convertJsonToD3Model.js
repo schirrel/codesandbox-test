@@ -30,7 +30,7 @@ const flatTree = (data) => {
   }
 }
 
-export const mountTree = (data) => {
+export const convertJsonToTree = (data) => {
   data = generateChildren(data)
   const root = data.node.find(node => !node.hasParent)
   data = flatTree({ node: root }, true)
