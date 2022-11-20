@@ -152,21 +152,7 @@ export default {
      * Atualiza os valores do nó com os novos valores do input
      **/
     saveChangesInput () {
-      // atualizar referencia do code nos flows e no children
-      if (this.selectedNodeModel.data.code !== this.edit.code) {
-        if (this.selectedNodeModel.data.flow.nodeIn === this.selectedNodeModel.data.code) {
-          this.selectedNodeModel.data.flow.nodeIn = this.edit.code
-        } else {
-          this.selectedNodeModel.data.flow.nodeOut = this.edit.code
-        }
-        this.selectedNodeModel.data.children.forEach(each => {
-          if (each.flow.nodeIn === this.selectedNodeModel.data.code) {
-            each.flow.nodeIn = this.edit.code
-          } else {
-            each.flow.nodeOut = this.edit.code
-          }
-        })
-      }
+      const sourceNodeCode = this.selectedNodeModel.data.code + ''
 
       this.selectedNodeModel.data.code = this.edit.code
       this.selectedNodeModel.data.name = this.edit.name
@@ -185,7 +171,7 @@ export default {
 
       // this.selectedNodeModel.data.unit = resourceData.unit
       // this.selectedNodeModel.data.category = resourceData.category
-      this.$emit('saveChangesInput', this.selectedNodeModel)
+      this.$emit('saveChangesInput', { sourceNodeCode, edited: this.edit })
     }
   }
 }

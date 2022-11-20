@@ -135,12 +135,6 @@ class D3Tree {
     await this.mountTree(copyJson)
   }
 
-  async mountTree () {
-    const copyJson = utils.methods.copyObject(this.json)
-    this.data = await convertJsonToTree(copyJson)
-    this.redrawTree(true)
-  }
-
   /**
    * Adiciona o SVG na div fluxograma e centraliza a posição da árvore e
    * habilidade a opção de zoom
@@ -488,7 +482,6 @@ class D3Tree {
    * Redesenha a árvore após alguma modificação em algum nó
    */
   redrawTree () {
-    history.saveState(this.data)
     this.save()
 
     this.cleanTree()
@@ -522,6 +515,7 @@ class D3Tree {
     this.json.node.push(newNodeData)
     this.json.flow.push(flow)
 
+    history.saveState(this.json)
     await this.mountTree()
   }
 
@@ -549,38 +543,10 @@ class D3Tree {
       return false
     }
 
-    this.checkIfNeedRemoveBalance(d)
-
-    const index = d.parent.children.indexOf(d)
-    d.parent.children.splice(index, 1)
-    d.parent.data.children.splice(index, 1)
-
-    this.redrawTree()
-  }
-
-  /**
-   * Verifica se tem permissão para remover o nó
-   */
-  checkIfNeedRemoveBalance (node) {
-  }
-
-  /**
-   * Copia os atribuitos do segundo nó clicado para o primeiro nó no momento
-   * da criação do balanço
-   */
-  copyBalanceData (nodeClicked1, nodeClicked2) {
-  }
-
-  /**
-   * Adiciona ao nó o tipo balanço, caso as regras de negócio sejam satisfeitas
-   */
-  changeNodeTypeToBalance (d, id) {
-  }
-
-  /**
-   * Remove o nó o tipo balanço, caso as regras de negócio sejam satisfeitas
-   */
-  removeNodeTypeToBalance (d) {
+    this.json.node = this.json.node.filter(node => node.code !== d.data.code)
+    this.json.flow = this.json.flow.filter(flow => flow.nodeIn !== d.data.code && flow.nodeOut !== d.data.code)
+    history.saveState(this.json)
+    this.mountTree()
   }
 
   /**
@@ -637,12 +603,18 @@ class D3Tree {
     return false
   }
 
+  async mountTree () {
+    const copyJson = utils.methods.copyObject(this.json)
+    this.data = await convertJsonToTree(copyJson)
+    this.redrawTree(true)
+  }
+
   /**
    * Salva o json com dados da árvore no localstorage
    */
   save () {
     // this.resetNodeSelected(true, true)
-    localStorage.data = JSON.stringify(this.data)
+    // localStorage.data = JSON.stringify(this.data)
     localStorage.json = JSON.stringify(this.json)
   }
 
@@ -650,8 +622,8 @@ class D3Tree {
    * Carrega o json com dados da árvore do localstorage
    */
   load () {
-    if (localStorage.data) {
-      this.data = JSON.parse(localStorage.data)
+    if (localStorage.json) {
+      this.json = JSON.parse(localStorage.json)
     }
   }
 
@@ -659,7 +631,7 @@ class D3Tree {
    * Remove os dados da árvore do localstorage e redesenha a árvore
    */
   async clean () {
-    localStorage.removeItem('data')
+    localStorage.removeItem('json')
     history.clean()
     this.counterBalance = 1
     await this.inicializeData(true)
@@ -670,9 +642,11 @@ class D3Tree {
    * Desfaz uma modificação realizada na árvore
    */
   undo () {
+    console.log('undo')
     if (history.canUndo()) history.undo()
-    this.data = history.getState()
-    this.redrawTree(true)
+    this.json = history.getState()
+    console.log('undo', this.json)
+    this.mountTree()
   }
 
   /**
@@ -680,8 +654,9 @@ class D3Tree {
    */
   redo () {
     if (history.canRedo()) history.redo()
-    this.data = history.getState()
-    this.redrawTree(true)
+    this.json = history.getState()
+    console.log('redo', this.json)
+    this.mountTree()
   }
 
   /**
@@ -701,6 +676,29 @@ class D3Tree {
   async readJsonPP (json) {
     this.data = await this.mountTree(this.json)
     // this.redrawTree(true)
+  }
+
+  editNode (values) {
+    // { sourceNode: sourceNodeCode, edited: this.edit }
+    const nodeFoundByCode = this.json.node.find(node => node.code === values.sourceNodeCode)
+
+    const flowFoundByCodeIn = this.json.flow.filter(flow => flow.nodeIn === values.sourceNodeCode)
+    const flowFoundByCodeOut = this.json.flow.filter(flow => flow.nodeOut === values.sourceNodeCode)
+
+    // mudanças no node
+    nodeFoundByCode.code = values.edited.code
+    nodeFoundByCode.name = values.edited.name
+    nodeFoundByCode.description = values.edited.description
+
+    // mudanças de código nos flows
+    flowFoundByCodeIn.forEach(each => {
+      each.nodeIn = values.edited.code
+    })
+    flowFoundByCodeOut.forEach(each => {
+      each.nodeOut = values.edited.code
+    })
+
+    this.mountTree()
   }
 }
 

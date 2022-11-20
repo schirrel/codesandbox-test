@@ -14,6 +14,7 @@
         :optionSelect="optionSelect"
         :selectedNode="selectedNode"
         @confirmEditNode="confirmEditNode"
+        @saveChangesInput="saveChangesInput"
       />
 
       <TreeConfig :config="config" @executeModelCommand="executeModelCommand" />
@@ -94,6 +95,9 @@ export default {
     tree.build()
   },
   methods: {
+    saveChangesInput (value) {
+      tree.editNode(value)
+    },
     /**
      * Executa o tipo de clique escolhido no menu no nó selecionado
      * @param selected representa os dados do nó selecionado

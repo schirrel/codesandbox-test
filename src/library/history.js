@@ -1,11 +1,14 @@
 // Singleton to Stack to Manage History
 
+import utils from '@/helpers/util'
+
 const states = []
 let currentStateIndex = 0
 const limit = 50
 
 const history = {
   saveState: function (obj) {
+    obj = utils.methods.copyObject(obj)
     if (currentStateIndex > limit) {
       currentStateIndex -= 1
       states.shift()
