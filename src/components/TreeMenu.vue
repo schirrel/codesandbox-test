@@ -1,7 +1,7 @@
 <template>
-  <v-navigation-drawer clipped stateless v-model="drawer" absolute>
+  <v-navigation-drawer clipped stateless v-model="drawer" absolute :mini-variant="mini" >
     <v-list dense>
-      <v-subheader class="mt-2 grey--text text--darken-1">Fluxos</v-subheader>
+      <v-subheader class="mt-2 grey--text text--darken-1"> {{ mini ? '': 'Fluxos'}} </v-subheader>
 
       <v-list-item
         v-for="item in menuFlow"
@@ -19,7 +19,7 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-subheader class="mt-2 grey--text text--darken-1">Balanços</v-subheader>
+      <v-subheader class="mt-2 grey--text text--darken-1"> {{ mini ? '': 'Balanços'}} </v-subheader>
 
       <v-list-item
         v-for="item in menuBalance"
@@ -29,8 +29,8 @@
         :disabled="item.disabled"
         :ripple="true"
       >
-        <v-list-item-action>
-          <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
+        <v-list-item-action :disabled="item.disabled">
+          <v-icon :disabled="item.disabled" v-if="item.icon">{{ item.icon }}</v-icon>
           <img class="svg-custom-icon" v-else-if="item.iconSvg" :src="item.iconSvg"/>
         </v-list-item-action>
         <v-list-item-content>
@@ -39,7 +39,7 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-subheader class="mt-2 grey--text text--darken-1">Modelo</v-subheader>
+      <v-subheader class="mt-2 grey--text text--darken-1"> {{ mini ? '': 'Modelo'}} </v-subheader>
 
       <v-list-item
         v-for="item in menuModel"
@@ -186,7 +186,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .active {
   background-color: #f5f5f5;
 }
@@ -195,4 +195,8 @@ export default {
   height: 24px;
   width: 24px;
 }
+[disabled] .svg-custom-icon {
+  opacity: .8;
+}
+
 </style>

@@ -78,6 +78,33 @@ class D3Tree {
   }
 
   /**
+   * Muda a orientação da arvore
+   */
+  changeOrientationTree (newOrientation) {
+    console.log('Muda a orientação da arvore')
+    console.log(newOrientation)
+    this.selectedOrientationTree = newOrientation
+    this.orientation = orientationTree[this.selectedOrientationTree]
+    this.redrawTree(true)
+  }
+
+  /**
+   * Muda nodeh que afeta a distância entre os nós irmãos
+   */
+  changeNodeh (newValue) {
+    this.nodeh = newValue
+    this.redrawTree(true)
+  }
+
+  /**
+   * Muda nodew que afeta a distância entre pai e filho
+   */
+  changeNodew (newValue) {
+    this.nodew = newValue
+    this.redrawTree(true)
+  }
+
+  /**
    * Configura os atributos para edição e as cores das classes
    */
   setAttributesSelectAndColor (attributes) {
