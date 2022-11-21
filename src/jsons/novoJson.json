@@ -1,104 +1,159 @@
 {
     "node": [
-      {
-        "code": "N01",
-        "name": "Nó 01",
-        "formula": "PESO#MATRIZES + PRECO_PESO#NULIPARAS + PRECO_ARROBA#MATRIZES + CARCACA#MATRIZES + PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA",
-        "description": "<p>Descrição</p>",
-        "stage": "62b86017737735b773d7c768"
-      },
-      {
-        "code": "N02",
-        "name": "Nó 02",
-        "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA",
-        "description": "<p>Descrição</p>",
-        "stage": "62b86017737735b773d7c768"
-      }
+        {
+            "code": "A1",
+            "name": "Nó A1",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "B1",
+            "name": "Nó B1",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "ArbM",
+            "name": "Nó ArbM",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "ArbM2",
+            "name": "Nó ArbM2",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "RtyA",
+            "name": "Nó RtyA",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "VgAh",
+            "name": "Nó VgAh",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "LcTa",
+            "name": "Nó LcTa",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "MtsoR",
+            "name": "Nó MtsoR",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "PwkTb",
+            "name": "Nó PwkTb",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "CryiW",
+            "name": "Nó CryiW",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "Etfow",
+            "name": "Nó Etfow",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "tswPe",
+            "name": "Nó tswPe",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        }
     ],
     "flow": [
-      {
-        "type": "Produção",
-        "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
-        "nodeIn": "N01",
-        "nodeOut": "N02",
-        "resource": "62b86017737735b773d7c768"
-      }
+        {
+            "type": "Produção",
+            "formula": "",
+            "nodeIn": "A1",
+            "nodeOut": "B1",
+            "resource": ""
+        },{
+            "type": "Produção",
+            "formula": "",
+            "nodeIn": "B1",
+            "nodeOut": "ArbM",
+            "resource": ""
+        }, {
+            "type": "Produção",
+            "formula": "",
+            "nodeIn": "B1",
+            "nodeOut": "ArbM2",
+            "resource": ""
+        },{
+            "type": "Produção",
+            "formula": "",
+            "nodeIn": "ArbM",
+            "nodeOut": "LcTa",
+            "resource": ""
+        },{
+            "type": "Produção",
+            "formula": "",
+            "nodeIn": "ArbM",
+            "nodeOut": "MtsoR",
+            "resource": ""
+        },{
+            "type": "Tratamento",
+            "formula": "",
+            "nodeIn": "PwkTb",
+            "nodeOut": "ArbM",
+            "resource": ""
+        },{
+            "type": "Tratamento",
+            "formula": "",
+            "nodeIn": "RtyA",
+            "nodeOut": "B1",
+            "resource": ""
+        },{
+            "type": "Tratamento",
+            "formula": "",
+            "nodeIn": "VgAh",
+            "nodeOut": "B1",
+            "resource": ""
+        },{
+            "type": "Tratamento",
+            "formula": "",
+            "nodeIn": "CryiW",
+            "nodeOut": "VgAh",
+            "resource": ""
+        },{
+            "type": "Tratamento",
+            "formula": "",
+            "nodeIn": "Etfow",
+            "nodeOut": "VgAh",
+            "resource": ""
+        },{
+            "type": "Produção",
+            "formula": "",
+            "nodeIn": "VgAh",
+            "nodeOut": "tswPe",
+            "resource": ""
+        }
     ],
     "parameter": [
-      {
-        "name": "Categoria 1",
-        "parameter": [
-          {
-            "code": "PESO#MATRIZES",
-            "name": "Peso das matrizes",
-            "description": "Peso das matrizes",
-            "unit": "kg",
-            "minimum": 100,
-            "maximum": 1500,
-            "standard": 600,
-            "step": 50,
-            "fixed": false,
-            "internal": false,
-            "order": 1
-          },
-          {
-            "code": "VAGAO_MISTURADOR#VIDA_UTIL",
-            "name": "Vida útil do vagão misturador",
-            "description": "Vida útil do vagão misturador",
-            "unit": "ano",
-            "minimum": 1,
-            "maximum": 10,
-            "standard": 5,
-            "step": 1,
-            "fixed": false,
-            "internal": false,
-            "order": 1
-          },
-          {
-            "code": "VAGAO_MISTURADOR#PRECO",
-            "name": "Preço do vagão misturador",
-            "description": "Preço do vagão misturador",
-            "unit": "R$",
-            "minimum": 20000,
-            "maximum": 30000,
-            "standard": 25000,
-            "step": 500,
-            "fixed": false,
-            "internal": false,
-            "order": 1
-          }
-        ]
-      },
-      {
-        "name": "Categoria 2",
-        "parameter": [
-          {
-            "code": "VAGAO_MISTURADOR#VIDA_UTIL",
-            "name": "Vida útil do vagão misturador",
-            "description": "Vida útil do vagão misturador",
-            "unit": "ano",
-            "minimum": 1,
-            "maximum": 10,
-            "standard": 5,
-            "step": 1,
-            "fixed": false,
-            "internal": false,
-            "order": 1
-          },
-          {
-            "code": "VAGAO_MISTURADOR#PRECO",
-            "name": "Preço do vagão misturador",
-            "description": "Preço do vagão misturador",
-            "unit": "R$",
-            "minimum": 20000,
-            "maximum": 30000,
-            "standard": 25000,
-            "step": 500,
-            "fixed": false,
-            "internal": false,
-            "order": 1
-          }
-        ]
-      }
     ]
-  }
+}

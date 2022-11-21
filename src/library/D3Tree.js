@@ -14,6 +14,8 @@ export const actionsType = {
   remove: 'removeNode',
   addBalance: 'addBalance',
   removeBalance: 'removeBalance',
+  addStation: 'addStation',
+  removeStation: 'removeStation',
   edit: 'editNode',
   undo: 'undo',
   redo: 'redo',

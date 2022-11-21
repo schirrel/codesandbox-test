@@ -16,6 +16,202 @@
         },
         {
             "code": "ArbM",
+            "name": "Nó ArbM",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "ArbM2",
+            "name": "Nó ArbM2",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "RtyA",
+            "name": "Nó RtyA",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "VgAh",
+            "name": "Nó VgAh",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "LcTa",
+            "name": "Nó LcTa",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "MtsoR",
+            "name": "Nó MtsoR",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "PwkTb",
+            "name": "Nó PwkTb",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "CryiW",
+            "name": "Nó CryiW",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "Etfow",
+            "name": "Nó Etfow",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "tswPe",
+            "name": "Nó tswPe",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "187c3",
+            "name": "",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "e7139",
+            "name": "",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "358a1",
+            "name": "",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "58a38",
+            "name": "",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "6995d",
+            "name": "",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "530cc",
+            "name": "",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "70ddf",
+            "name": "",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "74acb",
+            "name": "",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "ab16a",
+            "name": "",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "7fb8d",
+            "name": "",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "3645f",
+            "name": "",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "2f89a",
+            "name": "",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "46600",
+            "name": "",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "5edbd",
+            "name": "",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "65027",
+            "name": "",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "09b63",
+            "name": "",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "9bb60",
+            "name": "",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "233b4",
+            "name": "",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "e8365",
             "name": "",
             "formula": "",
             "description": "",
@@ -34,7 +230,204 @@
             "type": "Produção",
             "formula": "",
             "nodeIn": "B1",
-            "nodeOut": "ArbM"
+            "nodeOut": "ArbM",
+            "resource": ""
+        },
+        {
+            "type": "Produção",
+            "formula": "",
+            "nodeIn": "B1",
+            "nodeOut": "ArbM2",
+            "resource": ""
+        },
+        {
+            "type": "Produção",
+            "formula": "",
+            "nodeIn": "ArbM",
+            "nodeOut": "LcTa",
+            "resource": ""
+        },
+        {
+            "type": "Produção",
+            "formula": "",
+            "nodeIn": "ArbM",
+            "nodeOut": "MtsoR",
+            "resource": ""
+        },
+        {
+            "type": "Tratamento",
+            "formula": "",
+            "nodeIn": "PwkTb",
+            "nodeOut": "ArbM",
+            "resource": ""
+        },
+        {
+            "type": "Tratamento",
+            "formula": "",
+            "nodeIn": "RtyA",
+            "nodeOut": "B1",
+            "resource": ""
+        },
+        {
+            "type": "Tratamento",
+            "formula": "",
+            "nodeIn": "VgAh",
+            "nodeOut": "B1",
+            "resource": ""
+        },
+        {
+            "type": "Tratamento",
+            "formula": "",
+            "nodeIn": "CryiW",
+            "nodeOut": "VgAh",
+            "resource": ""
+        },
+        {
+            "type": "Tratamento",
+            "formula": "",
+            "nodeIn": "Etfow",
+            "nodeOut": "VgAh",
+            "resource": ""
+        },
+        {
+            "type": "Produção",
+            "formula": "",
+            "nodeIn": "VgAh",
+            "nodeOut": "tswPe",
+            "resource": ""
+        },
+        {
+            "type": "Produção",
+            "formula": "",
+            "resource": "",
+            "nodeIn": "LcTa",
+            "nodeOut": "187c3"
+        },
+        {
+            "type": "Produção",
+            "formula": "",
+            "resource": "",
+            "nodeIn": "MtsoR",
+            "nodeOut": "e7139"
+        },
+        {
+            "type": "Produção",
+            "formula": "",
+            "resource": "",
+            "nodeIn": "tswPe",
+            "nodeOut": "358a1"
+        },
+        {
+            "type": "Produção",
+            "formula": "",
+            "resource": "",
+            "nodeIn": "VgAh",
+            "nodeOut": "58a38"
+        },
+        {
+            "type": "Tratamento",
+            "formula": "",
+            "resource": "",
+            "nodeIn": "6995d",
+            "nodeOut": "CryiW"
+        },
+        {
+            "type": "Tratamento",
+            "formula": "",
+            "resource": "",
+            "nodeIn": "530cc",
+            "nodeOut": "PwkTb"
+        },
+        {
+            "type": "Tratamento",
+            "formula": "",
+            "resource": "",
+            "nodeIn": "70ddf",
+            "nodeOut": "PwkTb"
+        },
+        {
+            "type": "Tratamento",
+            "formula": "",
+            "resource": "",
+            "nodeIn": "74acb",
+            "nodeOut": "RtyA"
+        },
+        {
+            "type": "Tratamento",
+            "formula": "",
+            "resource": "",
+            "nodeIn": "ab16a",
+            "nodeOut": "RtyA"
+        },
+        {
+            "type": "Tratamento",
+            "formula": "",
+            "resource": "",
+            "nodeIn": "7fb8d",
+            "nodeOut": "Etfow"
+        },
+        {
+            "type": "Tratamento",
+            "formula": "",
+            "resource": "",
+            "nodeIn": "3645f",
+            "nodeOut": "Etfow"
+        },
+        {
+            "type": "Produção",
+            "formula": "",
+            "resource": "",
+            "nodeIn": "187c3",
+            "nodeOut": "2f89a"
+        },
+        {
+            "type": "Produção",
+            "formula": "",
+            "resource": "",
+            "nodeIn": "187c3",
+            "nodeOut": "46600"
+        },
+        {
+            "type": "Produção",
+            "formula": "",
+            "resource": "",
+            "nodeIn": "187c3",
+            "nodeOut": "5edbd"
+        },
+        {
+            "type": "Produção",
+            "formula": "",
+            "resource": "",
+            "nodeIn": "e7139",
+            "nodeOut": "65027"
+        },
+        {
+            "type": "Produção",
+            "formula": "",
+            "resource": "",
+            "nodeIn": "PwkTb",
+            "nodeOut": "09b63"
+        },
+        {
+            "type": "Produção",
+            "formula": "",
+            "resource": "",
+            "nodeIn": "RtyA",
+            "nodeOut": "9bb60"
+        },
+        {
+            "type": "Produção",
+            "formula": "",
+            "resource": "",
+            "nodeIn": "Etfow",
+            "nodeOut": "233b4"
+        },
+        {
+            "type": "Produção",
+            "formula": "",
+            "resource": "",
+            "nodeIn": "CryiW",
+            "nodeOut": "e8365"
         }
     ],
     "parameter": []

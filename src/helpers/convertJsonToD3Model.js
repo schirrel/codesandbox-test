@@ -1,38 +1,39 @@
 import { nodeTypes } from '../library/D3Tree/constants'
 
+// procura e retorna o nó baseado em seu code
 const getNode = (code, data) => {
   return data.node.find(node => node.code === code)
 }
 
-const generateChildren = (data) => {
+const gerarListagemDeChildren = (data) => {
+  /*
+  Percorre cada item de flow
+  */
   data.flow.forEach(flow => {
+    // Encontra quem é o nó "pai"/superior a partir do code e do tipo do nó
     const parent = getNode(nodeTypes.isProducaoSaida(flow.type) ? flow.nodeIn : flow.nodeOut, data)
+    // Se já tiver uma propriedade children utiliza, senão a instancia como uma array vazia
     parent.children = parent.children || []
-    const child = getNode(nodeTypes.isProducaoSaida(flow.type) ? flow.nodeOut : flow.nodeIn, data)
-    child.hasParent = true
-    parent.children.push({
-      node: child,
-      flow
-    })
-  })
-  return data
-}
 
-const flatTree = (data) => {
-  if (data.node.children?.length) {
-    data.node.children = data.node.children.map(child => {
-      return flatTree(child)
-    })
-  }
-  return {
-    ...data.node,
-    flow: data.flow
-  }
+    // Encontra quem é o nó "filho"/inferior a partir do code e do tipo do nó
+    const child = getNode(nodeTypes.isProducaoSaida(flow.type) ? flow.nodeOut : flow.nodeIn, data)
+
+    // seta hasParente = true, pois um nó sem pais é o primeiro da lista
+    child.hasParent = true
+
+    // adiciona o nó filho encontrado a listagem de filhos do nó pai
+    const node = child
+    node.flow = flow
+    parent.children.push(node)
+  })
+
+  // retorna a mesma listagem, agora com as propriedades children nos nós
+  return data
 }
 
 export const convertJsonToTree = (data) => {
-  data = generateChildren(data)
-  const root = data.node.find(node => !node.hasParent)
-  data = flatTree({ node: root }, true)
-  return data
+  // gera listagem de children dentro de cada nó para formar a arvore
+  data = gerarListagemDeChildren(data)
+  // retorna primeiro nó, quem não tem pai
+  return data.node.find(node => !node.hasParent)
 }
