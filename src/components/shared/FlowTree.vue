@@ -26,7 +26,6 @@
         @confirmEditNode="confirmEditNode"
       />
     </v-container>
-    <TreeNewNodeModal ref="newNodeItem" />
   </section>
 </template>
 
@@ -37,6 +36,7 @@ import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
 // import { useSentry } from '@/plugins/sentry'
 
+import uuid from '@/library/uuid'
 import jsonExampleLoadFluxograma from '@/jsons/jsonFluxograma.json'
 // import jsonExampleIgnoreSimulationData from '@/jsons/jsonPlataforma.json'
 // import jsonFernando from '@/jsons/jsonFernando.json'
@@ -44,14 +44,13 @@ import TreeMenu from '@/components/TreeMenu'
 import TreeModal from '@/components/TreeModal'
 import TreeConfig from '@/components/TreeConfig'
 import TreeChildren from '@/components/TreeChildren'
-import TreeNewNodeModal from '@/components/TreeNewNodeModal'
 
 import D3TreeClass, { actionsType, nodesType, nodesTypeName } from '@/library/NewD3Tree'
 const tree = new D3TreeClass()
 Vue.use(VueSweetalert2)
 
 export default {
-  components: { TreeMenu, TreeModal, TreeConfig, TreeChildren, TreeNewNodeModal },
+  components: { TreeMenu, TreeModal, TreeConfig, TreeChildren },
   props: {
     simulation: {
       type: Object,
@@ -106,15 +105,12 @@ export default {
     handleOnclickFunction (selected, index) {
       switch (this.TypeOfActionSelectedNow) {
         case actionsType.addIn:
-          this.$refs.newNodeItem.open().then((code) => {
-            tree.addChildrenNode(selected, index, nodesTypeName.in, code)
-          })
+          tree.addChildrenNode(selected, index, nodesTypeName.in, uuid())
 
           break
         case actionsType.addOut:
-          this.$refs.newNodeItem.open().then((code) => {
-            tree.addChildrenNode(selected, index, nodesTypeName.out, code)
-          })
+          tree.addChildrenNode(selected, index, nodesTypeName.out, uuid())
+
           break
         case actionsType.remove:
           tree.removeChildrenNode(selected, index)

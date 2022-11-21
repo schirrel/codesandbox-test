@@ -8,11 +8,15 @@
   >
     <v-card>
       <v-card-text>
+                      <v-form v-model="valid" ref="form" @submit.prevent="submit">
+
         <v-container>
             <v-text-field
             label="Code"
             v-model="edit.code"
             :disabled="edit.disableEdit"
+            :rules="[rules.required, rules.counter, rules.min,  rules.alphanumericUnderscore, rules.notExisists]"
+
           />
           <v-text-field
             label="Nome"
@@ -39,20 +43,8 @@
             required
             :disabled="edit.disableEdit"
           />
-          <v-select
-            :items="optionSelect.duration"
-            label="Duração"
-            v-model="edit.duration"
-            required
-            :disabled="edit.disableEdit"
-          />
-          <v-select
-            :items="optionSelect.factor"
-            label="Fator"
-            v-model="edit.factor"
-            required
-          />
         </v-container>
+                      </v-form>
       </v-card-text>
       <v-card-actions>
         <v-btn @click="cancelChangeInNode">Cancelar</v-btn>
@@ -79,7 +71,21 @@ export default {
         factor: ''
       },
       modalModel: false,
-      selectedNodeModel: {}
+      selectedNodeModel: {},
+      valid: false,
+      rules: {
+        required: value => !!value || 'Obrigatorio.',
+        counter: value => value.length <= 6 || 'Máximo de 6 digitos',
+        min: value => value.length > 2 || 'Mínimo de 3 digitos',
+        alphanumericUnderscore: value => {
+          const pattern = /^\w+$/
+          return pattern.test(value) || 'Somente números e letras.'
+        },
+        notExisists: value => {
+          const currentJson = localStorage.json ? JSON.parse(localStorage.json)?.node?.map(node => node.code) : []
+          return !currentJson.some(current => current === value) || 'Code existente'
+        }
+      }
     }
   },
   watch: {
@@ -143,9 +149,12 @@ export default {
      * salvando a modificação no histórico para poder ser desfeita
      **/
     saveChangeInNode () {
-      this.saveChangesInput()
-      this.cleanChangeInputs()
-      this.$emit('confirmEditNode', false)
+      const validate = this.$refs.form.validate()
+      if (validate) {
+        this.saveChangesInput()
+        this.cleanChangeInputs()
+        this.$emit('confirmEditNode', false)
+      }
     },
 
     /**
