@@ -39,6 +39,26 @@
         </v-list-item-content>
       </v-list-item>
 
+      <v-subheader class="mt-2 grey--text text--darken-1"> {{ mini ? '': 'Estações'}} </v-subheader>
+
+      <v-list-item
+        v-for="item in menuStation"
+        :key="item.value"
+        @click="setTypeOfClick(item.value)"
+        :class="isActive(item.value)"
+        :disabled="item.disabled"
+        :ripple="true"
+      >
+        <v-list-item-action :disabled="item.disabled">
+          <v-icon :disabled="item.disabled" v-if="item.icon">{{ item.icon }}</v-icon>
+          <img class="svg-custom-icon" v-else-if="item.iconSvg" :src="item.iconSvg"/>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>{{ item.text }}</v-list-item-title>
+          <small>  Desabilitado </small>
+        </v-list-item-content>
+      </v-list-item>
+
       <v-subheader class="mt-2 grey--text text--darken-1"> {{ mini ? '': 'Modelo'}} </v-subheader>
 
       <v-list-item
@@ -115,6 +135,23 @@ export default {
           text: 'Excluir',
           icon: 'mdi-close-circle',
           value: actionsType.removeBalance,
+          disabled: true
+        }
+      ],
+      /**
+       * Vetor usado para construir o submenu de Balanço
+       */
+      menuStation: [
+        {
+          text: 'Adicionar',
+          iconSvg: tripOrigin,
+          value: actionsType.addStation,
+          disabled: true
+        },
+        {
+          text: 'Excluir',
+          icon: 'mdi-close-circle',
+          value: actionsType.removeStation,
           disabled: true
         }
       ],
