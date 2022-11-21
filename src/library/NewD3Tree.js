@@ -95,42 +95,37 @@ class D3Tree {
    * no localstorage esse dado sera carregado
    */
   async inicializeData (reset) {
-    this.data = {
-      name: 'A1',
-      description: DEFAULT.description,
-      value: 1, //
-      class: DEFAULT.class,
-      resource: DEFAULT.resource,
-      unit: DEFAULT.unit,
-      category: DEFAULT.category,
-      duration: DEFAULT.duration,
-      factor: DEFAULT.factor,
-      children: [
+    const resetData = {
+      node: [
         {
-          name: 'B1',
-          description: DEFAULT.description,
-          value: 1,
-          class: DEFAULT.class,
-          resource: DEFAULT.resource,
-          unit: DEFAULT.unit,
-          category: DEFAULT.category,
-          duration: DEFAULT.duration,
-          factor: DEFAULT.factor,
-          children: []
+          code: 'A01',
+          name: 'Nó A1',
+          formula: '',
+          description: '',
+          stage: ''
+        }, {
+          code: 'B01',
+          name: 'Nó B1',
+          formula: '',
+          description: '',
+          stage: ''
+        }
+      ],
+      flow: [
+        {
+          type: nodesTypeName.out,
+          formula: '',
+          nodeIn: 'A01',
+          nodeOut: 'B01',
+          resource: ''
         }
       ]
     }
 
-    // TODO validar esse código
-    // if (reset === false && this.json.simulationData.graph.root[0] === "n") {
-    //   console.log("Json novo");
-    //   this.readJsonPP(this.json);
-    // } else {
-    //   throw error.enums.oldJson
-    // this.load()
-    // }
+    if (reset) {
+      this.json = resetData
+    }
 
-    // this.readJsonPP(this.json)
     const copyJson = utils.methods.copyObject(this.json)
     await this.mountTree(copyJson)
   }
@@ -586,10 +581,10 @@ class D3Tree {
    */
   checkIfIsCantRemoveNode (node) {
     const qtdBrother = node.parent.children.length
-    const typeFather = node.parent.data.value
-    const typeNode = node.data.value
+    const typeFather = node.parent.data.flow.type
+    const typeNode = node.data.flow.type
     const nodeTypeFather = node.parent.children.filter(
-      n => n.data.value === typeFather
+      n => n.data.flow.type === typeFather
     )
 
     if (typeNode !== typeFather) {
@@ -613,8 +608,6 @@ class D3Tree {
    * Salva o json com dados da árvore no localstorage
    */
   save () {
-    // this.resetNodeSelected(true, true)
-    // localStorage.data = JSON.stringify(this.data)
     localStorage.json = JSON.stringify(this.json)
   }
 
@@ -668,14 +661,6 @@ class D3Tree {
       title: 'Oops...',
       text: msg
     })
-  }
-
-  /**
-   * Converte o JSON da P+P para formato do D3.js
-   */
-  async readJsonPP (json) {
-    this.data = await this.mountTree(this.json)
-    // this.redrawTree(true)
   }
 
   editNode (values) {
