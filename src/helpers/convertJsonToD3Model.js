@@ -30,8 +30,6 @@ const gerarListagemDeChildren = (data) => {
     parent.children.push(node)
   })
 
-  localStorage.data = JSON.stringify(data)
-  console.log(data)
   // retorna a mesma listagem, agora com as propriedades children nos nós
   return data
 }

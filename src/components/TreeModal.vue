@@ -23,12 +23,10 @@
             v-model="edit.name"
             :disabled="edit.disableEdit"
           />
-          <v-text-field
-            label="Descrição"
-            v-model="edit.description"
-            required
-            :disabled="edit.disableEdit"
-          />
+          <div>
+            <label class="editor__label"> Descrição </label>
+            <rich-edit :disabled="edit.disableEdit" v-model="edit.description" dense> </rich-edit>
+          </div>
           <v-select
             :items="optionSelect.class"
             label="Classe"
@@ -55,7 +53,9 @@
 </template>
 
 <script>
+import RichEdit from '@/components/RichEdit.vue'
 export default {
+  components: { RichEdit },
   props: ['modal', 'optionSelect', 'selectedNode'],
   data () {
     return {

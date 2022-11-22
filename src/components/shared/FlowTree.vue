@@ -227,25 +227,22 @@ export default {
        * O fluxograma ira carregar os dados do simulationData e gerar fluxograma salvo.
        * Exemplo de json -> jsonExampleLoadFluxograma
        */
-      tree.setJsonFromPP(json)
+      tree.setJsonFromPP(json.data.system)
 
-      // Carrega os dados do json para gerar os selecteds com as opções fornecidas
-      // this.loadVectorFromJson(
-      //   json.simulationData.formulas.flows,
-      //   this.optionSelect.factor
-      // )
-      // this.loadVectorFromJson(
-      //   json.simulationData.formulas.nodes,
-      //   this.optionSelect.duration
-      // )
-      // this.loadClassFromJson(
-      //   json.simulationData.stagesHierarchy,
-      //   this.optionSelect.class
-      // )
-      // this.loadResourceFromJson(
-      //   json.simulationData.resources,
-      //   this.optionSelect.resource
-      // )
+      this.optionSelect.class = json.data.stage.map(stage => {
+        return {
+          color: stage.color.name,
+          text: stage.name
+        }
+      })
+
+      this.optionSelect.resource = json.data.resource.map(resource => {
+        return {
+          unit: resource.unit,
+          category: resource.resourceCategory,
+          text: resource.name
+        }
+      })
     },
 
     /**

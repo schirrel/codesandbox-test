@@ -40,6 +40,7 @@ class D3Tree {
     this.optionSelect = {}
     this.modal = false
     this.json = null
+    this.jsonData = null
   }
 
   /**
@@ -53,7 +54,11 @@ class D3Tree {
    * Salva uma copia do json recebido da plataforma P+P
    */
   setJsonFromPP (json) {
-    this.json = json
+    this.jsonData = json
+    this.json = {
+      node: json.node,
+      flow: json.flow
+    }
   }
 
   /**
@@ -575,7 +580,7 @@ class D3Tree {
    * Verifica se tem permissão para adicionar um novo nó
    */
   checkIfHavePermission (fatherNode, newNodeType, add) {
-    const fatherType = fatherNode.data.flow.type
+    const fatherType = fatherNode.data?.flow?.type
 
     // Não é possível incluir novas Arestas ao Vértice raiz
     if (fatherNode.depth === 0) {
