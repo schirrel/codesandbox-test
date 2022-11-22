@@ -5,6 +5,9 @@ const getNode = (code, data) => {
   return data.node.find(node => node.code === code)
 }
 
+/*
+Essa função apenas cria uma listagem de children dentro de cada node
+*/
 const gerarListagemDeChildren = (data) => {
   /*
   Percorre cada item de flow
@@ -27,6 +30,8 @@ const gerarListagemDeChildren = (data) => {
     parent.children.push(node)
   })
 
+  localStorage.data = JSON.stringify(data)
+  console.log(data)
   // retorna a mesma listagem, agora com as propriedades children nos nós
   return data
 }
