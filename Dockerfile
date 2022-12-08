@@ -27,6 +27,11 @@ RUN npm run build
 
 # release stage
 FROM nginx:stable-alpine as release-stage
+
+COPY ./docker/nginx/default.conf /etc/nginx/conf.d/
+
 COPY --from=build-stage /app/dist /usr/share/nginx/html
+
 EXPOSE 80
+
 CMD [ "nginx", "-g", "daemon off;" ]
