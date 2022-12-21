@@ -28,7 +28,15 @@ module.exports = defineConfig({
           }
         }
       })
-    ]
+    ],
+    module: {
+      rules: [
+        {
+          test: /\.coffee$/,
+          loader: 'coffee-loader'
+        }
+      ]
+    }
   },
   devServer: {
     port: process.env.PORT

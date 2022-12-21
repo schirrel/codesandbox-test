@@ -5,6 +5,14 @@ const getNode = (code, data) => {
   return data.node.find(node => node.code === code)
 }
 
+const parentOf = function (flow, inThisSystemCopy) {
+  if (nodeTypes.isProducaoSaida(flow.type)) {
+    return getNode(flow.nodeIn, inThisSystemCopy)
+  } else {
+    return getNode(flow.nodeOut, inThisSystemCopy)
+  }
+}
+
 /*
 Essa função apenas cria uma listagem de children dentro de cada node
 */
@@ -14,7 +22,7 @@ const gerarListagemDeChildren = (data) => {
   */
   data.flow.forEach(flow => {
     // Encontra quem é o nó "pai"/superior a partir do code e do tipo do nó
-    const parent = getNode(nodeTypes.isProducaoSaida(flow.type) ? flow.nodeIn : flow.nodeOut, data)
+    const parent = parentOf(flow, data)
     // Se já tiver uma propriedade children utiliza, senão a instancia como uma array vazia
     parent.children = parent.children || []
 

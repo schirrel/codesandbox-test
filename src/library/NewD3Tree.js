@@ -1,7 +1,9 @@
 import * as d3 from 'd3'
 import history from './history'
 import error from '@/helpers/error'
-import { convertJsonToTree } from '@/helpers/convertJsonToD3Model'
+// import { convertJsonToTree } from '@/helpers/convertJsonToD3Model'
+import { addChildrenToNodes } from '@/helpers/addChildrenToNodes'
+
 import { orientationTree, nodesType, nodeTypes, nodesTypeName, actionsType, colors } from './D3Tree/constants'
 import utils from '@/helpers/util'
 export { nodesType, nodesTypeName, actionsType }
@@ -406,7 +408,10 @@ class D3Tree {
    * transparente
    */
   selectStrokeColorBalance (d) {
-    if (d.data.idBalance > 0) { return d.value === 0 ? colors.tratamento : colors.producao } else return 'transparent'
+    if (d.data.balanceCode) {
+      return nodeTypes.isProducaoSaida(d.data.nodeType) ? colors.producao : colors.tratamento
+    } else return 'transparent'
+    // if (d.data.idBalance > 0) { return d.value === 0 ? colors.tratamento : colors.producao }
   };
 
   /**
@@ -632,7 +637,11 @@ class D3Tree {
 
   async mountTree () {
     const copyJson = utils.methods.copyObject(this.json)
-    this.data = await convertJsonToTree(copyJson)
+
+    // const data2 = convertJsonToTree(copyJson)
+    const data = addChildrenToNodes(copyJson)
+    console.log(data)
+    this.data = data
     this.redrawTree(true)
   }
 
