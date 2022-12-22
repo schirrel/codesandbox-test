@@ -2,12 +2,12 @@
 
 # Constante para teste do tipo do Fluxo:
 #PRODUCTION = 0
+# @Alan: enquanto nosso código ainda trata como string
 PRODUCTION = 'Produção'
-# enquanto nosso código ainda trata como string
 #---------------------
 
-# Sugestão de como copiar (deepcopy) objeto Sistema em objeto data para um objeto "inThisSystemCopyCopy".
-inThisSystemCopy = JSON.parse JSON.stringify data.system
+# @Alan: Inicialiazando objeto como null e preenchendo na exeução de addChildrenToNodes
+inThisSystemCopy = null
 
 #---------------------
 
@@ -30,7 +30,11 @@ isBalanceCode = (nodeCode, inThisSystemCopy) ->
 #---------------------
 
 # Adiciona lista de Filhos (children) cada Nó do Sistema (system.node), com um elemento para cada Fluxo (flow) do qual o Nó é Pai (parent). 
-addChildrenToNodes = (inThisSystemCopy) ->
+# @Alan: alterei para receber o data original para que o arquivo tenha conhecimento dele, e entao eu salvo no inThisSystemCopy
+# @Alan: source = data.system
+addChildrenToNodes = (source) ->
+  # Sugestão de como copiar (deepcopy) objeto Sistema em objeto data para um objeto "inThisSystemCopyCopy".
+  inThisSystemCopy = JSON.parse JSON.stringify source
 
   # Para cada Fluxo neste Sistema, na ordem com que foram incluídos: 
   for f in inThisSystemCopy.flow
@@ -63,6 +67,9 @@ addChildrenToNodes = (inThisSystemCopy) ->
     n.children.push c
 
   # Retorna o Nó Raiz, isto é, aquele que não tem Pai.
+  # @Alan: o código só inicializa o valor de hasParent nos filhos, entao o parent não é false, mas undefined
+  #        o coffeescript converte undefined para `void 0;` que o javascript nao aceita, então mudei de is false para isnt true
   inThisSystemCopy.node.find (n) -> n.hasParent isnt true
-  # o código só inicializa o valor de hasParent entao o parent não é false, mas sim undefined
-  # o coffeescript converte undefined para `void 0;` que o javascript nao aceita, então mudei de is false para isnt true
+
+# @Alan: adicionei a exportação pra poder usar a funcao no outro arquivo
+module.exports = { addChildrenToNodes }

@@ -33,9 +33,26 @@ module.exports = defineConfig({
       rules: [
         {
           test: /\.coffee$/,
-          loader: 'coffee-loader'
+          use: [
+            {
+              loader: 'coffee-loader',
+              options: { sourceMap: true }
+            }
+          ]
         }
       ]
+      // rules: [
+      //   {
+      //     test: /\.coffee$/,
+      //     loader: 'coffee-loader',
+      //     options: {
+      //       bare: false,
+      //       transpile: {
+      //         presets: ['@babel/env']
+      //       }
+      //     }
+      //   }
+      // ]
     }
   },
   devServer: {
