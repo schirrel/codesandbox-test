@@ -42,29 +42,31 @@ addChildrenToNodes = (source) ->
     # Encontra o Nó "Filho" deste Fluxo.
     c = childOf f, inThisSystemCopy
 
-    # Acrescenta atributo indicando o Fluxo do qual o Nó é Filho.
-    c.flow = f
+    # @Alan: com a adição de balanço precisa-se colocar isso
+    if(c isnt undefined)
+      # Acrescenta atributo indicando o Fluxo do qual o Nó é Filho.
+      c.flow = f
 
-    # Acrescenta atributo indicando que o Nó tem Pai (para facilitar a localização futura do Nó Raiz, que não tem Pai).
-    c.hasParent = true
+      # Acrescenta atributo indicando que o Nó tem Pai (para facilitar a localização futura do Nó Raiz, que não tem Pai).
+      c.hasParent = true
 
-    # Encontra o Nó "Pai" deste mesmo Fluxo.
-    n = parentOf f, inThisSystemCopy
+      # Encontra o Nó "Pai" deste mesmo Fluxo.
+      n = parentOf f, inThisSystemCopy
 
-    # Se o Nó Pai deste Fluxo é Balanço: 
-    if isBalanceCode n, inThisSystemCopy
-      # Procura o primeiro Fluxo do Sistema do qual o Balanço é Filho:
-      for f1 in inThisSystemCopy.flow then break if n is childOf f1, inThisSystemCopy
-      # O Código do Balanço é salvo na Estação Filha do Balanço, para uso futuro.
-      c.balanceCode = n
-      # A Estação Pai do Balanço será assumida como Pai da Estação Filha do Balanço (i.e., Balanço não terá "children"):
-      n = parentOf f1, inThisSystemCopy
-    
-    # Se O Nó n já tiver "children", utiliza, senão instancia como "array" vazio.
-    n.children = n.children or []
+      # Se o Nó Pai deste Fluxo é Balanço: 
+      if isBalanceCode n, inThisSystemCopy
+        # Procura o primeiro Fluxo do Sistema do qual o Balanço é Filho:
+        for f1 in inThisSystemCopy.flow then break if n is childOf f1, inThisSystemCopy
+        # O Código do Balanço é salvo na Estação Filha do Balanço, para uso futuro.
+        c.balanceCode = n
+        # A Estação Pai do Balanço será assumida como Pai da Estação Filha do Balanço (i.e., Balanço não terá "children"):
+        n = parentOf f1, inThisSystemCopy
+      
+      # Se O Nó n já tiver "children", utiliza, senão instancia como "array" vazio.
+      n.children = n.children or []
 
-    # Acrescenta o Nó filho à lista "children" do Nó n.
-    n.children.push c
+      # Acrescenta o Nó filho à lista "children" do Nó n.
+      n.children.push c
 
   # Retorna o Nó Raiz, isto é, aquele que não tem Pai.
   # @Alan: o código só inicializa o valor de hasParent nos filhos, entao o parent não é false, mas undefined

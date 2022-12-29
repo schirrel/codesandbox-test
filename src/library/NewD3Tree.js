@@ -3,10 +3,10 @@ import history from './history'
 import error from '@/helpers/error'
 // import { convertJsonToTree } from '@/helpers/convertJsonToD3Model'
 import { addChildrenToNodes } from '@/coffee/addChildrenToNodes.coffee'
+import { addBalance } from '@/coffee/addBalance.coffee'
 import { orientationTree, nodesType, nodeTypes, nodesTypeName, actionsType, colors } from './D3Tree/constants'
 import utils from '@/helpers/util'
 export { nodesType, nodesTypeName, actionsType }
-
 const DEFAULT = {
   name: '',
   description: '',
@@ -407,8 +407,8 @@ class D3Tree {
    * transparente
    */
   selectStrokeColorBalance (d) {
-    if (d.data.balanceCode) {
-      return nodeTypes.isProducaoSaida(d.data.nodeType) ? colors.producao : colors.tratamento
+    if (d.data.balance) {
+      return d.data.flow.type === 'Produção' ? colors.producao : colors.tratamento
     } else return 'transparent'
     // if (d.data.idBalance > 0) { return d.value === 0 ? colors.tratamento : colors.producao }
   };
@@ -635,10 +635,11 @@ class D3Tree {
   }
 
   async mountTree () {
-    const copyJson = utils.methods.copyObject(this.json)
+    const copyJson = { ...utils.methods.copyObject(this.json) }
 
     // const data2 = convertJsonToTree(copyJson)
     const data = addChildrenToNodes(copyJson)
+
     this.data = data
     this.redrawTree(true)
   }
@@ -702,6 +703,17 @@ class D3Tree {
     })
   }
 
+  /**
+   * Reseta a variavel responsavel por controlar qual foi o primeiro clique no
+   * momento da criação do balanço
+   */
+  resetNodeSelected (notSaveState) {
+    this.balanceClicked.id = null
+    this.balanceClicked.d = null
+    if (notSaveState) this.redrawTree(true)
+    else this.redrawTree()
+  }
+
   editNode (values) {
     // { sourceNode: sourceNodeCode, edited: this.edit }
     const nodeFoundByCode = this.json.node.find(node => node.code === values.sourceNodeCode)
@@ -723,6 +735,92 @@ class D3Tree {
     })
 
     this.mountTree()
+  }
+
+  /**
+   * Adiciona ao nó o tipo balanço, caso as regras de negócio sejam satisfeitas
+   */
+  changeNodeTypeToBalance (d, id) {
+    if (
+      d.depth === 0 ||
+      d.depth === 1
+    ) {
+      this.msgAlertUser(error.enums.cannotAddBalanceInDefaultNodes)
+      this.resetNodeSelected(true)
+      return false
+    }
+
+    if (d.children && d.children.length > 0 && this.counterBalanceClick === 0) {
+      this.msgAlertUser(error.enums.cannotHaveChildren)
+      this.resetNodeSelected(true)
+      return false
+    }
+
+    if (
+      d.data.idBalance > 0
+    ) {
+      this.msgAlertUser(error.enums.cannotCreateBalanceIfIsAlready)
+      this.resetNodeSelected(true)
+      return false
+    }
+
+    this.counterBalanceClick += 1
+
+    if (this.counterBalanceClick === 2) {
+      this.counterBalanceClick = 0
+
+      if (d === this.balanceClicked.d) {
+        this.resetNodeSelected(true)
+        return false
+      }
+
+      if (d.data.resource !== this.balanceClicked.d.data.resource) {
+        this.msgAlertUser(error.enums.cannotHaveBalanceWithDifferentRessources)
+        this.resetNodeSelected(true)
+        return false
+      }
+
+      if (
+        d.data.idBalance > 0
+      ) {
+        this.msgAlertUser(error.enums.cannotCreateBalanceIfIsAlready)
+        this.resetNodeSelected(true)
+        return false
+      }
+
+      if (d === this.balanceClicked.d.parent) {
+        this.msgAlertUser(error.enums.cannotAddBalanceBetweenParentAndChildren)
+        this.resetNodeSelected(true)
+        return false
+      }
+
+      if (!this.balanceClicked.d.children) {
+        if (!d.children) {
+          this.msgAlertUser(error.enums.mustHaveChildren)
+          this.resetNodeSelected(true)
+          return false
+        }
+      }
+      const copyJson = { ...utils.methods.copyObject(this.json) }
+
+      const added = addBalance(this.balanceClicked.d.data, d.data, copyJson)
+      this.json = added
+      this.mountTree()
+
+      // if (d.data.idBalance > 0) {
+      //   this.balanceClicked.d.data.idBalance = d.data.idBalance
+      // } else {
+      //   d.data.idBalance = this.counterBalance
+      //   this.balanceClicked.d.data.idBalance = this.counterBalance
+      //   this.counterBalance += 1
+      // }
+
+      // this.copyBalanceData(this.balanceClicked.d, d)
+      // this.resetNodeSelected()
+    } else {
+      this.balanceClicked.id = id
+      this.balanceClicked.d = d
+    }
   }
 }
 

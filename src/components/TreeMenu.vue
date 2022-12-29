@@ -55,7 +55,6 @@
         </v-list-item-action>
         <v-list-item-content>
           <v-list-item-title>{{ item.text }}</v-list-item-title>
-          <small>  Desabilitado </small>
         </v-list-item-content>
       </v-list-item>
 
@@ -128,14 +127,12 @@ export default {
         {
           text: 'Adicionar',
           iconSvg: tripOrigin,
-          value: actionsType.addBalance,
-          disabled: true
+          value: actionsType.addBalance
         },
         {
           text: 'Excluir',
           icon: 'mdi-close-circle',
-          value: actionsType.removeBalance,
-          disabled: true
+          value: actionsType.removeBalance
         }
       ],
       /**

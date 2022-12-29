@@ -48,6 +48,13 @@
         "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA"
       },
       {
+        "code": "N04",
+        "name": "Nó 04",
+        "description": "<p>Descrição</p>",
+        "stage": "62b86017737735b773d7c768",
+        "formula": "PESO#MATRIZES + PRECO_PESO#NULIPARAS + PRECO_ARROBA#MATRIZES + CARCACA#MATRIZES + PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA"
+      },
+      {
         "code": "N05",
         "name": "Nó 05",
         "description": "<p>Descrição</p>",
@@ -69,6 +76,27 @@
         "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA"
       },
       {
+        "code": "N08",
+        "name": "Nó 08",
+        "description": "<p>Descrição</p>",
+        "stage": "62b86017737735b773d7c768",
+        "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA"
+      },
+      {
+        "code": "N09",
+        "name": "Nó 09",
+        "description": "<p>Descrição</p>",
+        "stage": "62b86017737735b773d7c768",
+        "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA"
+      },
+      {
+        "code": "N10",
+        "name": "Nó 10",
+        "description": "<p>Descrição</p>",
+        "stage": "62b86017737735b773d7c768",
+        "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA"
+      },
+      {
         "code": "N11",
         "name": "Nó 11",
         "description": "<p>Descrição</p>",
@@ -78,6 +106,55 @@
       {
         "code": "N12",
         "name": "Nó 12",
+        "description": "<p>Descrição</p>",
+        "stage": "62b86017737735b773d7c768",
+        "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA"
+      },
+      {
+        "code": "N13",
+        "name": "Nó 13",
+        "description": "<p>Descrição</p>",
+        "stage": "62b86017737735b773d7c768",
+        "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA"
+      },
+      {
+        "code": "N14",
+        "name": "Nó 14",
+        "description": "<p>Descrição</p>",
+        "stage": "62b86017737735b773d7c768",
+        "formula": "PESO#MATRIZES + PRECO_PESO#NULIPARAS + PRECO_ARROBA#MATRIZES + CARCACA#MATRIZES + PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA"
+      },
+      {
+        "code": "N15",
+        "name": "Nó 15",
+        "description": "<p>Descrição</p>",
+        "stage": "62b86017737735b773d7c768",
+        "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA"
+      },
+      {
+        "code": "N16",
+        "name": "Nó 06",
+        "description": "<p>Descrição</p>",
+        "stage": "62b86017737735b773d7c768",
+        "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA"
+      },
+      {
+        "code": "N17",
+        "name": "Nó 17",
+        "description": "<p>Descrição</p>",
+        "stage": "62b86017737735b773d7c768",
+        "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA"
+      },
+      {
+        "code": "N18",
+        "name": "Nó 18",
+        "description": "<p>Descrição</p>",
+        "stage": "62b86017737735b773d7c768",
+        "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA"
+      },
+      {
+        "code": "N19",
+        "name": "Nó 19",
         "description": "<p>Descrição</p>",
         "stage": "62b86017737735b773d7c768",
         "formula": "PRECO#MULTIPARA_PARIDA + PESO#MULTIPARA_PARIDA + PRECO_PESO#PRIMIPARA_PARIDA"
@@ -97,6 +174,13 @@
         "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
         "nodeIn": "N02",
         "nodeOut": "N03"
+      },
+      {
+        "type": "Tratamento",
+        "resource": "62b86017737735b773d7c768",
+        "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
+        "nodeIn": "N04",
+        "nodeOut": "N02"
       },
       {
         "type": "Produção",
@@ -120,6 +204,27 @@
         "nodeOut": "N07"
       },
       {
+        "type": "Tratamento",
+        "resource": "62b86017737735b773d7c768",
+        "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
+        "nodeIn": "N08",
+        "nodeOut": "N03"
+      },
+      {
+        "type": "Tratamento",
+        "resource": "62b86017737735b773d7c768",
+        "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
+        "nodeIn": "N09",
+        "nodeOut": "N04"
+      },
+      {
+        "type": "Produção",
+        "resource": "62b86017737735b773d7c768",
+        "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
+        "nodeIn": "N04",
+        "nodeOut": "N10"
+      },
+      {
         "type": "Produção",
         "resource": "62b86017737735b773d7c768",
         "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
@@ -132,6 +237,55 @@
         "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
         "nodeIn": "N05",
         "nodeOut": "N12"
+      },
+      {
+        "type": "Produção",
+        "resource": "62b86017737735b773d7c768",
+        "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
+        "nodeIn": "N06",
+        "nodeOut": "N13"
+      },
+      {
+        "type": "Produção",
+        "resource": "62b86017737735b773d7c768",
+        "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
+        "nodeIn": "N06",
+        "nodeOut": "N14"
+      },
+      {
+        "type": "Produção",
+        "resource": "62b86017737735b773d7c768",
+        "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
+        "nodeIn": "N07",
+        "nodeOut": "N15"
+      },
+      {
+        "type": "Produção",
+        "resource": "62b86017737735b773d7c768",
+        "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
+        "nodeIn": "N07",
+        "nodeOut": "N16"
+      },
+      {
+        "type": "Tratamento",
+        "resource": "62b86017737735b773d7c768",
+        "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
+        "nodeIn": "N17",
+        "nodeOut": "N07"
+      },
+      {
+        "type": "Tratamento",
+        "resource": "62b86017737735b773d7c768",
+        "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
+        "nodeIn": "N18",
+        "nodeOut": "N08"
+      },
+      {
+        "type": "Tratamento",
+        "resource": "62b86017737735b773d7c768",
+        "formula": "VAGAO_MISTURADOR#VIDA_UTIL + VAGAO_MISTURADOR#MANUTENCAO + VAGAO_MISTURADOR#PRECO + VAGAO_MISTURADOR#VALOR_RESIDUAL + VAGOES_MISTURADORES",
+        "nodeIn": "N19",
+        "nodeOut": "N08"
       }
     ],
     "parameter": [
