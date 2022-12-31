@@ -17,7 +17,7 @@
         @saveChangesInput="saveChangesInput"
       />
 
-      <TreeConfig :config="config" @executeModelCommand="executeModelCommand" />
+      <TreeConfig :config="config" @executeModelCommand="executeModelCommand"/>
 
       <TreeChildren
         :children="children"
@@ -25,6 +25,7 @@
         @setTypeClickTree="setTypeClickTree"
         @confirmEditNode="confirmEditNode"
       />
+      <JsonViewer v-if="false" :json="json"/>
     </v-container>
   </section>
 </template>
@@ -44,13 +45,21 @@ import TreeMenu from '@/components/TreeMenu'
 import TreeModal from '@/components/TreeModal'
 import TreeConfig from '@/components/TreeConfig'
 import TreeChildren from '@/components/TreeChildren'
+import JsonViewer from '@/components/JsonViewer'
 
 import D3TreeClass, { actionsType, nodesType, nodesTypeName } from '@/library/NewD3Tree'
+
 const tree = new D3TreeClass()
 Vue.use(VueSweetalert2)
 
 export default {
-  components: { TreeMenu, TreeModal, TreeConfig, TreeChildren },
+  components: {
+    TreeMenu,
+    TreeModal,
+    TreeConfig,
+    TreeChildren,
+    JsonViewer
+  },
   props: {
     simulation: {
       type: Object,
@@ -72,7 +81,13 @@ export default {
       config: false,
       children: false,
       mini: false,
-      TypeOfActionSelectedNow: actionsType.edit
+      TypeOfActionSelectedNow: actionsType.edit,
+      json: {}
+    }
+  },
+  watch: {
+    simulation () {
+      this.json = this.simulation
     }
   },
   mounted: function () {
@@ -80,8 +95,12 @@ export default {
     // Carrega os dados dos atributos(class,resource,duration,factor) do backend
     this.loadAtributesBackend()
     // Configura qual função será acionada para mostrar os erros na tela
-    document.addEventListener('tree-update', function (e) {
-      // console.log(e.detail) // Prints "Example of an event"
+    document.addEventListener('tree-update', (e) => {
+      const data = e.detail
+      if (this.json.data.system) {
+        this.json.data.system.node = data.node
+        this.json.data.system.flow = data.flow
+      }
     })
 
     tree.setHandleError(this.$swal)
@@ -209,6 +228,7 @@ export default {
        ************************************************************************/
       // const json = jsonExampleIgnoreSimulationData
       const json = this.simulation
+      this.json = this.simulation
       // const json = jsonFernando
       /************************************************************************/
 
@@ -297,6 +317,7 @@ export default {
 
       // Pega o json convertido no formato P+P para enviar para a plataforma
       // const jsonPP = tree.generateJsonPP()
+      console.log('Saving data => json', this.json)
     },
 
     /**

@@ -173,20 +173,10 @@ class D3Tree {
       .append('svg')
       .attr('width', '100vw')
       .attr('height', '100vh')
-      .call(
-        d3.zoom().on('zoom', function () {
-          svg.attr('transform', d3.event.transform)
-        })
-      )
-      .call(
-        d3.zoom().transform,
-        d3.zoomIdentity.translate(window.innerWidth / 2 - 16, 50).scale(1)
-      )
+      .call(d3.zoom().on('zoom', function () { svg.attr('transform', d3.event.transform) }))
+      .call(d3.zoom().transform, d3.zoomIdentity.translate(window.innerWidth / 2 - 16, 50).scale(1))
       .append('g')
-      .attr(
-        'transform',
-        'translate(' + (window.innerWidth / 2 - 16) + ',' + 50 + ')'
-      )
+      .attr('transform', 'translate(' + (window.innerWidth / 2 - 16) + ',' + 50 + ')')
     svg.append('g').attr('class', 'links')
     svg.append('g').attr('class', 'nodes')
   }
@@ -619,9 +609,7 @@ class D3Tree {
     const qtdBrother = node.parent.children.length
     const typeFather = node.parent.data.flow.type
     const typeNode = node.data.flow.type
-    const nodeTypeFather = node.parent.children.filter(
-      n => n.data.flow.type === typeFather
-    )
+    const nodeTypeFather = node.parent.children.filter(n => n.data.flow.type === typeFather)
 
     if (typeNode !== typeFather) {
       return false
@@ -741,10 +729,8 @@ class D3Tree {
    * Adiciona ao nó o tipo balanço, caso as regras de negócio sejam satisfeitas
    */
   changeNodeTypeToBalance (d, id) {
-    if (
-      d.depth === 0 ||
-      d.depth === 1
-    ) {
+    if (d.depth === 0 ||
+      d.depth === 1) {
       this.msgAlertUser(error.enums.cannotAddBalanceInDefaultNodes)
       this.resetNodeSelected(true)
       return false
@@ -756,9 +742,7 @@ class D3Tree {
       return false
     }
 
-    if (
-      d.data.idBalance > 0
-    ) {
+    if (d.data.idBalance > 0) {
       this.msgAlertUser(error.enums.cannotCreateBalanceIfIsAlready)
       this.resetNodeSelected(true)
       return false
@@ -780,9 +764,7 @@ class D3Tree {
         return false
       }
 
-      if (
-        d.data.idBalance > 0
-      ) {
+      if (d.data.idBalance > 0) {
         this.msgAlertUser(error.enums.cannotCreateBalanceIfIsAlready)
         this.resetNodeSelected(true)
         return false
@@ -820,6 +802,42 @@ class D3Tree {
     } else {
       this.balanceClicked.id = id
       this.balanceClicked.d = d
+    }
+  }
+
+  /**
+   * Remove o nó o tipo balanço, caso as regras de negócio sejam satisfeitas
+   */
+  removeNodeTypeToBalance (d) {
+    if (d.data.balance.code <= 0) {
+      this.msgAlertUser(error.enums.isNotBalance)
+      return false
+    }
+
+    const target = d.data.balance.code
+    const descendants = this.root.descendants()
+    let count = 0
+
+    descendants.filter(d => d.data.balance).forEach(function (d) {
+      if (d.data.balance.code === target) count++
+    })
+
+    if (count > 2 && d.children) {
+      this.msgAlertUser(error.enums.cannotRemoveFatherBalanceBigger2)
+      return false
+    }
+
+    if (count > 2 && !d.children) {
+      d.data.balance.code = 0
+    } else {
+      descendants.filter(d => d.data.balance).forEach(function (d) {
+        if (d.data.balance.code === target) d.data.balance.code = 0
+
+        // Corrigi os id após remover um balanço
+        if (d.data.balance.code > target) d.data.balance.code -= 1
+      })
+
+      this.counterBalance -= 1
     }
   }
 }

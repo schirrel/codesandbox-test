@@ -1,7 +1,7 @@
 # Use https://marketplace.visualstudio.com/items?itemName=drewbarrett.vscode-coffeescript-preview
 
-
 # Procura e retorna o primeiro Nó (node) do Sistema com um Código (code) dado.
+# @Alan: adicionada funcao que busca node por codigo
 nodeWithCode = (code, inThisSystemCopy) -> inThisSystemCopy.node.find (n) -> n.code is code
 
 # @Alan: Variavel faltando
@@ -21,12 +21,16 @@ addBalance = (t, n, inThisSystem) ->
   # @Alan em nenhum outro trecho de código existe atribuição da propriedade balance, ficou faltando?
   if n.balance?
     b = n.balance
-  # Senão:
+
+  # Senão, acrescenta e usa um Nó de Balanço, tendo como único atributo um Código único gerado automaticamente:
   else
-  # Acrescenta e usa um Nó de Balanço, tendo como único atributo um Código único gerado automaticamente:
     seq = inThisSystem.node.push
       code: newNodeCode()
     b = inThisSystem.node[seq-1]
+
+   #@FD Associa o Nó não Terminal n a este novo Balanço.
+    nNode = nodeWithCode(n.code,inThisSystem )
+    nNode.balance = b
     # Redireciona o Fluxo acima da Estação n para este novo Balanço:
     if n.flow.type is PRODUCAO then n.flow.nodeOut = b.code else n.flow.nodeIn = b.code
 
@@ -38,24 +42,27 @@ addBalance = (t, n, inThisSystem) ->
       type: n.flow.type
 
     # @Alan esse f não é usado em lugar nenhum  
-    f = inThisSystem.flow[seq-1]
+    # @FD e nem precisa, mesmo: f = inThisSystem.flow[seq-1]
 
-  
   # Redireciona o Fluxo de Referência de t para o Balanço.
   # @Alan estava nodeOut em ambos, acredito que deva ser apenas o primeiro não?
-  if t.flow.type is PRODUCAO then t.flow.nodeOut = b.code else t.flow.nodeOut = b.code
-
-  nNode = nodeWithCode(n.code,inThisSystem )
-  # @Alan, qual valor é atribuido aqui?
-  # nNode.balance = ???
+  # @FD Isso mesmo. Correção logo em seguida.
+  # if t.flow.type is PRODUCAO then t.flow.nodeOut = b.code else t.flow.nodeOut = b.code
+  if t.flow.type is PRODUCAO then t.flow.nodeOut = b.code else t.flow.nodeIn = b.code
 
   # Exclui o Nó Terminal t.
-  # @Alan o objeto que vem pelo d (pelo click) não é o mesmo do data por isso o indexOf não acha corretamente
+  # @Alan o objeto que vem pelo d (pelo click) não é o mesmo do data por isso o indexOf não acha corretamente.
   # @Alan mudei para usar a abordagem de usar a funcao de array filter de array, que retorna array sem o objeto filtrado
+  # @FD Olhei a minha versão original e de fato tinha um erro bobo (primeira linha). Avalie minha correção (segunda linha),
+  # @FD mas use a minha ou sua correção, a que achar melhor.
+  # inThisSystem.node.splice(0, system.node.indexOf(t))
+  # inThisSystem.node.splice(0, inThisSystem.node.indexOf(t))
   inThisSystem.node = inThisSystem.node.filter (currentNode) -> currentNode.code isnt t.code 
 
   # @Alan adicionei o retorno da array alterada
+  # @FD Precisa mesmo, já que o objeto está sendo alterado? Fique à vontade.
   return inThisSystem
 
-# @Alan: adicionei a exportação pra poder usar a funcao no outro arquivo
+# @Alan: adicionei a exportação pra poder usar a funcao no outro arquivo.
+# @FD E as outras funções auxiliares usadas por addBalance e addChildrenToNode? Não precisam ser exportadas?
 module.exports = { addBalance }
