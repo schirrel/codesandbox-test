@@ -165,7 +165,7 @@ export default {
      */
     setTypeClickTree (type) {
       this.TypeOfActionSelectedNow = type
-      // tree.resetNodeSelected(true)
+      tree.resetNodeSelected(true)
     },
 
     /**
@@ -352,5 +352,9 @@ export default {
 section {
   z-index: 1;
   position: relative;
+}
+
+::v-deep circle {
+  cursor: pointer
 }
 </style>
