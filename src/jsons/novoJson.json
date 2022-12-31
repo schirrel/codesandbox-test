@@ -1,0 +1,395 @@
+{
+    "result": "SUC",
+    "data": {
+        "system": {
+            "_id": "635af5fac4313f90e87dde79",
+            "name": "Teste",
+            "size": "_SMALL_",
+            "description": "<p>teste</p>",
+            "featured": false,
+            "biome": [
+                {
+                    "_id": "6334e6bf83305d35a1037a85",
+                    "name": "bioma teste"
+                }
+            ],
+            "phase": [
+                {
+                    "_id": "6334e6c883305d35a1037a8c",
+                    "name": "fase teste"
+                }
+            ],
+            "process": [
+                {
+                    "_id": "6334e6d983305d35a1037a93",
+                    "name": "processos teste"
+                }
+            ],
+            "program": [
+                {
+                    "_id": "6334e8de83305d35a1037a9a",
+                    "name": "programa teste"
+                }
+            ],
+            "technology": [
+                {
+                    "_id": "6334e8e983305d35a1037aa1",
+                    "name": "tecnologia teste"
+                }
+            ],
+            "product": [
+                {
+                    "_id": "6334e8f183305d35a1037aa8",
+                    "name": "produtos teste"
+                }
+            ],
+            "node": [
+                {
+                    "code": "A1",
+                    "name": "Nó A1",
+                    "formula": "",
+                    "description": "",
+                    "stage": ""
+                },
+                {
+                    "code": "B1",
+                    "name": "Nó B1",
+                    "formula": "",
+                    "description": "",
+                    "stage": ""
+                },
+                {
+                    "code": "ArbM",
+                    "name": "Nó ArbM",
+                    "formula": "",
+                    "description": "",
+                    "stage": ""
+                },
+                {
+                    "code": "ArbM2",
+                    "name": "Nó ArbM2",
+                    "formula": "",
+                    "description": "",
+                    "stage": ""
+                },
+                {
+                    "code": "RtyA",
+                    "name": "Nó RtyA",
+                    "formula": "",
+                    "description": "",
+                    "stage": ""
+                },
+                {
+                    "code": "VgAh",
+                    "name": "Nó VgAh",
+                    "formula": "",
+                    "description": "",
+                    "stage": ""
+                },
+                {
+                    "code": "LcTa",
+                    "name": "Nó LcTa",
+                    "formula": "",
+                    "description": "",
+                    "stage": ""
+                },
+                {
+                    "code": "MtsoR",
+                    "name": "Nó MtsoR",
+                    "formula": "",
+                    "description": "",
+                    "stage": ""
+                },
+                {
+                    "code": "PwkTb",
+                    "name": "Nó PwkTb",
+                    "formula": "",
+                    "description": "",
+                    "stage": ""
+                },
+                {
+                    "code": "CryiW",
+                    "name": "Nó CryiW",
+                    "formula": "",
+                    "description": "",
+                    "stage": ""
+                }
+            ],
+            "flow": [
+                {
+                    "type": "Produção",
+                    "formula": "",
+                    "nodeIn": "A1",
+                    "nodeOut": "B1",
+                    "resource": ""
+                },{
+                    "type": "Produção",
+                    "formula": "",
+                    "nodeIn": "B1",
+                    "nodeOut": "ArbM",
+                    "resource": ""
+                }, {
+                    "type": "Produção",
+                    "formula": "",
+                    "nodeIn": "B1",
+                    "nodeOut": "ArbM2",
+                    "resource": ""
+                },{
+                    "type": "Produção",
+                    "formula": "",
+                    "nodeIn": "ArbM",
+                    "nodeOut": "LcTa",
+                    "resource": ""
+                },{
+                    "type": "Produção",
+                    "formula": "",
+                    "nodeIn": "ArbM",
+                    "nodeOut": "MtsoR",
+                    "resource": ""
+                },{
+                    "type": "Tratamento",
+                    "formula": "",
+                    "nodeIn": "PwkTb",
+                    "nodeOut": "ArbM",
+                    "resource": ""
+                },{
+                    "type": "Tratamento",
+                    "formula": "",
+                    "nodeIn": "RtyA",
+                    "nodeOut": "B1",
+                    "resource": ""
+                },{
+                    "type": "Tratamento",
+                    "formula": "",
+                    "nodeIn": "VgAh",
+                    "nodeOut": "B1",
+                    "resource": ""
+                },{
+                    "type": "Tratamento",
+                    "formula": "",
+                    "nodeIn": "CryiW",
+                    "nodeOut": "VgAh",
+                    "resource": ""
+                }
+            ],
+            "parameter": [
+                {
+                    "name": "Categoria 1",
+                    "parameter": [
+                        {
+                            "code": "PESO#MATRIZES",
+                            "name": "Peso das matrizes",
+                            "description": "Peso das matrizes",
+                            "unit": "kg",
+                            "minimum": 100,
+                            "maximum": 1500,
+                            "standard": 600,
+                            "step": 50,
+                            "fixed": false,
+                            "internal": false,
+                            "order": 1
+                        },
+                        {
+                            "code": "VAGAO_MISTURADOR#VIDA_UTIL",
+                            "name": "Vida útil do vagão misturador",
+                            "description": "Vida útil do vagão misturador",
+                            "unit": "ano",
+                            "minimum": 1,
+                            "maximum": 10,
+                            "standard": 5,
+                            "step": 1,
+                            "fixed": false,
+                            "internal": false,
+                            "order": 1
+                        },
+                        {
+                            "code": "VAGAO_MISTURADOR#PRECO",
+                            "name": "Preço do vagão misturador",
+                            "description": "Preço do vagão misturador",
+                            "unit": "R$",
+                            "minimum": 20000,
+                            "maximum": 30000,
+                            "standard": 25000,
+                            "step": 500,
+                            "fixed": false,
+                            "internal": false,
+                            "order": 1
+                        }
+                    ]
+                },
+                {
+                    "name": "Categoria 2",
+                    "parameter": [
+                        {
+                            "code": "VAGAO_MISTURADOR#VIDA_UTIL",
+                            "name": "Vida útil do vagão misturador",
+                            "description": "Vida útil do vagão misturador",
+                            "unit": "ano",
+                            "minimum": 1,
+                            "maximum": 10,
+                            "standard": 5,
+                            "step": 1,
+                            "fixed": false,
+                            "internal": false,
+                            "order": 1
+                        },
+                        {
+                            "code": "VAGAO_MISTURADOR#PRECO",
+                            "name": "Preço do vagão misturador",
+                            "description": "Preço do vagão misturador",
+                            "unit": "R$",
+                            "minimum": 20000,
+                            "maximum": 30000,
+                            "standard": 25000,
+                            "step": 500,
+                            "fixed": false,
+                            "internal": false,
+                            "order": 1
+                        }
+                    ]
+                }
+            ],
+            "author": "César Hiragi",
+            "email": "hiragi@hiragi.com.br",
+            "deleted": false,
+            "created": "2022-10-27T21:19:54.938Z",
+            "changed": "2022-10-27T21:20:24.258Z",
+            "__v": 0,
+            "published": true
+        },
+        "propertyGroup": [
+            {
+                "_id": "6334ea3b83305d35a1037af4",
+                "name": "Grupo de propriedade teste",
+                "order": 0,
+                "author": "alanbschio@gmail.com",
+                "email": "alanbschio@gmail.com",
+                "deleted": false,
+                "created": "2022-09-29T00:43:39.613Z",
+                "changed": "2022-09-29T00:43:39.613Z",
+                "__v": 0
+            }
+        ],
+        "property": [
+            {
+                "_id": "6334ea6783305d35a1037b01",
+                "code": "TESTE",
+                "name": "propriedade teste",
+                "propertyGroup": "6334ea3b83305d35a1037af4",
+                "description": "",
+                "minimum": 1000,
+                "maximum": 3000,
+                "value": 2341,
+                "step": 123,
+                "unit": "und",
+                "fixed": false,
+                "internal": false,
+                "author": "alanbschio@gmail.com",
+                "email": "alanbschio@gmail.com",
+                "deleted": false,
+                "created": "2022-09-29T00:44:23.477Z",
+                "changed": "2022-09-29T00:44:23.477Z",
+                "__v": 0
+            }
+        ],
+        "resourceCategory": [
+            {
+                "_id": "6334ea7283305d35a1037b0f",
+                "code": "CAT",
+                "name": "categoria teste",
+                "father": null,
+                "author": "alanbschio@gmail.com",
+                "email": "alanbschio@gmail.com",
+                "deleted": false,
+                "created": "2022-09-29T00:44:34.409Z",
+                "changed": "2022-09-29T00:44:34.409Z",
+                "__v": 0
+            }
+        ],
+        "resource": [
+            {
+                "_id": "6334ea7f83305d35a1037b1c",
+                "code": "REC",
+                "name": "recurso teste",
+                "unit": "und",
+                "resourceCategory": "6334ea7283305d35a1037b0f",
+                "author": "alanbschio@gmail.com",
+                "email": "alanbschio@gmail.com",
+                "deleted": false,
+                "created": "2022-09-29T00:44:47.508Z",
+                "changed": "2022-09-29T00:44:47.508Z",
+                "__v": 0
+            }
+        ],
+        "stageCategory": [
+            {
+                "_id": "6334ea8983305d35a1037b2a",
+                "name": "etapa",
+                "father": null,
+                "author": "alanbschio@gmail.com",
+                "email": "alanbschio@gmail.com",
+                "deleted": false,
+                "created": "2022-09-29T00:44:57.237Z",
+                "changed": "2022-09-29T00:44:57.237Z",
+                "__v": 0
+            }
+        ],
+        "stage": [
+            {
+                "_id": "6334eac583305d35a1037b43",
+                "code": "ET1",
+                "name": "etapa 1",
+                "stageCategory": {
+                    "_id": "6334ea8983305d35a1037b2a",
+                    "name": "etapa"
+                },
+                "color": {
+                    "_id": "6334ea2f83305d35a1037ae8",
+                    "name": "Vermellho"
+                },
+                "description": "",
+                "formula": [
+                    {
+                        "name": "formula1",
+                        "formula": "TESTE#0",
+                        "resourceCategory": {
+                            "_id": "6334ea7283305d35a1037b0f",
+                            "name": "categoria teste"
+                        },
+                        "order": 0,
+                        "out": true,
+                        "_id": "6334eac583305d35a1037b44"
+                    },
+                    {
+                        "name": "123",
+                        "formula": "TESTE#1",
+                        "resourceCategory": {
+                            "_id": "6334ea7283305d35a1037b0f",
+                            "name": "categoria teste"
+                        },
+                        "order": 1,
+                        "out": false,
+                        "_id": "6334eac583305d35a1037b45"
+                    },
+                    {
+                        "name": "saida",
+                        "formula": "TESTE#2",
+                        "resourceCategory": {
+                            "_id": "6334ea7283305d35a1037b0f",
+                            "name": "categoria teste"
+                        },
+                        "order": 2,
+                        "out": true,
+                        "_id": "6334eac583305d35a1037b46"
+                    }
+                ],
+                "author": "alanbschio@gmail.com",
+                "email": "alanbschio@gmail.com",
+                "deleted": false,
+                "created": "2022-09-29T00:45:57.887Z",
+                "changed": "2022-09-29T00:45:57.887Z",
+                "__v": 0
+            }
+        ]
+    }
+}

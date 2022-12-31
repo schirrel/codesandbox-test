@@ -1,6 +1,6 @@
 {
   "name": "@mais-precoce/plugin-flow",
-  "version": "0.22.10-alpha.7",
+  "version": "0.22.10-alpha.8",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -21,14 +21,18 @@
     "vue-lodash": "^2.1.2",
     "vue-router": "^3.5.1",
     "vue-sweetalert2": "^2.1.1",
+    "vue2-editor": "^2.10.3",
     "vuetify": "^2.6.0"
   },
   "devDependencies": {
+    "@schirrel/module-federation-enhanced-plugin": "^1.0.8",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-pwa": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "@vue/eslint-config-standard": "^6.1.0",
+    "coffee-loader": "^4.0.0",
+    "coffeescript": "^2.7.0",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-node": "^11.1.0",
@@ -39,7 +43,6 @@
     "vue-cli-plugin-vuetify": "~2.4.8",
     "vue-template-compiler": "^2.6.14",
     "vuetify-loader": "^1.7.0",
-    "webpack": "5.74.0",
-    "@schirrel/module-federation-enhanced-plugin": "^1.0.8"
+    "webpack": "5.74.0"
   }
 }

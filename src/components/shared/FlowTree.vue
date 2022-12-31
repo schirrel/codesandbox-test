@@ -6,39 +6,66 @@
       @setTypeClickTree="setTypeClickTree"
       @executeModelCommand="executeModelCommand"
     />
-
-    <TreeModal
-      :modal="modal"
-      :optionSelect="optionSelect"
-      :selectedNode="selectedNode"
-      @confirmEditNode="confirmEditNode"
-    />
-
-    <TreeConfig :config="config" @executeModelCommand="executeModelCommand" />
-
-    <v-main>
+    <v-container fluid>
       <div class="fluxograma" ref="fluxograma"></div>
-    </v-main>
+
+      <TreeModal
+        :modal="modal"
+        :optionSelect="optionSelect"
+        :selectedNode="selectedNode"
+        @confirmEditNode="confirmEditNode"
+        @saveChangesInput="saveChangesInput"
+      />
+
+      <TreeConfig :config="config" @executeModelCommand="executeModelCommand"/>
+
+      <TreeChildren
+        :children="children"
+        :TypeOfActionSelectedNow="TypeOfActionSelectedNow"
+        @setTypeClickTree="setTypeClickTree"
+        @confirmEditNode="confirmEditNode"
+      />
+      <JsonViewer v-if="false" :json="json"/>
+    </v-container>
   </section>
 </template>
 
-
 <script>
+
 import Vue from 'vue'
 import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
-import jsonFernando from '@/jsons/jsonFernando.json'
+// import { useSentry } from '@/plugins/sentry'
+
+import uuid from '@/library/uuid'
+import jsonExampleLoadFluxograma from '@/jsons/jsonFluxograma.json'
+// import jsonExampleIgnoreSimulationData from '@/jsons/jsonPlataforma.json'
+// import jsonFernando from '@/jsons/jsonFernando.json'
 import TreeMenu from '@/components/TreeMenu'
 import TreeModal from '@/components/TreeModal'
 import TreeConfig from '@/components/TreeConfig'
-import D3TreeClass, { actionsType, nodesType } from '@/library/D3Tree'
+import TreeChildren from '@/components/TreeChildren'
+import JsonViewer from '@/components/JsonViewer'
 
+import D3TreeClass, { actionsType, nodesType, nodesTypeName } from '@/library/NewD3Tree'
+
+const tree = new D3TreeClass()
 Vue.use(VueSweetalert2)
 
-const tree = new D3TreeClass(Vue.swal)
-
 export default {
-  components: { TreeMenu, TreeModal, TreeConfig },
+  components: {
+    TreeMenu,
+    TreeModal,
+    TreeConfig,
+    TreeChildren,
+    JsonViewer
+  },
+  props: {
+    simulation: {
+      type: Object,
+      default: () => jsonExampleLoadFluxograma
+    }
+  },
   data () {
     return {
       optionSelect: {
@@ -48,26 +75,47 @@ export default {
         factor: []
       },
       selectedNode: null,
+      selectedIndex: null,
+      nodeTypeChildren: null,
       modal: false,
       config: false,
+      children: false,
       mini: false,
-      TypeOfActionSelectedNow: actionsType.edit
+      TypeOfActionSelectedNow: actionsType.edit,
+      json: {}
+    }
+  },
+  watch: {
+    simulation () {
+      this.json = this.simulation
     }
   },
   mounted: function () {
+    // useSentry()
     // Carrega os dados dos atributos(class,resource,duration,factor) do backend
     this.loadAtributesBackend()
     // Configura qual função será acionada para mostrar os erros na tela
-    // tree.setHandleError(this.$swal)
+    document.addEventListener('tree-update', (e) => {
+      const data = e.detail
+      if (this.json.data.system) {
+        this.json.data.system.node = data.node
+        this.json.data.system.flow = data.flow
+      }
+    })
+
+    tree.setHandleError(this.$swal)
     // Configura qual função será acionada ao clicar em um nó da árvore
     tree.setHandleClickFunction(this.handleOnclickFunction)
     // Ajusta a árvore para utilizar os atributos do select fornecido pelo backend
     // E configura qual cor vai representar cada classe
-    tree.setAttributesSelectAndColor(this.optionSelect)
+    // tree.setAttributesSelectAndColor(this.optionSelect)
     // Constroi a árvore na div fluxograma
     tree.build()
   },
   methods: {
+    saveChangesInput (value) {
+      tree.editNode(value)
+    },
     /**
      * Executa o tipo de clique escolhido no menu no nó selecionado
      * @param selected representa os dados do nó selecionado
@@ -76,10 +124,12 @@ export default {
     handleOnclickFunction (selected, index) {
       switch (this.TypeOfActionSelectedNow) {
         case actionsType.addIn:
-          tree.addChildrenNode(selected, index, nodesType.in)
+          tree.addChildrenNode(selected, index, nodesTypeName.in, uuid())
+
           break
         case actionsType.addOut:
-          tree.addChildrenNode(selected, index, nodesType.out)
+          tree.addChildrenNode(selected, index, nodesTypeName.out, uuid())
+
           break
         case actionsType.remove:
           tree.removeChildrenNode(selected, index)
@@ -96,6 +146,12 @@ export default {
           // Não limpa o nó selecionado caso o modal esteja aberto
           tree.setModalstate(true)
           break
+        case actionsType.children:
+          this.selectedNode = selected
+          this.treeChildren = tree
+          this.childrens = !this.childrens
+          break
+
         default:
           tree.addChildrenNode(selected, index, nodesType.in)
       }
@@ -158,6 +214,7 @@ export default {
     confirmEditNode (isNotModified) {
       tree.redrawTree(isNotModified)
       this.modal = false
+      this.children = false
       tree.setModalstate(false)
     },
 
@@ -169,9 +226,10 @@ export default {
       /*************************************************************************
        * //TODO: Adicionar aqui no futuro código para carregar json do backend
        ************************************************************************/
-      //const json = jsonExampleIgnoreSimulationData
-      //const json = jsonExampleLoadFluxograma
-      const json = jsonFernando
+      // const json = jsonExampleIgnoreSimulationData
+      const json = this.simulation
+      this.json = this.simulation
+      // const json = jsonFernando
       /************************************************************************/
 
       /**
@@ -189,25 +247,22 @@ export default {
        * O fluxograma ira carregar os dados do simulationData e gerar fluxograma salvo.
        * Exemplo de json -> jsonExampleLoadFluxograma
        */
-      tree.setJsonFromPP(json)
+      tree.setJsonFromPP(json.data.system)
 
-      // Carrega os dados do json para gerar os selecteds com as opções fornecidas
-      this.loadVectorFromJson(
-        json.simulationData.formulas.flows,
-        this.optionSelect.factor
-      )
-      this.loadVectorFromJson(
-        json.simulationData.formulas.nodes,
-        this.optionSelect.duration
-      )
-      this.loadClassFromJson(
-        json.simulationData.stagesHierarchy,
-        this.optionSelect.class
-      )
-      this.loadResourceFromJson(
-        json.simulationData.resources,
-        this.optionSelect.resource
-      )
+      this.optionSelect.class = json.data.stage.map(stage => {
+        return {
+          color: stage.color.name,
+          text: stage.name
+        }
+      })
+
+      this.optionSelect.resource = json.data.resource.map(resource => {
+        return {
+          unit: resource.unit,
+          category: resource.resourceCategory,
+          text: resource.name
+        }
+      })
     },
 
     /**
@@ -226,7 +281,7 @@ export default {
      * Carrega as opções de classes do json recebido pela plataforma
      */
     loadClassFromJson (from, to) {
-      for (let item in from) {
+      for (const item in from) {
         to.push({
           color: from[item].color,
           text: item
@@ -239,7 +294,7 @@ export default {
      * Carrega as opções de recursos do json recebido pela plataforma
      */
     loadResourceFromJson (from, to) {
-      for (let item in from) {
+      for (const item in from) {
         to.push({
           unit: from[item].unit,
           category: from[item].category,
@@ -261,7 +316,8 @@ export default {
       tree.save()
 
       // Pega o json convertido no formato P+P para enviar para a plataforma
-      const jsonPP = tree.generateJsonPP()
+      // const jsonPP = tree.generateJsonPP()
+      console.log('Saving data => json', this.json)
     },
 
     /**
@@ -280,6 +336,24 @@ export default {
 </script>
 
 <style scoped>
+.fluxograma {
+  /* border: solid; */
+  padding: 0;
+  margin: 0;
+  font-family: "PT Mono", monospace;
+}
+
+::v-deep .link {
+  fill: none;
+  /* stroke: #ccc; */
+  stroke-width: 3px;
+}
+
+section {
+  z-index: 1;
+  position: relative;
+}
+
 ::v-deep circle {
   cursor: pointer
 }

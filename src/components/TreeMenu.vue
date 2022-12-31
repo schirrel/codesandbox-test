@@ -1,76 +1,85 @@
 <template>
-      <v-navigation-drawer clipped stateless v-model="drawer" absolute>
+  <v-navigation-drawer clipped stateless v-model="drawer" absolute :mini-variant="mini" >
+    <v-list dense>
+      <v-subheader class="mt-2 grey--text text--darken-1"> {{ mini ? '': 'Fluxos'}} </v-subheader>
 
-      <v-list dense>
-        <v-subheader class="mt-2 grey--text text--darken-1">Fluxos</v-subheader>
+      <v-list-item
+        v-for="item in menuFlow"
+        :key="item.value"
+        @click="setTypeOfClick(item.value)"
+        :class="isActive(item.value)"
+        :ripple="true"
+      >
+        <v-list-item-action>
+          <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
+          <img class="svg-custom-icon" v-else-if="item.iconSvg" :src="item.iconSvg"/>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>{{ item.text }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
 
-        <v-list-item
-          v-for="item in menuFlow"
-          :key="item.value"
-          @click="setTypeOfClick(item.value)"
-          :class="isActive(item.value)"
-          :ripple="true"
-        >
-          <v-list-item-action>
-            <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
-            <img
-              class="svg-custom-icon"
-              v-else-if="item.iconSvg"
-              :src="item.iconSvg"
-            />
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>{{ item.text }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+      <v-subheader class="mt-2 grey--text text--darken-1"> {{ mini ? '': 'Balanços'}} </v-subheader>
 
-        <v-subheader class="mt-2 grey--text text--darken-1"
-          >Balanços</v-subheader
-        >
+      <v-list-item
+        v-for="item in menuBalance"
+        :key="item.value"
+        @click="setTypeOfClick(item.value)"
+        :class="isActive(item.value)"
+        :disabled="item.disabled"
+        :ripple="true"
+      >
+        <v-list-item-action :disabled="item.disabled">
+          <v-icon :disabled="item.disabled" v-if="item.icon">{{ item.icon }}</v-icon>
+          <img class="svg-custom-icon" v-else-if="item.iconSvg" :src="item.iconSvg"/>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>{{ item.text }}</v-list-item-title>
+          <small>  Desabilitado </small>
+        </v-list-item-content>
+      </v-list-item>
 
-        <v-list-item
-          v-for="item in menuBalance"
-          :key="item.value"
-          @click="setTypeOfClick(item.value)"
-          :class="isActive(item.value)"
-          :ripple="true"
-        >
-          <v-list-item-action>
-            <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
-            <img
-              class="svg-custom-icon"
-              v-else-if="item.iconSvg"
-              :src="item.iconSvg"
-            />
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>{{ item.text }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+      <v-subheader class="mt-2 grey--text text--darken-1"> {{ mini ? '': 'Estações'}} </v-subheader>
 
-        <v-subheader class="mt-2 grey--text text--darken-1">Modelo</v-subheader>
+      <v-list-item
+        v-for="item in menuStation"
+        :key="item.value"
+        @click="setTypeOfClick(item.value)"
+        :class="isActive(item.value)"
+        :disabled="item.disabled"
+        :ripple="true"
+      >
+        <v-list-item-action :disabled="item.disabled">
+          <v-icon :disabled="item.disabled" v-if="item.icon">{{ item.icon }}</v-icon>
+          <img class="svg-custom-icon" v-else-if="item.iconSvg" :src="item.iconSvg"/>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>{{ item.text }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
 
-        <v-list-item
-          v-for="item in menuModel"
-          :key="item.value"
-          @click="executeModelCommand(item.value)"
-          :ripple="true"
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>{{ item.text }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
+      <v-subheader class="mt-2 grey--text text--darken-1"> {{ mini ? '': 'Modelo'}} </v-subheader>
+
+      <v-list-item
+        v-for="item in menuModel"
+        :key="item.value"
+        @click="executeModelCommand(item.value)"
+        :ripple="true"
+      >
+        <v-list-item-action>
+          <v-icon>{{ item.icon }}</v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>{{ item.text }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
+  </v-navigation-drawer>
 </template>
 
 <script>
 import { actionsType } from '../library/D3Tree'
 import tripOrigin from '@/assets/icons/trip_origin.svg'
-
 export default {
   props: ['TypeOfActionSelectedNow', 'mini'],
   data () {
@@ -124,6 +133,23 @@ export default {
           text: 'Excluir',
           icon: 'mdi-close-circle',
           value: actionsType.removeBalance
+        }
+      ],
+      /**
+       * Vetor usado para construir o submenu de Balanço
+       */
+      menuStation: [
+        {
+          text: 'Adicionar',
+          iconSvg: tripOrigin,
+          value: actionsType.addStation,
+          disabled: true
+        },
+        {
+          text: 'Excluir',
+          icon: 'mdi-close-circle',
+          value: actionsType.removeStation,
+          disabled: true
         }
       ],
       /**
@@ -194,13 +220,17 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .active {
-  background-color: #f5f5f5
+  background-color: #f5f5f5;
 }
+
 .svg-custom-icon {
   height: 24px;
   width: 24px;
+}
+[disabled] .svg-custom-icon {
+  opacity: .8;
 }
 
 </style>

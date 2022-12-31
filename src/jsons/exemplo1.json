@@ -1,0 +1,113 @@
+{
+    "node": [
+        {
+            "code": "A1",
+            "name": "Nó A1",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "B1",
+            "name": "Nó B1",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "VgAh",
+            "name": "Nó VgAh",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "VgAh2",
+            "name": "Nó VgAh2",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "RtyA",
+            "name": "Nó RtyA",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "VgAh3",
+            "name": "Nó VgAh3",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "LcTa",
+            "name": "Nó LcTa",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        },
+        {
+            "code": "CryiW",
+            "name": "Nó CryiW",
+            "formula": "",
+            "description": "",
+            "stage": ""
+        }
+    ],
+    "flow": [
+        {
+            "type": "Produção",
+            "formula": "",
+            "nodeIn": "A1",
+            "nodeOut": "B1",
+            "resource": ""
+        },
+        {
+            "type": "Produção",
+            "formula": "",
+            "nodeIn": "B1",
+            "nodeOut": "VgAh",
+            "resource": ""
+        },
+        {
+            "type": "Produção",
+            "formula": "",
+            "nodeIn": "B1",
+            "nodeOut": "VgAh2",
+            "resource": ""
+        },
+        {
+            "type": "Produção",
+            "formula": "",
+            "nodeIn": "VgAh",
+            "nodeOut": "LcTa",
+            "resource": ""
+        },
+        {
+            "type": "Tratamento",
+            "formula": "",
+            "nodeIn": "RtyA",
+            "nodeOut": "B1",
+            "resource": ""
+        },
+        {
+            "type": "Tratamento",
+            "formula": "",
+            "nodeIn": "VgAh3",
+            "nodeOut": "B1",
+            "resource": ""
+        },
+        {
+            "type": "Tratamento",
+            "formula": "",
+            "nodeIn": "CryiW",
+            "nodeOut": "VgAh3",
+            "resource": ""
+        }
+    ],
+    "parameter": [
+    ]
+}
