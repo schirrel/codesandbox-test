@@ -91,6 +91,9 @@ export default {
     }
   },
   mounted: function () {
+    if(this.simulation)
+    this.json = this.simulation
+    
     // useSentry()
     // Carrega os dados dos atributos(class,resource,duration,factor) do backend
     this.loadAtributesBackend()
@@ -100,13 +103,7 @@ export default {
       if (this.json.data.system) {
         this.json.data.system.node = data.node
         this.json.data.system.flow = data.flow
-      }
-      this.$emit('saveChanges', {
-        system: this.json.data.system,
-        onlyFlow: {
-          node: this.json.data.system.node,
-          flow: this.json.data.system.flow
-        }})
+        }
     })
 
     tree.setHandleError(this.$swal)
@@ -324,6 +321,14 @@ export default {
       // Pega o json convertido no formato P+P para enviar para a plataforma
       // const jsonPP = tree.generateJsonPP()
       console.log('Saving data => json', this.json)
+
+      this.$emit('saveChanges', {
+        system: this.json.data.system,
+        onlyFlow: {
+          node: this.json.data.system.node,
+          flow: this.json.data.system.flow,
+          parameter: this.json.data.system.parameter
+        }})
     },
 
     /**

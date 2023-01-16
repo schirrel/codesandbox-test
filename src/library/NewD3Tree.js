@@ -21,7 +21,32 @@ const DEFAULT = {
   nodew: 80,
   orientationTree: 'top'
 }
-
+const resetData = {
+  node: [
+    {
+      code: 'A01',
+      name: 'Nó A1',
+      formula: '',
+      description: '',
+      stage: ''
+    }, {
+      code: 'B01',
+      name: 'Nó B1',
+      formula: '',
+      description: '',
+      stage: ''
+    }
+  ],
+  flow: [
+    {
+      type: nodesTypeName.out,
+      formula: '',
+      nodeIn: 'A01',
+      nodeOut: 'B01',
+      resource: ''
+    }
+  ]
+}
 class D3Tree {
   constructor () {
     this.data = null
@@ -128,33 +153,6 @@ class D3Tree {
    * no localstorage esse dado sera carregado
    */
   async inicializeData (reset) {
-    const resetData = {
-      node: [
-        {
-          code: 'A01',
-          name: 'Nó A1',
-          formula: '',
-          description: '',
-          stage: ''
-        }, {
-          code: 'B01',
-          name: 'Nó B1',
-          formula: '',
-          description: '',
-          stage: ''
-        }
-      ],
-      flow: [
-        {
-          type: nodesTypeName.out,
-          formula: '',
-          nodeIn: 'A01',
-          nodeOut: 'B01',
-          resource: ''
-        }
-      ]
-    }
-
     if (reset) {
       this.json = resetData
     }
@@ -628,6 +626,10 @@ class D3Tree {
     // const data2 = convertJsonToTree(copyJson)
     const data = addChildrenToNodes(copyJson)
 
+    if (!data) {
+      this.json = resetData
+      return this.mountTree()
+    }
     this.data = data
     this.redrawTree(true)
   }
