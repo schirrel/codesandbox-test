@@ -17,7 +17,7 @@
         @saveChangesInput="saveChangesInput"
       />
 
-      <TreeConfig :config="config" @executeModelCommand="executeModelCommand"/>
+      <TreeConfig :config="config" @executeModelCommand="executeModelCommand" />
 
       <TreeChildren
         :children="children"
@@ -25,7 +25,7 @@
         @setTypeClickTree="setTypeClickTree"
         @confirmEditNode="confirmEditNode"
       />
-      <JsonViewer v-if="false" :json="json"/>
+      <JsonViewer v-if="false" :json="json" />
     </v-container>
   </section>
 </template>
@@ -101,6 +101,12 @@ export default {
         this.json.data.system.node = data.node
         this.json.data.system.flow = data.flow
       }
+      this.$emit('saveChanges', {
+        system: this.json.data.system,
+        onlyFlow: {
+          node: this.json.data.system.node,
+          flow: this.json.data.system.flow
+        }})
     })
 
     tree.setHandleError(this.$swal)
@@ -355,6 +361,6 @@ section {
 }
 
 ::v-deep circle {
-  cursor: pointer
+  cursor: pointer;
 }
 </style>
