@@ -14,6 +14,7 @@ services:
         IO_VERSION: ${IO_VERSION}
         IO_DEPLOYER: ${IO_DEPLOYER}
         SENTRY_DSN: ${SENTRY_DSN}
+        MATOMO_ID: ${MATOMO_ID}
     ports:
       - ${PORT}:80
     networks:
