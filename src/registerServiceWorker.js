@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') {
     updated () {
       console.log('New content is available; please refresh.')
 
-      window.dispatchEvent(new Event('hasUpdate'))
+      document.dispatchEvent(new CustomEvent('hasUpdate'))
     },
     offline () {
       console.log('No internet connection found. App is running in offline mode.')
