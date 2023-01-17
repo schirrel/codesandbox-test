@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import VueGtag from 'vue-gtag'
+import VueMatomo from 'vue-matomo'
 
 Vue.use(VueRouter)
 
@@ -29,10 +29,14 @@ const router = new VueRouter({
   routes
 })
 
-Vue.use(VueGtag, {
-  config: { id: process.env.VUE_APP_ANALYTICS },
-  appName: '%GENESIS_PROJECT_NAME%',
-  pageTrackerScreenviewEnabled: true
-}, router)
+Vue.use(VueMatomo, {
+  host: 'https://hit.embrapa.io',
+  siteId: process.env.VUE_APP_MATOMO_ID,
+  router: router,
+  preInitActions: [
+    ['setCustomDimension', 1, process.env.VUE_APP_STAGE],
+    ['setCustomDimension', 2, process.env.VUE_APP_VERSION]
+  ]
+})
 
 export default router
