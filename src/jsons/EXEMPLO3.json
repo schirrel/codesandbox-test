@@ -1,0 +1,69 @@
+{
+    "node": [
+      {
+        "code": "A01",
+        "name": "Nó A1",
+        "formula": "",
+        "description": "",
+        "stage": ""
+      },
+      {
+        "code": "B01",
+        "name": "Nó B1",
+        "formula": "",
+        "description": "",
+        "stage": ""
+      },
+      {
+        "code": "C01",
+        "name": "",
+        "formula": "",
+        "description": "",
+        "stage": ""
+      },
+      {
+        "code": "D01",
+        "name": "",
+        "formula": "",
+        "description": "",
+        "stage": ""
+      },
+      {
+        "code": "C02",
+        "name": "",
+        "formula": "",
+        "description": "",
+        "stage": ""
+      }
+    ],
+    "flow": [
+      {
+        "type": "Produção",
+        "formula": "",
+        "nodeIn": "A01",
+        "nodeOut": "B01",
+        "resource": ""
+      },
+      {
+        "type": "Produção",
+        "formula": "",
+        "resource": "",
+        "nodeIn": "B01",
+        "nodeOut": "C01"
+      },
+      {
+        "type": "Produção",
+        "formula": "",
+        "resource": "",
+        "nodeIn": "C01",
+        "nodeOut": "D01"
+      },
+      {
+        "type": "Produção",
+        "formula": "",
+        "resource": "",
+        "nodeIn": "B01",
+        "nodeOut": "C02"
+      }
+    ]
+  }

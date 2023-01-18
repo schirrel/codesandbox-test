@@ -1,5 +1,5 @@
-### %GENESIS_PROJECT_NAME%
-# %GENESIS_PROJECT_UNIX% / %GENESIS_APP_UNIX%
+### +Precoce
+# mais-precoce / plugin-flow
 
 ## Project setup
 ```

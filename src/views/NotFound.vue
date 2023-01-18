@@ -6,7 +6,7 @@
           <v-icon>mdi-arrow-left</v-icon>
         </v-btn>
 
-        <v-toolbar-title v-text="$route.name" />
+        <v-app-bar-title v-text="$route.name" />
       </v-app-bar>
     </nav>
 
@@ -27,7 +27,7 @@
                 <v-row align="center" justify="center">
                   <v-btn-toggle multiple class="mb-4">
                     <v-btn
-                      :href="'mailto: ' + settings.email + '?subject=Problemas%20na%20vers%C3%A3o%20' + version + '%20do%20aplicativo%20%GENESIS_PROJECT_UNIX%'"
+                      :href="'mailto: ' + settings.email + '?subject=Problemas%20na%20vers%C3%A3o%20' + version + '%20do%20aplicativo%20mais-precoce'"
                       x-large
                       color="primary"
                       class="white--text"

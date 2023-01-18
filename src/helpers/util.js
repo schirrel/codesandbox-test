@@ -27,6 +27,9 @@ export default {
       if (array.length !== 3 || array[0].length !== 4 || typeof array[0] !== 'string') return 0
 
       return parseInt(array[0])
+    },
+    copyObject (object) {
+      return JSON.parse(JSON.stringify(object))
     }
   }
 }

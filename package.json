@@ -1,6 +1,6 @@
 {
-  "name": "@%GENESIS_PROJECT_UNIX%/%GENESIS_APP_UNIX%",
-  "version": "%GENESIS_VERSION%",
+  "name": "@mais-precoce/plugin-flow",
+  "version": "0.23.1-alpha.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -12,8 +12,7 @@
     "@sentry/vue": "^7.1.1",
     "axios": "^0.27.2",
     "caniuse-lite": "^1.0.30001444",
-    "crypto-js": "^4.1.1",
-    "dexie": "^3.2.2",
+    "d3": "4.2.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.3",
     "register-service-worker": "^1.7.2",
@@ -23,14 +22,19 @@
     "vue-lodash": "^2.1.2",
     "vue-matomo": "^4.2.0",
     "vue-router": "^3.5.1",
+    "vue-sweetalert2": "^2.1.1",
+    "vue2-editor": "^2.10.3",
     "vuetify": "^2.6.0"
   },
   "devDependencies": {
+    "@schirrel/module-federation-enhanced-plugin": "^1.0.8",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-pwa": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "@vue/eslint-config-standard": "^6.1.0",
+    "coffee-loader": "^4.0.0",
+    "coffeescript": "^2.7.0",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-node": "^11.1.0",
@@ -40,6 +44,7 @@
     "sass-loader": "^10.0.0",
     "vue-cli-plugin-vuetify": "~2.4.8",
     "vue-template-compiler": "^2.6.14",
-    "vuetify-loader": "^1.7.0"
+    "vuetify-loader": "^1.7.0",
+    "webpack": "5.74.0"
   }
 }
