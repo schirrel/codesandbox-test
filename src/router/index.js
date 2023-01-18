@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import VueMatomo from 'vue-matomo'
 
 Vue.use(VueRouter)
 
@@ -22,6 +23,16 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL || '/',
   routes
+})
+
+Vue.use(VueMatomo, {
+  host: 'https://hit.embrapa.io',
+  siteId: process.env.VUE_APP_MATOMO_ID,
+  router: router,
+  preInitActions: [
+    ['setCustomDimension', 1, process.env.VUE_APP_STAGE],
+    ['setCustomDimension', 2, process.env.VUE_APP_VERSION]
+  ]
 })
 
 export default router
